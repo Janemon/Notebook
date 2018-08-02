@@ -1,0 +1,110 @@
+1. 首先自己本地得有一个仓库 
+       mkdir Test_git
+       或者使用第二步的操作 (git init Test_git)
+
+2. 让git来管理你仓库里面的工程
+       git init
+
+3. 创建你的工程.这里假设你的工程现在只做出一个 readme.txt 文件
+       vim reademe.txt
+
+4. 把这个readme.txt 文件追踪起来(这是第一步,我们要做的版本控制当然是得把他添加进来git的控制中),添加到 working dictionary(另一些资料称为劲:Index)
+       git add .
+         (注意: 我们没修改一次都要add一下用于追踪)
+         
+5. 检查情况
+       git status
+
+6. 如果此时,你还想在修改一次的话,那么修改完后,可以查看前后有什么不同的地方
+       git diff
+
+7. 最后,如果确认无误后,我们就可以真正地去保存他了(Head).
+       git commit -m 'des'
+
+8. 当然如果我们是团队开发的话,那么我们必须建一个中心仓库来管理整个团队的工程项目.
+   所以我们得链接上这个远端的中心仓库.
+       git remote add origin referenced-address
+         (remote add 表示了和本地的 add有所不同)
+
+[
+   当然有些时候我们是直接在github上直接clone 那个中心仓库的工程项目,而不用自己建一个
+       git clone referenced address
+]
+
+9. 那么和remote链接上了之后,我们可能被分配创建一个新的分支
+       git branch branch_name
+
+10. 如果我们想要切换到另一个分支的时候那么我们可以这样做:
+        git checkout otherBranch_name
+
+11. 当我们完成了自己所完成的功能时候,我们就要把他提交到中心仓库上了
+        git push origin<1> master<2>
+                <1>(假设是提交到remote的分支,默认是主机上的master) <2>(假设是当前要提交的分支,默认的也是这个)
+                
+          有时候这个分支(可能是master也可能是branch)与多个主机存在追踪关系,可以用 -u 选项指定一个默认的主机, 这样后面就不用加任何参数了
+              git push
+[
+  这个时候需要提交密码.
+]
+
+12. 查看当前有那些remote链接:
+        git remote -v
+
+13. 如果我们提交上去的branch已经被管理者所merge了,那么我们可以在本地上merge该分支,然后删除这个已经
+    merge 的分支,如果可以顺便吧remote的该分支也删了.
+        git checkout master(假设是主分支)
+        git merge required_branch
+        git branch -d required_branch
+        git push origin(假设是远端的主分支) --delete required_branch
+
+14. 当然不止你一个在打理一个分支功能,那么你也要吧别人的修改的东西拉到自己的本地分支了:
+        git pull origin request_branch (: reqired_branch)[如果就是合并到这个分支的话,那就不用再打名字了]
+
+          如何你在之前已经设定了默认主机,那么根据情况, 你可以像 'git push' 那样直接:
+              git pull
+
+15. 如何我们想删除每个文件, 我们可以
+        git rm file_name
+        这样就把文件从git仓库中删除了(也就是说不再被git追踪了), 并且连工作区中的文件也一并删除了
+    如何我们只想把他从git仓库中删除但是不在工作区内删除的话,
+        git rm --cached file_name
+    Note: 最后,我们如果想要在github上也一并删除的话那么就得要 'git commit -> git push'
+
+16. 如何我们想要重命名,那么 status 会显示出这样的操作吗?
+        git mv olafilename new filename
+        会的
+
+17. 如果我们想要查看提交的日记,我们可以
+        git log
+    如果我们想要查看提交的内容差异:
+        git log -p 
+
+
+[[
+   1. 我们知道在git下有三个区: 首先, 是我们的暂存区(Index) 这是我们 'git add' 后的区
+                               其次, 是我们的完成区(Head) 这是我们 'git commit' 后的最终区
+                               最后, 是我们的工作区, 就是我们实际上操作的区域但没有被git跟踪,换句话来说其实他和git没有什么关系.
+
+   2. git config --list 
+       这个是查看配置信息的
+   
+   3. .gitignore
+       这个是在git中可被忽略的文件: 1> '#' 表示注释 2> '/' 表示这个忽略的是目录
+   
+   4. git status 是仅仅显示了那些文件做了修改, 
+     而git diff 这是显示了那些还没被add的文件做了什么样的修改, 
+     而git diff --staged/--cached这是显示了还在暂存区和上次提交的区别,做了那些修改.
+   
+   5. git commit -a -m'...'
+        是可以不用'add' 就可直接提交file了.But the file must be 'add' before
+
+   6. 如果想要知道如何设置SSh秘钥, 上网搜索吧!
+
+]]
+
+
+18. 换行: 在行末加两个空格键和一个回车键. (<c-Enter>)
+    分段: 段落之间空一段
+
+
+19. 现在我才明白, 原来提交到远程github 上的仓库, 你也得要在上面有才行啊 #_#!
