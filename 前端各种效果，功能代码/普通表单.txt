@@ -1,0 +1,28 @@
+<style type="text/css">
+  table{
+        border: 1px solid black;
+        border-collapse: collapse;
+        }
+  tr,th,td{
+        bordr: 1px solid black;
+        text-align: center;
+          }
+</style>
+<body>
+    <table>
+        <tr>
+           <th>name</th>
+           <th>sex</th>
+           <th>age</th>
+        </tr>
+        <tr>
+           <td>jack</td>
+           <td>man</td>
+           <td>20</td>
+        </tr>
+    </table>
+</body>
+
+
+在这个代码中，我们可以知道，表单里的所有元素都不包括边框。
+所以我们要都分别给他加边框。而且collapse是只能在table中用。

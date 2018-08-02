@@ -1,0 +1,74 @@
+#top{
+	width:100%;
+	height: 200px;
+	background: orange;
+	border-radius: 12px;
+}
+#top_fixed{
+	position: relative;
+	left:50%;
+	margin-left: -40%;
+	width: 80%;
+	height: 200px;
+	background: yellow;
+	border-radius: 12px;
+}
+#main{
+	width:100%;
+	height: 1600px;
+	background-color: skyblue;
+	border-radius: 12px;
+}
+#foot{
+	width:100%;
+	height:100px;
+	background-color: black;
+	border-radius: 12px;
+}
+#left{
+	position: absolute;
+	left: 0;
+	top:80px;
+	height:150px;
+	width: 100px;
+	background-color: red;
+}
+#right{
+	position: absolute;
+	right: 0;
+	top: 80px;
+	height:150px;
+	width: 100px;
+	background: black;
+}
+固定顶部导航栏和两侧广告栏
+<div id="top"></div>
+<div id="top_fixed"></div>
+<div id="main"></div>
+<div id="foot"></div>
+<div id="left"></div>
+<div id="right"></div>
+<!-- 固定顶部导航栏和两侧广告栏 -->
+
+ var topH = $("#top").height();
+      console.log("Here is top " +topH +"px");
+      $(window).scroll(function(){
+      	var ScTop = $(document).scrollTop();
+      	console.log( "Here is dramitic " + ScTop +"px");
+      	if(ScTop >= topH){
+      		$("#top_fixed").css({
+      			"position" : "fixed",
+      			"top" : 0,
+      			      		
+      		});
+      	}else{
+      		$("#top_fixed").css({
+      			"position": "relative",
+	            "left":"50%",
+	            "margin-left": "-40%",
+      		});
+      	}
+      	$("#left,#right").animate({"top" : 80 + ScTop},30);
+      });
+      // 固定顶部导航栏
+      //两侧广告栏

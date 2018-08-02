@@ -1,0 +1,146 @@
+/**{
+	margin:0;
+	padding:0;
+}
+.goods{
+	height:283px;
+    width:275px;
+    position: relative;
+    left: 50%;
+    margin-left: -138px;
+    top:100px;
+    border:1px solid gray;
+}
+.goods:hover{
+	border:1px solid orange;
+}
+.goods .image_info p a img{
+	height: 175px;
+	width: 275px;
+}
+.goods .image_info .tangkuang{
+	position: absolute;
+	top: 139px;
+	height: 36px;
+	width:275px;一旦脱标宽度就不能撑满,只能是成为盒子里面内容的长度.
+}
+.goods:hover .image_info .tangkuang{
+	background-color:black;
+	opacity: 0.8;
+}
+.goods .image_info .tangkuang p{
+	opacity: 0;
+	margin-left: 11px;
+	line-height: 36px;
+}
+.goods:hover .image_info .tangkuang p{
+	color: white;
+	opacity: 1;通明度，0是完全透明而1是不透明。
+}
+.goods .image_info .tiebiao1{
+	position: absolute;
+    left:9px;
+    top:-9px;
+    height: 28px;
+    width:48px;
+    background: url(../img/精灵.png) no-repeat -108px 0; 只有对于背景图片才是这种路径吗？
+}
+.goods .image_info .tiebiao2{
+	position: absolute;
+    left:57px;
+    top:-9px;
+    height: 28px;
+    width:52px;
+    background: url(../img/精灵.png) no-repeat -54px 0;
+}
+.goods .word_info h3{
+	margin-top: 15px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	要三个属性连在一起在可以显示
+	height: 24px;
+	cursor: pointer;
+}
+.goods .word_info h4{
+	display: block;
+	height: 30px;
+	cursor: pointer;
+	padding-left: 5px;
+}
+.goods .word_info .price{
+	height: 39px;
+}
+.goods .word_info .price span{
+	display: inline-block;
+    float: left;
+}
+.goods .word_info .price span.youhui{
+	padding-left: 15px;
+	font-size: 24px;
+	color: orange;
+}
+.goods .word_info .price span.youhui em{
+	font-size: 18px;
+}
+.goods .word_info .price span.yuanj {
+	padding-top: 5px;
+	padding-left: 16px;
+	color: gray;
+}
+.goods .word_info .price span.yuanj em{
+	font-size: 15px;
+}
+.goods .word_info .price span.yuanj del{
+	font-size: 12px;
+}
+.goods .word_info .price span.shuliang{
+	margin-left: 94px;
+	margin-top: 8px;
+	font-size: 13px;
+	color: orange;
+}
+.goods .word_info .price span.shuliang em{
+    color: gray;
+}*/
+/*.goods .image_info .tangkuang a{
+	height: 36px;
+	width:275px;
+	background-color: transparent;///并不需要用到这个东东，因为background的transparent是默认的。///
+	position: absolute;
+	top: 139px;
+}*/
+/*a:hover,是属于伪类，只是给元素在cursor hover时加上样式。*/
+/*#example{
+	height: 220px;
+	width: 350px;
+	border:1px solid red;
+	background-image: url(../img/M20.jpg);
+	background-position: -31px 0;
+	background-repeat: no-repeat;
+} 通过这个例子，我们知道background-position 里的移动是对容纳他的盒子为参考系而言，而不是图片。比如这里的left：31px;
+是离盒子的左边31px处来放置图片，所以为了图片能向左边缩进31px，我们应该要用-31px*/
+/*///////////////////////////////////////////////////////////////////////////////////////
+从以上这些部分可以看出，就算是盒子脱标了，父亲还是能够被儿子所撑撑大，不过就是脱标了，content有多大，他的height和width
+就有多大，所以height和width要重新设定。*/
+
+<div class="goods">
+		<div class="image_info">
+			<p>
+				<a href="#"><img src="img/头图.jpg"/></a>这个路径要怎么用要注意了。
+			</p>
+			<span class="tiebiao1"></span>
+			<span class="tiebiao2"></span>
+			<span class="tangkuang"><p>广东广州白云区</p></span>
+		</div>
+		<div class="word_info">
+			<h3 title="【机场路线】海宝挪威三文鱼（特供）还有一大推东西，只不过我忘记了这些内容，所以算了。">【机场路线】海宝挪威三文鱼（特供）还有一大推东西，只不过我忘记了这些内容，所以算了。</h3>
+			<h4> 北极贝一份，约4斤。</h4>
+			<div class="price">
+				<span class="youhui"><em>￥</em>400</span>
+				<span class="yuanj"><em>￥</em><del>450</del></span>
+				<span class="shuliang"><em>已售</em> 120</span>
+				注意文本元素之间如果有空隙那么在显示上也会有空隙。
+			</div>
+		</div>
+	</div>

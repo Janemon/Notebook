@@ -1,0 +1,111 @@
+<syle type="text/css">
+ body{
+     	width:970px;
+     	height: auto;
+     	margin:10px auto;
+
+     }
+     #head{
+     	width:100%;
+     	height: 103px;
+     }
+     #head .logo1{
+     	float: left;
+     	background: red;
+     	width:277px;
+     	height: 103px;
+     }
+     #head .logo2{
+     	float: right;
+     	background: green;
+     	width: 137px;
+     	height: 49px;
+     }
+     #head .loo{
+     	float: right;
+     	margin-top: 8px;
+     	margin-left: 10px;
+     	background: green;
+     	width:679px;
+     	height: 46px;
+     }
+     #container{
+     	margin:10px 0;
+     	width:100%;
+     	height: 435px;
+     }
+     #container .side1{
+     	float: left;
+     	width:310px;
+     	height: 435px;
+     	background: yellow;
+     }
+     #container .zhong{
+     	float: left;
+     	width:450px;
+     	height: 400px;
+     	margin:0px 10px;
+     }
+     #container .con_top{
+     	margin-bottom: 10px;
+     	width:450px;
+     	height: 240px;
+     	background: skyblue;
+     }
+     #container .con_cen{
+     	width:450px;
+     	height: 110px;
+     	background: skyblue;
+     	margin-bottom: 10px;
+     }
+     #container .con_bott{
+     	width: 450px;
+     	height: 30px;
+     	background: skyblue;
+     }
+     #container .side2{
+     	float: right;
+     	width:190px;
+     	height: 400px;
+     	background: purple;
+     }
+     #container .nouo{
+     	float: right;
+     	width:650px;
+     	height: 25px;
+     	background: green;
+     	margin-top: 10px;
+     	margin-left: 10px;
+     }
+     #footer{
+     	width: 970px;
+     	height: 35px;
+        background: blue;
+     }
+	</style>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+<body>
+ <div id="head">
+    	<div class="logo1"></div>
+    	<div class="logo2"></div>
+    	<div class="loo"></div>
+    </div>
+    <div id="container">
+    	<div class="side1"></div>
+    	<div class="zhong">
+    	    <div class="con_top"></div>
+    	    <div class="con_cen"></div>
+    	    <div class="con_bott"></div>
+    	</div>
+    	<div class="side2"></div>
+    	<div class="nouo"></div>
+    	
+    </div>
+    <div id="footer"></div>
+
+</body>
+
+
+从这个布局可以看出一些问题：浮动元素是默认并排的而且这样贴靠的话就是离他最近的那个元素，那么不够空间的话，他就自然地排到下面。2.而且我们的选择器要尽量精准，
+避免重叠，易于排错，所以这里我用了后代选择器。3.要注意HTML元素的排列，毕竟dom就是按照HTML的排列而成，css也受影响。就像这里，我在css中把 side2和 nouo的排列顺序和
+HTML中的不一样，而导致了布局的错误。

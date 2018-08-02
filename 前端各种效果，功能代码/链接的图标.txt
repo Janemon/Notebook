@@ -1,0 +1,2 @@
+一般是在padding内的background。
+所以，要有padding
