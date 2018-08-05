@@ -164,8 +164,8 @@
 > 2 切换分支, 也如之前所说的, 可以用到`checkout`, `git checkout issue1`. 不过值得注意的是, 我们如果切换到那个工作区工作, 那么我们的 **Head**(用我自己的话来说这个是**完成区**), 就在那个分区.  
 
 > 3 如果我们切换到了issue1中, 并且有内容提交了. 那么流程图是这样的:  
-
     ![git_branch3](../datapi/git_branch3.png)  
+
 > 4 如果我们想合并分支了, 那个我们可以使用`merge`, 先切换到 `master` 分支,确认一下内容是否已经合并了, 没有的话, 那么我们就可以合并他,eg: `git merge issue`  
     ![git_branch4](../datapi/git_branch4.png)  
 完成之后, 打开文档, 确认内容是否已经更改.如果更改了的话, 你又不再需要这个分支, 那个可以把他delete: `git branch -d <branchname>`.  
