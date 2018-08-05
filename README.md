@@ -1,2 +1,2 @@
-# JOY MAYBE END IN GRIEF
-# 如今垂翅附鸿冥,他日不羞蛇作龙
+# 如今垂翅附冥鸿,他日不羞蛇作龙
+## JOY MAYBE END IN GRIEF
