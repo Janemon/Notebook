@@ -1,0 +1,151 @@
+ul {
+  font-size: 14px;
+}
+ul li {
+  list-style: none;
+}
+
+div.box, div.box-info {
+  background-color: #fff;
+}
+
+div.package {
+  border: 1px solid #fff;
+}
+
+.nav {
+  height: 100px;
+}
+.nav ul {
+  margin: 0;
+}
+.nav ul li {
+  float: left;
+  padding: 5px;
+  list-style: none;
+}
+
+.nav {
+  height: 100px;
+}
+.nav ul {
+  margin: 0;
+}
+.nav ul li {
+  float: left;
+  padding: 5px;
+  list-style: none;
+}
+.nav ul li:hover {
+  font-size: 20px;
+}
+.nav .nav-text {
+  border: 5px;
+}
+
+.pp {
+  font-family: Heson;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.alert-warnig {
+  color: #fff;
+  background-color: yellowgreen;
+}
+.alert-warnig a {
+  color: red;
+}
+
+/*!
+.show{
+  @include show($bgcolor:#fff,$text-color:blue)
+}
+*/
+.show {
+  color: blue;
+  background-color: #fff;
+}
+.show a {
+  color: #0000cc;
+}
+
+/*! the compulsive comment of after compile */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.box, .box-info {
+  padding: 15px;
+}
+
+.box-info {
+  background-color: burlywood;
+}
+
+.box a, .box-info a {
+  font-weight: bold;
+}
+
+.rounded {
+  border-radius: 5px;
+}
+
+body {
+  background-color: black;
+}
+
+col-1 {
+  width: 25%;
+}
+
+col-2 {
+  width: 50%;
+}
+
+col-3 {
+  width: 75%;
+}
+
+col-4 {
+  width: 100%;
+}
+
+col-1 {
+  width: 25%;
+}
+
+col-2 {
+  width: 50%;
+}
+
+col-3 {
+  width: 75%;
+}
+
+icon-success {
+  background-image: url(../img/icons/success.png);
+}
+
+icon-error {
+  background-image: url(../img/icons/error.png);
+}
+
+icon-warning {
+  background-image: url(../img/icons/warning.png);
+}
+
+.ite-6 {
+  width: 30px;
+}
+
+.ite-4 {
+  width: 20px;
+}
+
+.ite-2 {
+  width: 10px;
+}
+
+/*# sourceMappingURL=style.css.map */

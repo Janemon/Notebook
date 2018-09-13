@@ -1,0 +1,1132 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   h1,h2,h3,h4{color:#6495ed}body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}body{font-family:Helvetica,Arial,sans-serif}h1,h2{text-align:center}blockquote{background:#f9f9f9;border-left:10px solid #6495ed;margin:1.5em 10px;padding:.5em 10px;font-style:italic}blockquote p{display:inline}hr{clear:both;float:none;width:100%;height:2.5px;margin:1.4em 0;border:none;background:#ddd;background:-webkit-gradient(linear,left bottom,right bottom,color-stop(0,#fff),color-stop(.1,#ddd),color-stop(.9,#ddd),color-stop(1,#fff)) #ddd;background:-moz-linear-gradient(left center,#fff 0,#ddd 10%,#ddd 90%,#fff 100%) #ddd}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr th{font-weight:700}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none;background:0 0}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <p>
+   <mark>
+    the unix philosophy is
+    <strong>
+     Small is beautiful
+    </strong>
+    or
+    <strong>
+     less is more
+    </strong>
+   </mark>
+  </p>
+  <ol>
+   <li>
+    <p>
+     为什么会有逻辑卷管理器(logical volume manager)?
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      /
+     </strong>
+     和
+     <strong>
+      ?
+     </strong>
+     分别是正向搜索和反向搜索.
+    </p>
+   </li>
+   <li>
+    <p>
+     top命令:
+     <br/>
+     <img alt="top命令" src="../datapi/top命令.png"/>
+    </p>
+   </li>
+   <li>
+    <p>
+     ifconfig 和 Windows的 ipconfig 一样.
+    </p>
+   </li>
+   <li>
+    <p>
+     uname =&gt; knel and linux version.
+    </p>
+   </li>
+   <li>
+    <p>
+     free 内存使用量
+    </p>
+   </li>
+   <li>
+    <p>
+     who 接入用户都是谁
+    </p>
+   </li>
+   <li>
+    <p>
+     history 历史上使用的命令
+     <br/>
+     可用 !行号 来执行该行号的命令
+    </p>
+   </li>
+   <li>
+    <p>
+     cat 查看文件内容,适合较少内容的
+    </p>
+   </li>
+   <li>
+    more 查看文件内容,适合较多内容的
+   </li>
+   <li>
+    head -n … 查看文件头几行的内容
+   </li>
+   <li>
+    <p>
+     tail -n … 查看文件后几行的内容
+    </p>
+   </li>
+   <li>
+    <p>
+     stat 查看文件的相关信息
+    </p>
+   </li>
+   <li>
+    <p>
+     在文件的每行截取指定字符, 通过 -b/-c/-f.其实看去来没什么用但是’存在即是真理’. 比如: 截取passw文件的第一个用户, 用cut就特别方便.
+     <br/>
+     <img alt="cut command" src="../datapi/linux_cut_command2.png"/>
+     <br/>
+     <img alt="cut command" src="../datapi/linux_cut_command.png"/>
+    </p>
+   </li>
+   <li>
+    <p>
+     diff 查看文件的不同, 单单是查看的方式就有三种: diff file1 file2 | diff -c file1 file2 | diff -u file1 file2 (当然是合并版最好,’git’ 就采取了这种方式)
+     <br/>
+     <img alt="diff command" src="../datapi/linux_diff_command1.png"/>
+     <br/>
+     ‘+’ and ‘-‘ 都是对应改变, 但是’-‘ 对应的是第一个文件, 而加对应的是第二个文件的改变, 或许仅仅是一个字不同而已,并不是代表就是加一行或者减一行.
+    </p>
+   </li>
+   <li>
+    <p>
+     mkdir -p .... 可创建层叠文件夹
+    </p>
+   </li>
+   <li>
+    <p>
+     dd 按照指定大小和个数的数据块来复制文件或者转换文件
+     <br/>
+     <img alt="dd command" src="../datapi/dd_command.png"/>
+     <br/>
+     <img alt="dd command" src="../datapi/linux_dd_command.png"/>
+    </p>
+   </li>
+   <li>
+    <p>
+     tar -xzvf … -C ....
+     <br/>
+     解压(为gzip),过程,源文件,目标地址
+     <br/>
+     tar -czvf … -C ....
+     <br/>
+     压缩(为gzip),过程,源文件,目标地址
+    </p>
+   </li>
+   <li>
+    <p>
+     /etc/passwd 保存着所有用户信息
+    </p>
+   </li>
+   <li>
+    <p>
+     grep 查询字符 被查询文件
+     <br/>
+     -n 这个是显示字符所在的行数
+     <br/>
+     -v 参数是那么代表反选
+     <br/>
+     -c 显示符合的行数(列数)
+     <br/>
+     -E “…” 使用正则
+     <br/>
+     -r 可对目录使用递归
+     <br/>
+     -q 成功搜索到输出 ‘0’ or if will return not zero value when it failed
+     <br/>
+     -A number, means print the content of numberth lines behind the fit line.
+     <br/>
+     -B number, 意味着打印符合条件的当前行前number行的内容.
+     <br/>
+     -C number, 前后行
+    </p>
+   </li>
+   <li>
+    <p>
+     find 文件 ‘linux中可是一切都是文件哦’.
+     <br/>
+     <img alt="find command" src="../datapi/findCommand.png"/>
+    </p>
+    <blockquote>
+     <p>
+      其实一开始我是搞不清
+      <code>
+       whereis
+      </code>
+      and
+      <code>
+       which
+      </code>
+      has what differences. but now i understand it. Yep, it have something same and also have some differences.
+     </p>
+     <blockquote>
+      <p>
+       1
+       <code>
+        whereis
+       </code>
+       是仅仅用于程序名(有些程序名也是命令)的搜索, 而且搜索三种类型的文件, -m(man instruction) -b(the binary file) -s(the source code)
+       <br/>
+       2
+       <code>
+        which
+       </code>
+       是仅仅搜索命令的, 但是他只返回搜索结果的第一个.
+      </p>
+     </blockquote>
+    </blockquote>
+   </li>
+  </ol>
+  <p>
+   所以啊, 经过以上的解析就让我们开始进入
+   <mark>
+    find
+   </mark>
+   的世界吧:
+   <br/>
+   <strong>
+    find ‘diretory’ ‘condition’ ‘motion’
+   </strong>
+   <br/>
+   <em>
+    (if we dont’ aim the special directory, by default, the command will use the current directory and it’s subset)
+   </em>
+  </p>
+  <blockquote>
+   <p>
+    1
+    <strong>
+     -name “file”
+    </strong>
+    , means what format files we want to find.
+    <strong>
+     eg: find . -name “*.txt”
+    </strong>
+   </p>
+   <p>
+    2
+    <strong>
+     !
+    </strong>
+    , means find file not in this condition.
+    <strong>
+     eg: find . ! -name “*.txt”
+    </strong>
+   </p>
+   <p>
+    3
+    <strong>
+     -o
+    </strong>
+    , means we execute the other command in the same time.
+    <strong>
+     eg: find . -name “
+     <em>
+      .txt” -o -name “
+     </em>
+     .pdf”
+    </strong>
+   </p>
+   <p>
+    4
+    <strong>
+     -regex
+    </strong>
+    , means using regex to find file.
+    <strong>
+     eg: find . -regex “.*(.txt\|.pdf)$”
+    </strong>
+   </p>
+   <p>
+    5
+    <strong>
+     -type …(f, d, l, c, b, s, p)
+    </strong>
+    , means find what type of file we want to find.
+    <strong>
+     eg: find . -type f -name “*.txt”
+    </strong>
+   </p>
+   <p>
+    6
+    <strong>
+     -atime/-amin
+    </strong>
+    , means the user last acess time,
+    <strong>
+     eg:
+    </strong>
+   </p>
+   <blockquote>
+    <p>
+     1
+     <strong>
+      find . -type f -atime -7
+     </strong>
+     , the
+     <strong>
+      -
+     </strong>
+     sign means among this number’s day.
+     <br/>
+     2
+     <strong>
+      find . -type f -atime 7
+     </strong>
+     , no sign before number means just before this number’s day.
+     <br/>
+     3
+     <strong>
+      find . -type f -atime +7
+     </strong>
+     , the
+     <strong>
+      +
+     </strong>
+     sign means beyond this number’s day.
+    </p>
+   </blockquote>
+   <p>
+    7
+    <strong>
+     -mtime/-ammin
+    </strong>
+    , means the user last modify the file’s content.
+   </p>
+   <p>
+    8
+    <strong>
+     -ctime/-cmin
+    </strong>
+    , means the user last chage the file’s satation.
+   </p>
+   <p>
+    <img alt="linux-find-command1" src="../datapi/linux_find_command1.png"/>
+   </p>
+   <p>
+    10
+    <strong>
+     -delete
+    </strong>
+    , means delete the file meatched.
+    <strong>
+     eg: find . -type f “*.txt” -delete
+    </strong>
+   </p>
+   <p>
+    11
+    <strong>
+     -perm(-permission)
+    </strong>
+    , means find the file accoding to it’s access.
+    <strong>
+     eg: find . -type f -type f -name “*.txt” -perm 777
+    </strong>
+   </p>
+   <p>
+    12
+    <strong>
+     -user/-group
+    </strong>
+    , means find the file owned of which user or group.
+    <strong>
+     eg: find . -type f -user tom / find . -type f -group sunk
+    </strong>
+   </p>
+   <p>
+    13
+    <strong>
+     -path “..” -prune
+    </strong>
+    , means find some file but prune this directory.
+    <strong>
+     eg: find . -pat “./sk” -prune -o -type f -name “*.txt”
+    </strong>
+   </p>
+   <p>
+    14
+    <strong>
+     -exec … {} \;
+    </strong>
+    , note that every charatcer in sign of ‘
+    <strong>
+     ‘ is should be need, the ‘{}’ actually is the form parameter which present every files of matched, and ‘' and ‘;’ are neccesary for it. This command can execute somet motion after find the matched files.
+     <mark>
+      eg:
+     </mark>
+     find . -name “*.txt” -exec rm {} \;.
+    </strong>
+    Actually, we can use
+    <mark>
+     -ok
+    </mark>
+    to replace it beacuse it will show the prompt which show more security.**
+   </p>
+  </blockquote>
+  <hr/>
+  <p>
+   <mark>
+    NOTE:
+   </mark>
+   我们知道 linux命令可以从两个地方读取要处理的内容, 一个是通过命令行
+   <strong>
+    参数
+   </strong>
+   , 另一个是标准输入.
+   <br/>
+   <em>
+    eg:
+   </em>
+   <code>
+    echo 'main' | cat test.cpp
+   </code>
+   <em>
+    result:
+   </em>
+   show the content of test.cpp, if no exit this file, it also can’t show the ‘main’. 正常来讲,
+   <code>
+    echo 'mina'
+   </code>
+   会通过管道符 将其的
+   <strong>
+    标准输出
+   </strong>
+   导入到 cat 的
+   <strong>
+    标准输入
+   </strong>
+   中, 也就是说,此时 cat 的标准输入中是有内容的. 但是他却不从标准输入中读入要处理的内容, 因为他优先从命令行参数中读取数据, 而且有一些命令他是不处理
+   <strong>
+    标准输入
+   </strong>
+   的.
+   <em>
+    eg
+   </em>
+   :
+   <code>
+    echo '516' | kill
+   </code>
+   . 这个是不能执行的.
+   <br/>
+   那么就引申到这个可以
+   <strong>
+    把文件内容分割为命令行参数的命令
+   </strong>
+   :
+   <mark>
+    xargs
+   </mark>
+  </p>
+  <blockquote>
+   <p>
+    有时候我们的脚本却需要 echo ‘516’ | kill 这样的效果，例如
+    <strong>
+     ps -ef | grep ‘ddd’ | kill
+    </strong>
+    这样的效果，筛选出符合某条件的进程pid然后结束。这种需求对于我们来说是理所当然而且是很常见的，那么应该怎样达到这样的效果呢。有几个解决办法：
+    <br/>
+    1 通过
+    <strong>
+     kill `ps -ef | grep ‘ddd’`
+    </strong>
+    <br/>
+    这种形式，这个时候实际上等同于拼接字符串得到的命令，其效果类似于  kill $pid
+   </p>
+   <p>
+    2
+    <strong>
+     for procid in
+     <mathjax>
+      $(ps -aux | grep "some search" | awk '{print $
+     </mathjax>
+     2}’); do kill -9 $procid; done
+    </strong>
+    <br/>
+    其实与第一种原理一样，只不过需要多次kill的时候是循环处理的，每次处理一个
+   </p>
+   <p>
+    3
+    <mark>
+     <strong>
+      ps -ef | grep ‘ddd’ | xargs kill
+     </strong>
+    </mark>
+    <br/>
+    OK，使用了xargs命令，铺垫了这么久终于铺到了主题上。
+    <strong>
+     xargs命令可以通过管道接受字符串，并将接收到的字符串通过空格分割成许多参数(默认情况下是通过空格分割) 然后将参数传递给其后面的命令，作为后面命令的命令行参数
+    </strong>
+   </p>
+  </blockquote>
+  <p>
+   所以, 一切大白, 我们要学习的一个命令是
+   <mark>
+    xargs
+   </mark>
+   <br/>
+   xargs命令是给其他命令传递参数的一个过滤器，也是组合多个命令的一个工具。它擅长将标准输入数据转换成命令行参数，xargs能够处理管道或者stdin并将其转换成特定命令的命令参数.
+   <br/>
+   <img alt="linux_command_xargs" src="../datapi/linux_command_xargs1.png"/>
+   <br/>
+   这里值得注意的是, xargs 必须和其他命令一起执行的, 因为他的作用就是为了使其他东西转换成命令行参数, xargs 是要放在需要参数的命令行前面.
+   <br/>
+   这里有一个和 find 命令里面的一个
+   <strong>
+    -exec
+   </strong>
+   , 有点类似的地方, 就是
+   <strong>
+    对应替换
+   </strong>
+   <code>
+    {}
+   </code>
+   , 但是我们另外增加一个
+   <code>
+    I
+   </code>
+   和 减少一个
+   <code>
+    ;
+   </code>
+   .
+   <br/>
+   1
+   <em>
+    eg:
+   </em>
+   <strong>
+    <code>
+     ls *.jpg | xargs -n1 I cp {} /data/images
+    </code>
+   </strong>
+   <br/>
+   2
+   <em>
+    eg:
+   </em>
+   用rm 删除太多的文件时候，可能得到一个错误信息：/bin/rm Argument list too long. 用xargs去避免这个问题：
+   <br/>
+   <strong>
+    <code>
+     find . -type f -name "*.log" -print0 | xargs -0 rm -f
+    </code>
+    =&gt;
+    <code>
+     find . -type f -name "*.log" | xargs -n1 I rm -f {}
+    </code>
+   </strong>
+   <br/>
+   <img alt="linux_command_xargs" src="../datapi/linux_command_xargs2.png"/>
+  </p>
+  <hr/>
+  <ol>
+   <li>
+    <p>
+     pidof name 查找改该进程的id
+    </p>
+   </li>
+   <li>
+    <p>
+     kill id 结束进程
+    </p>
+   </li>
+   <li>
+    <p>
+     <mark>
+      每个基于文本的程序都应该能够从
+      <strong>
+       任何源
+      </strong>
+      接受输入,并向任何
+      <strong>
+       目标
+      </strong>
+      写入输出
+     </mark>
+    </p>
+    <blockquote>
+     <p>
+      以这种方式处理I/O, 用户具有极大的灵活性,而且对于Linux来说, 他把处理输入和输出交给了Unix来处理, 这就意味着用户不必担心输入和输出的各种情况了. 所以,Unix的开发人员设计了一种读取数据和两种写出数据的通用方法. 在登录时, shell会自动地将标准输入设置成键盘(或许你可以这样想,除了从指定文件读入外,其他的都可以不是标准输入)将标准输出和标准错误设置为屏幕.
+     </p>
+    </blockquote>
+   </li>
+  </ol>
+  <p>
+   输入重定向: 把文件导入命令(一般是直接在命令后面跟文件)
+   <a href='"&lt;"  就如C++ 一样的输入方向'>
+    多用于组合命令中
+   </a>
+   <br/>
+   输出重定向: 把原本输出屏幕的数据信息写入到指定文件中显示
+   <br/>
+   <img alt="standard in out" src="../datapi/SIO.png"/>
+   <br/>
+   <img alt="standard input redirection" src="../datapi/rein.png"/>
+   <br/>
+   <img alt="the way of redirection of inouterror" src="../datapi/reInOutWay.png"/>
+   <br/>
+   <mark>
+    note:
+   </mark>
+   <br/>
+   1.因为当重定向输出时, 如果如果 一不小心 ‘&gt;’ 覆盖了原本的内容, 那么就糟糕了,所以我们可以做一些防护措施: 对于Bash CLI 来说, 是这样
+   <code>
+    set -o noclobber
+   </code>
+   , 然后, 当确定要重定向时, 使用 ‘&gt;|’.
+   <br/>
+   2.’&gt;’ 和 ‘&lt;’, 可以一并使用:
+   <br/>
+   <img alt="'&gt;' and '&lt;'" src="../datapi/combind'&lt;,&gt;'.png"/>
+  </p>
+  <ol>
+   <li>
+    <p>
+     <img alt="linux 转义字符" src="../datapi/linux_转义字符.png"/>
+    </p>
+   </li>
+   <li>
+    <p>
+     alias :创建属于自己的命令别名
+     <br/>
+     比如: alias rm=’rm -i’ 解决了困扰我多年的rm 不小心操作后的问题.
+     <br/>
+     note: PATH变量的作用是, 设定解析器搜索所执行命令的路径.
+    </p>
+   </li>
+   <li>
+    <p>
+     env :查看我们的环境变量(有时候, 环境标量仅仅是指PATH, 这个可以在任何位置启动程序的变量,里面写着各种程序的执行路径)
+     <br/>
+     <img alt="常用的环境变量" src="../datapi/linux_常用环境变量.png"/>
+     <br/>
+     <img alt="常用的环境变量" src="../datapi/linux_自定义变量.png"/>
+    </p>
+   </li>
+   <li>
+    <p>
+     | : 管道符把左面（前面）命令的输出值作为右面（后面）命令的输入值以便进一步处理信息。
+    </p>
+   </li>
+   <li>
+    <p>
+     lsb_release -a :查看Linux是那个系统
+    </p>
+   </li>
+   <li>
+    <p>
+     <img alt="shell script 1" src="../datapi/linux_shell1.png"/>
+     <br/>
+     <img alt="shell script 1" src="../datapi/linux_shell3.png"/>
+    </p>
+   </li>
+  </ol>
+  <p>
+   <strong>
+    NOTE:
+   </strong>
+   <br/>
+   1. 参数如同上面所示,通过空格来隔开.
+   <br/>
+   2. 如果通过输入完整路径来运行脚本的话,那么大多数会显示权限不足,此时需要增加权限. 比如:
+   <br/>
+   3. 这里的变量是不需要声明的，约定成俗，变量全用大写，并且引用的时候前面加上‘$’.
+   <br/>
+   <img alt="add user execute" src="../datapi/linux_shell2.png"/>
+  </p>
+  <ol>
+   <li>
+    shell 脚本的测试语句和之前接触的有些不同,他是这样的: [ 条件表达式 ] _条件表达式左右都需应有一个空格, 其实shell是一种严格按照规范的语言._而且要理解他要
+    <mark>
+     结合类unix来发挥他的作用
+    </mark>
+    <br/>
+    <strong>
+     NOTE:
+    </strong>
+   </li>
+   <li>
+    按照测试对象来划分,条件测试语句可以分4种:
+    <blockquote>
+     <ul>
+      <li>
+       文件测试语句
+      </li>
+      <li>
+       逻辑测试语句
+      </li>
+      <li>
+       整数值比较语句
+      </li>
+      <li>
+       字符串比较语句
+       <blockquote>
+        <p>
+         1.
+         <img alt="文件测试" src="../datapi/linux_shell4.png"/>
+         <br/>
+         2.
+         <img alt="逻辑测试" src="../datapi/linux_shell5.png"/>
+         <br/>
+         3.
+         <img alt="整数测试" src="../datapi/linux_shell6.png"/>
+         <br/>
+         4.
+         <img alt="字符串测试" src="../datapi/linux_shell7.png"/>
+        </p>
+       </blockquote>
+      </li>
+     </ul>
+    </blockquote>
+   </li>
+   <li>
+    <strong>
+     $?
+    </strong>
+    可以显示上一条命令执行后的返回值, 其实如果在脚本中,那么上一条语句执行过后,那么它也就可以说是上一条命令了.
+   </li>
+   <li>
+    <p>
+     shell 脚本中的条件测试语句, 如果成功那么它返回的值是
+     <strong>
+      0
+     </strong>
+     , failed, 则返回其他任何值.
+    </p>
+   </li>
+   <li>
+    <p>
+     shell 脚本的流程控制语句:
+    </p>
+    <blockquote>
+     <ol>
+      <li>
+       <img alt="if 语句" src="../datapi/linux_shell8.png"/>
+       <blockquote>
+        <p>
+         <img alt="if 语句" src="../datapi/linux_shell9.png"/>
+        </p>
+       </blockquote>
+      </li>
+      <li>
+       <img alt="if 多分支1" src="../datapi/linux_shell10.png"/>
+      </li>
+      <li>
+       <img alt="if 多分支2" src="../datapi/linux_shell11.png"/>
+      </li>
+      <li>
+       <img alt="for 语句" src="../datapi/linux_shell12.png"/>
+      </li>
+      <li>
+       <img alt="while 条件循环语句" src="../datapi/linux_shell13.png"/>
+       <blockquote>
+        <p>
+         while循环语句的条件和for的不一样, for的往往是已经知道循环次数了,而while并不确定, 简单来说就是for 的 使用情景更加具体.
+        </p>
+       </blockquote>
+      </li>
+      <li>
+       <img alt="csae 条件测试语句" src="../datapi/linux_shell14.png"/>
+      </li>
+      <li>
+       <img alt="计划任务服务程序" src="../datapi/linux_shell15.png"/>
+      </li>
+      <li>
+       <img alt="计划任务服务程序" src="../datapi/linux_shell16.png"/>
+      </li>
+     </ol>
+    </blockquote>
+   </li>
+  </ol>
+  <p>
+   <mark>
+    NOTE:
+   </mark>
+   <br/>
+   - shell 脚本只需要对变量名全大写就行了, 而不需要一个定义符
+   <br/>
+   - shell 脚本不需要对在结尾对语句进行 ‘;’, 除非把那些下一行的语句全都写作同一行，比如：
+   <code>
+    if [ -e readme.txt ] ; then .....; fi;
+   </code>
+   <br/>
+   - shell 中, $(…) 和
+   <code>
+    ...
+   </code>
+   是一样的.
+   <br/>
+   - shell 中, /dev/null 是个信息黑洞,相当与’回收站’
+  </p>
+  <ol>
+   <li>
+    <p>
+     linux中的用户:
+    </p>
+    <blockquote>
+     <ol>
+      <li>
+       管理员: Linux的管理员是 root, 为什么是 root呢? 是因为管理员的UID=0, 而不是因为他叫root, root只是一个名称而已.
+      </li>
+      <li>
+       系统用户: UID为1~999, 为什么会有那么多呢? linux系统为了防止某个服务程序出现漏洞而被黑客提权到整个服务器,
+       <strong>
+        默认服务程序会有独立的系统用户负责运行,进而有效控制破坏的范围
+       </strong>
+      </li>
+      <li>
+       普通用户: UID从1000开始! 其是由管理员创建的用于日常工作的用户
+       <br/>
+       <strong>
+        NOTE:
+       </strong>
+       UID-&gt;User Identification, 具有唯一性.
+      </li>
+     </ol>
+    </blockquote>
+   </li>
+   <li>
+    <p>
+     为了方便管理一组用户, Linux 引入了用户组的概念. 通过使用GID(Group Identification) 用户组号码,把多个用户加入到同一个组中, 从而方便组中用户的统一规划权限或指定任务.
+     <br/>
+     <strong>
+      NOTE:
+     </strong>
+     Linux 在创建每个用户时, 都会自动创建一个同名的用户组, 而且这个基本用户组就只有该用户一个人. 如果该用户被以后纳入其它用户组, 则这个其它用户组被称为扩展用户组. 一个用户只有一个基本用户组, 而可以有多个扩展用户组.
+    </p>
+   </li>
+   <li>
+    <p>
+     <img alt="linux_command_useradd" src="../datapi/linux_command_useradd1.png"/>
+     <br/>
+     需要注意的是其中
+     <code>
+      -e
+     </code>
+     and
+     <code>
+      -s
+     </code>
+     which one is expried-time and the other is shell explainer.
+    </p>
+   </li>
+   <li>
+    <p>
+     <img alt="linux_command_usermod1.png" src="../datapi/linux_command_usermod1.png"/>
+     <br/>
+     其中, 需要注意的是’一切皆是文件’, 所以添加用户实际上就是修改配置文件的过程. 用户信息都保存在 /etc/passwd 中, 不要单单认为他是’密码’ :).
+     <br/>
+     <img alt="linux_command_usermod2" src="../datapi/linux_command_usermod2.png"/>
+    </p>
+   </li>
+   <li>
+    <p>
+     <img alt="linux_command_passwd1" src="../datapi/linux_command_passwd1.png"/>
+     <br/>
+     需要注意的是, 我们可以利用
+     <code>
+      -l
+     </code>
+     and
+     <code>
+      -u
+     </code>
+     to lock and unlock the user.
+    </p>
+   </li>
+   <li>
+    <p>
+     <img alt="linux_command_suid" src="../datapi/linux_command_suid.png"/>
+     <br/>
+     需要注意的是, 在生产环境中单纯的设置文件的
+     <strong>
+      rwx
+     </strong>
+     权限是无法满足安全性和灵活性的要求, 所以便有了
+     <strong>
+      suid, sgui, sbit
+     </strong>
+     这样的特殊权限位.如果有了这个权限, 会增加一个
+     <strong>
+      s
+     </strong>
+     , 而且这个仅仅是对
+     <strong>
+      二进制文件
+     </strong>
+     有效.
+    </p>
+    <p>
+     <img alt="linux_command_sguidi1" src="../datapi/linux_command_sguid1.png"/>
+     <br/>
+     <img alt="linux_command_sguidi2" src="../datapi/linux_command_sguid2.png"/>
+     <br/>
+     Here, we should note that, the first usage of sguid is we can give the user who is executing this file an access of the file’s owner. 但是第二个作用似乎更常用些, 我们设置一个共享组目录, 而组内任何人员创建的文件都不会归他自己的用户组了而是现在这个共享组.
+    </p>
+   </li>
+   <li>
+    <p>
+     <img alt="linux_command_sbit" src="../datapi/linux_command_sbit.png"/>
+     <br/>
+     需要注意,
+     <strong>
+      sbit
+     </strong>
+     特殊权限是为了不让共享目录内的文件被恶意删除(一个文件能否被删除, 不是看他自己的权限而是看他所在目录的权限), 如果一个目录被设置成了
+     <strong>
+      sbit
+     </strong>
+     , 那么我们可以通过
+     <code>
+      ls -l
+     </code>
+     看到权限里面有个
+     <strong>
+      t/T
+     </strong>
+     . 我们可以通过
+     <code>
+      chmod -R o+t
+     </code>
+     来设置’sbit’, 这个 ‘R’ 是代表递归的意思.
+    </p>
+   </li>
+   <li>
+    <p>
+     <img alt="linux_command_chmod" src="../datapi/linux_command_chmod.png"/>
+     <br/>
+     <strong>
+      chmod ‘who’+’what access’
+     </strong>
+    </p>
+   </li>
+   <li>
+    <p>
+     <img alt="linux_command_chown" src="../datapi/linux_command_chown.png"/>
+    </p>
+   </li>
+   <li>
+    <p>
+     <img alt="linux_command_chattr" src="../datapi/linux_command_chattr1.png"/>
+     <br/>
+     <img alt="linux_command_chattr2" src="../datapi/linux_command_chattr2.png"/>
+     <br/>
+     我觉得这是一个非常重要的且cool的命令, 如果用
+     <code>
+      ls
+     </code>
+     命令是看不出隐藏的权限的, 所以我们可以用
+     <code>
+      lsattr
+     </code>
+     来查看命令
+    </p>
+    <p>
+     <img alt="linux_command_chattr3" src="../datapi/linux_command_chattr3.png"/>
+    </p>
+   </li>
+   <li>
+    <p>
+     <img alt="linux_command_setfacl1" src="../datapi/linux_command_setfacl1.png"/>
+     <br/>
+     <img alt="linux_command_setfacl2" src="../datapi/linux_command_setfacl2.png"/>
+     <br/>
+     <img alt="linux_command_setfacl3" src="../datapi/linux_command_setfacl3.png"/>
+     <br/>
+     <img alt="linux_command_setfacl4" src="../datapi/linux_command_setfacl4.png"/>
+     <br/>
+     需要注意, 我们为什么需要
+     <strong>
+      setfacl
+     </strong>
+     , 明明都有了
+     <strong>
+      chmod and chattr
+     </strong>
+     , 问得好!
+     <strong>
+      存在即合理
+     </strong>
+     , 我们的确有了前两个命令可以做大部分工作了, 但是 就如社会发展到现在, 越来越多的
+     <strong>
+      定制化
+     </strong>
+     . 其实类比这个,
+     <strong>
+      setfacl
+     </strong>
+     就是定制化: 比如, 你想把某个文件仅仅是设置成你和你的一个好友看, 你用上面的两个命令是做不到的. 想想,是不是真的做不到? 因为权限只有两个有, 而上面的命令权限设置, 只有是用户一个人的, 而其他的是则是 用户组 和 其他人, 如果我们给其他人设置了, 那么是这个其他人是不仅仅只有 你的好友一个人. 所以就有了
+     <code>
+      setfacl
+     </code>
+     的出现.
+     <br/>
+     <strong>
+      规则:
+     </strong>
+     <br/>
+     1 模板 =&gt;
+     <strong>
+      <code>
+       user:who(if no specify this will be nothing):permission
+      </code>
+     </strong>
+     eg:
+     <code>
+      _user::rwx_
+     </code>
+     . 接下来的
+     <strong>
+      group, mask, other
+     </strong>
+     都是这种套路.
+     <br/>
+     2 ACL_USER_OBJ and ACL_GROUP_OBJ are both point that the owner not the other user and group, the ACL_USER and ACL_GROUP even point that. 现在我们还要知道
+     <strong>
+      MASK
+     </strong>
+     代表遮盖, 这个代表了 当前用户,当前用户组和 其他用户的
+     <strong>
+      最大值
+     </strong>
+     , 注意了是最大值, 就是表明不一定是这个值, 他原本是什么的值就是什么值, 只不过这个 MASK 出来了有点
+     <strong>
+      蒙蔽
+     </strong>
+     的意思, 所以我们要想知道确切是什么值, 就必须用
+     <code>
+      getfacl
+     </code>
+     来查看. 注意有 ACL 设置的, 在
+     <code>
+      ls -l
+     </code>
+     结果后面会有一个
+     <strong>
+      +
+     </strong>
+     .
+    </p>
+   </li>
+  </ol>
+  <p>
+   <mark>
+    <strong>
+     特殊权限, 隐藏权限, 权限表的差异
+    </strong>
+   </mark>
+  </p>
+  <blockquote>
+   <p>
+    1 特殊权限, 是仅仅针对二进制文件, 其中的 SGUID and SBIT 可以针对目录, 作用是: 可以给每个用户,或者某个组 暂时拥有 管理员的权限, 他主要针对的是用户而不是文件,当然他的设置是在文件上. 用法:
+    <strong>
+     <code>
+      chmod who+s file
+     </code>
+    </strong>
+    <strong>
+     <code>
+      chomod who+t file
+     </code>
+    </strong>
+    and
+    <strong>
+     SUID:4 SGID:2 SBIT:1
+    </strong>
+    <br/>
+    2 隐藏权限, 可以对文件,目录进行隐秘的设置, 比如不能修改内容;只能追加内容: 删除文件后还有备份; 他这个不同 特殊权限, 是针对的是文件而不是用户. 用法:
+    <strong>
+     <code>
+      chattr +/- parameter file
+     </code>
+    </strong>
+    <br/>
+    3 权限表, 我的感觉是这个是针对 特殊权限的improved version, 因为他把把单独一个用户领出来, 而不是只能对所有用户. 用法:
+    <strong>
+     <code>
+      setfacl user/group/mask:special point:permission
+     </code>
+    </strong>
+   </p>
+  </blockquote>
+  <ol>
+   <li>
+    <p>
+     <img alt="linux_usual_directory" src="../datapi/linux_usual_directory.png"/>
+     <br/>
+     <img alt="linux_dev" src="../datapi/linux_dev.png"/>
+     <br/>
+     <img alt="linux_dev2" src="../datapi/linux_dev2.png"/>
+    </p>
+    <blockquote>
+     <p>
+      其实, 这个拓展分区是其中一个主分区, 为了拓展而成的拓展分区:).
+      <br/>
+      再次, 我们需要弄清两个概念, 一是
+      <strong>
+       sda
+      </strong>
+      中的
+      <code>
+       a
+      </code>
+      不是所谓的第一个插槽上的存储储备, 这里的 a 是由系统内核识别的顺序决定的. 比如, 你插在第二个插槽, 这里也是 sda. 二是,
+      <strong>
+       sda1
+      </strong>
+      中的
+      <code>
+       1
+      </code>
+      不一定是第一个分区, 因为这也可以是自己分配的.
+     </p>
+    </blockquote>
+    <p>
+     <img alt="linux_dev3" src="../datapi/linux_dev3.png"/>
+     <br/>
+     <img alt="linux_dev4" src="../datapi/linux_dev4.png"/>
+     <br/>
+     <img alt="linux_dev5" src="../datapi/linux_dev5.png"/>
+    </p>
+   </li>
+  </ol>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>

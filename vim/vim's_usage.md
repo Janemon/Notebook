@@ -64,7 +64,7 @@ If we use the above instructions, we will reduce a lot of repeative activities.
 
 ---------------------------------------
 
-13 The <mark><C-a></mark> and <mark><C-x></mark> commands performs addition and subtraction on numbers. But there are some specialties. If our cursor on a number, we running *10<C-a>* could modify it to read 15. However, if the cursor is not positioned on a numeric digit, the <mark><C-a></mark> will look ahead for a digit on the current line. For example:
+13 Thk <mark><C-a></mark> and <marj><C-x></mark> commands performs addition and subtraction on numbers. But there are some specialties. If our cursor on a number, we running *10<C-a>* could modify it to read 15. However, if the cursor is not positioned on a numeric digit, the <mark><C-a></mark> will look ahead for a digit on the current line. For example:
 ```css {.line-numbers}
 .blog {background: 0px 0px}
 ```
@@ -222,7 +222,7 @@ And actually, we sometime want to review some commands but we cover it by repeat
 -----------------------------------
 
 31 In vim's visual module, we can use the crow select but the worlds number must all same.
-![picture](/home/janemon/图片/列编辑vim.png)
+![picture](../datapi/列编辑vim.png)
 
 -----------------------------------
 
@@ -234,4 +234,12 @@ And actually, we sometime want to review some commands but we cover it by repeat
 
 ----------------------------------
 
+34 If we don't want to edit the whole micro command when we write wrong code by accident, we can edit it by `qA` which means append the new content in register: a. And how to use the micro? one way is that we can use such code `100 @q` and we can use other way such like `'<,'>normal @q`.   
 
+----------------------------------
+
+35 when we use the *substitude" command, the `%s/origin/after/g` the **`%`** means the *whole file* and the **`g`** means in *whole line*.   
+
+----------------------------------
+
+36 If we open two editor in same time, I find if we write code in other editor not vim, when I wanna to save it, I must `q` vim then I could save it.
