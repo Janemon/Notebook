@@ -28,7 +28,7 @@ eg: `npm run eslint`>
 6 first, the style linters for all kinds of our files in our project. Commonly, in web Front-end project, it needs **eslint** checking javascript [usage](https://eslint.org/docs/user-guide/command-line-interface), **stylelint** checking css, less, scss [usage](https://stylelint.io/user-guide/cli/), **jsonlint** checking json [usage](https://github.com/zaach/jsonlint), **markdownlint-cli** checking markdown, and the html linter but it hasn't a good inplement yet. And we maybe need a test for code, so we can add **mocha** [usage](https://mochajs.org/#usage) testing the target code and collecting the test's result, and the **chai** the test assertion library. <mark>还不知道如何使用</mark>.   
 eg: ![npmScript1](../datapi/npmScript1.png)  
 
-<mark>Note:</mark> `*` means any filename; `**` means any dictionary, but if we write shell scipt directly. we should transfer it using `\*`  
+<mark>Note:</mark> `*` means any filename; `**` means any floor sonDictionary, but if we write shell scipt directly. we should transfer it using `\*`  
 
 -------------------------------------------------------------------------
 
