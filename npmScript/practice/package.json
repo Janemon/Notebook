@@ -6,8 +6,7 @@
   "scripts": {
     "lint": "npm-run-all --parallel lint:*",
     "lint:css": "stylelint \"./**/*.css\" \"./**/*.scss\"",
-    "lint:js": "eslint ./**/*.js",
-    "lint:js:fix": "npm run lint:js -- --fix",
+    "lint:js": "eslint ./**/*.js --fix",
     "lint:json": "jsonlint --quiet *.json",
     "transferSC": "scripty",
     "watch:scss": "onchange -i \"./**/*.scss\" -- npm run transferSC",
@@ -18,7 +17,18 @@
     "build:images": "scripty",
     "build:styles": "scripty",
     "build:js": "scripty",
-    "build:hash": "scripty"
+    "build:hash": "scripty",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "linter": {
+      "*.js": ["eslint --fix", "git add"],
+      "*.css": ["stylelint", "git add"],
+      "*.json": ["jsonlint --quiet", "git add"]
+    },
+    "ignore": [
+      "./dist/**/*.*.js"
+    ]
   },
   "keywords": [
     "npmScript"
@@ -30,8 +40,10 @@
     "cssmin": "^0.4.3",
     "eslint": "^5.5.0",
     "hashmark": "^5.0.0",
+    "husky": "^0.14.3",
     "imagemin-cli": "^3.0.0",
     "jsonlint": "^1.6.3",
+    "lint-staged": "^7.2.2",
     "npm-run-all": "^4.1.3",
     "onchange": "^4.1.0",
     "replaceinfiles": "^1.1.4",
@@ -42,5 +54,6 @@
     "stylelint-config-standard": "^18.2.0",
     "stylelint-scss": "^3.3.0",
     "uglify-es": "^3.3.9"
-  }
+  },
+  "dependencies": {}
 }
