@@ -1,4 +1,5 @@
 ### <mark>npm script</mark> automaking Frontend workflow
+<mark>Now, the html checker and js in html checket can't work!</mark>
 
 > In this concept, the core is **npm** and in npm the core is **pakage.json** file, and in package.json file, the core are **dependencies** and **script**. But what we do are **mainly sorounding the script**   
 

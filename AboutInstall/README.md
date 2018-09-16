@@ -1,11 +1,44 @@
 #### 其实无外乎两种方法：
 1. 自己下载安装包<small>(官网、github)</small>，自己解压，自己编译，自己选择路径安装。  
-2. 通过安装程序，一站式进行配置安装, 比如：Ubuntu的`sudo apt-get install ...` 和 `npm install --save/--save dev/-g`。  
+2. 通过安装程序，一站式进行配置安装, 比如：Ubuntu的`sudo apt-get install ...` 。  
 
 ---------------------------------------------------------------------
 
 #### 1 关于 ubuntu 的 安装，升级和卸载
 
+1. 如果是U盘安装各类系统，一般网上会有各种装机软件下载，对我一般使用 _大白菜_ ，但是各类使用软件使用方法都类似。过程：
+> 1 下载U盘启动盘制作工具，并准备U盘  
+> 2 使用制作工具对 U盘 进行格式化并制作成 U盘启动盘  
+> 3 把系统镜像放进去  
+> LAST 把电脑资料安置好后，重启电脑并把U盘插上，按`<F2>/<F12>' 设置成U盘为第一启动项, 进入界面，进行安装，等待完成！  
+
+2. 如果直接在原本的 _linux系统_ 上进行U盘启动盘制作，也可以，步骤如下：
+> 1 `sudo fdisk -l`, 查看U盘设备号，根据U盘的内存可以辨别出，一般为：`/dev/sdc`  
+> 2 `sudo umount /dev/sdname*`  
+> 3 `sudo dd if=~/downloads/ubuntu-18.04-desktop-amd64.iso of=/dev/sdname` 把你的镜像文件压入U盘中  
+> LAST， 等待装入完成。。。  
+
+3. <mark>如何通过命令格式化U盘</mark>  
+> 1 `sudo dd count=1 bs=512 if=/dev/zero of=/dev/sdname`  
+> 2 `sudo fdisk /dev/sdc`  
+>> 出现列表项，让你选择，请按：p，默认回车，n，t，1, 7，w。  
+
+> 3 `sudo umount /dev/sdc1`(一般是为 _sdc1_ )  
+> 4 `sudo mkfs.fat /dev/sdc1`  
+
+4. <mark>在 Ubuntu 上安装 Ubuntu图是最简单的</mark>  
+
+输入 `sudo usb-creator-gtk` 就有一个图形界面，然后**两步搞定**！！
+
+--------------------------------------------
+
+##### ubuntu 软件升级与卸载  
+
+1. 更换国内源，建议选择高校及大企业源 `~/etc/apt/sources.list`  
+
+2. 安装升级： `sudo apt-get check` => `sudo apt-get update` => `sudo apt-get dist-upgrade` => `sudo apt-get upgrade` => `sudo apt-get autoclean`  
+
+3. 删除清理： `sudo apt-get remove packname --purge / sudo apt-get autoremove --purge`  
 
 ---------------------------------------------------------------------
 
@@ -68,6 +101,16 @@ nvm 常用指令：
 > 7 更新模块: `npm-check -du` <small>(-d means -devlopment, -u means update by interactive</small>  
 >> 首先，还得要安装上 `npm install npm-check -g1  
 
+---------------------------------------------------------------------
+
+#### 4 关于linux 中的解压与压缩  
+
+> [-v ='verbose', -x ='extract', -f ='file', -c ='compress', -z='gzip' ]  
+
+1. 解压：`tar -xvf target -d destination`, `unzip target -d destination`  
+2. 压缩：`tar -zcvf destination target`, `zip destination target`  
+
+---------------------------------------------------------------------
 
 
 

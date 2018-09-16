@@ -10,21 +10,30 @@
     "lint:json": "jsonlint --quiet *.json",
     "transferSC": "scripty",
     "watch:scss": "onchange -i \"./**/*.scss\" -- npm run transferSC",
-    "watch:lint": "onchange -i \"./**/*.js\" \"./**/*.scss\" \"./**/*.html\" -- npm run lint",
+    "watch:lint": "onchange -i \"./**/*.js\" \"./**/*.scss\" \"./**/*.html\" \"./**/*.json\" -- npm run lint",
     "reload": "browser-sync start --files \"./**/*.html, ./**/*.css, ./**/*.js\" -server",
     "prebuild": "rm -rf dist && mkdir -p dist/images && mkdir -p dist/styles && mkdir -p dist/js",
     "build": "scripty",
     "build:images": "scripty",
-    "build:styles": "scripty",
     "build:js": "scripty",
+    "build:styles": "scripty",
     "build:hash": "scripty",
     "precommit": "lint-staged"
   },
   "lint-staged": {
     "linter": {
-      "*.js": ["eslint --fix", "git add"],
-      "*.css": ["stylelint", "git add"],
-      "*.json": ["jsonlint --quiet", "git add"]
+      "*.js": [
+        "eslint --fix",
+        "git add"
+      ],
+      "*.css": [
+        "stylelint",
+        "git add"
+      ],
+      "*.json": [
+        "jsonlint --quiet",
+        "git add"
+      ]
     },
     "ignore": [
       "./dist/**/*.*.js"
@@ -39,6 +48,7 @@
     "browser-sync": "^2.24.7",
     "cssmin": "^0.4.3",
     "eslint": "^5.5.0",
+    "eslint-plugin-html": "^4.0.5",
     "hashmark": "^5.0.0",
     "husky": "^0.14.3",
     "imagemin-cli": "^3.0.0",
