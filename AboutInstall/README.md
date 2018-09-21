@@ -31,6 +31,26 @@
 输入 `sudo usb-creator-gtk` 就有一个图形界面，然后**两步搞定**！！
 
 --------------------------------------------
+##### ubuntu 安装完成后，因不是外国用户，需要安装的东西有点多
+
+1. 有时候系统可能会马上更新一些补丁，但是有时候会迟点，这无所谓，反正到时候都要选择更新的
+
+2. 首先先安装中文输入法吧，就用搜狗拼音了，毕竟他已经熟悉我的打法了
+> 1. 去官网上下载 搜狗的linux拼音版本  
+> 2. `sudo apt-get install facitx` and `sudo apt  --fix-broken install`  
+> 3. 进入 ”region and language“，设置为全局应用并且框架选择为 ”facitx“  
+> 4. 系统重启，会发现右上角有个键盘的图标，点击，进行 ”设置当前输入法“, 进入之后点击 `+` 添加 sougou Pinyin。 完成。
+
+3. 安装 ”google-chrome“ 
+> 1. `wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb`
+> 2. `sudo dpkg -i google-chrome*`
+> 3. `sudo apt-get -f install`
+> 4. 安装翻墙插件： 一般来说最简单的还是： ”谷歌访问助手， 谷歌上网助手， setup vpn“ 等等，可能会挂，到时候自己再搜，一般可以到chrome插件网去搜索  
+
+
+
+
+--------------------------------------------
 
 ##### ubuntu 软件升级与卸载  
 
