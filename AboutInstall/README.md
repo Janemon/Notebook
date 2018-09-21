@@ -46,8 +46,33 @@
 > 2. `sudo dpkg -i google-chrome*`
 > 3. `sudo apt-get -f install`
 > 4. 安装翻墙插件： 一般来说最简单的还是： ”谷歌访问助手， 谷歌上网助手， setup vpn“ 等等，可能会挂，到时候自己再搜，一般可以到chrome插件网去搜索  
+4. 安装 “Python” 
+<mark>不同的系统版本不一样，Ubuntu18.04 是预安装了Python3</mark>  
+> 1. `sudo apt-get install update` and `sudo apt-get install upgrade`  
+> 2. `sudo apt install -y python3-pip` 安装Python管理器（这个我不懂）  
+> 3. `sudo apt install build-essential libssl-dev libffi-dev python3-dev` 预安装一些有用的实用包  
 
+<mark>PS:</mark> 这里是假设你的系统上已经安装了python3而进行的设置  
 
+5. 安装 oh-my-zsh  
+**the gihub registroy: https://github.com/robbyrussell/oh-my-zsh**
+
+**first using oh-my-zsh you should do:**
+1. switch your shell into **Zsh**: `sudo apt-get install zsh`  
+2. make it your default shell: `chsh -s $(which zsh)`, check it: `vim /etc/shells`  
+3. log out and login back, then check it: `echo $SHELL`  
+
+**then start install oh-my-zsh:**
+`sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"`
+
+**last config it:**
+**Using `~/.zshrc` to config it:**
+1. Theme setting: `ZSH_THEME="agnoster"`
+> My config  
+
+2. persistenc alias setting: `alias rm="rm -i"`  
+
+3. I use **antigen** to manager the plugin of zsh, which like **vundle** for vim  
 
 
 --------------------------------------------
