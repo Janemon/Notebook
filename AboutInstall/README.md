@@ -49,7 +49,9 @@
 4. 安装 “Python” 
 <mark>不同的系统版本不一样，Ubuntu18.04 是预安装了Python3</mark>  
 > 1. `sudo apt-get install update` and `sudo apt-get install upgrade`  
-> 2. `sudo apt install -y python3-pip` 安装Python管理器（这个我不懂）  
+> 2. `sudo apt install -y python3-pip` 安装Python管理器（这个我不懂）
+>> 实用pip的时候，因为我安装的是Python3-pip 所以我用 pip3 这个命令  
+
 > 3. `sudo apt install build-essential libssl-dev libffi-dev python3-dev` 预安装一些有用的实用包  
 
 <mark>PS:</mark> 这里是假设你的系统上已经安装了python3而进行的设置  
