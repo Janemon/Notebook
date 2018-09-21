@@ -33,30 +33,20 @@
 --------------------------------------------
 ##### ubuntu 安装完成后，因不是外国用户，需要安装的东西有点多
 
-1. 有时候系统可能会马上更新一些补丁，但是有时候会迟点，这无所谓，反正到时候都要选择更新的
+**1. 有时候系统可能会马上更新一些补丁，但是有时候会迟点，这无所谓，反正到时候都要选择更新的**
 
-2. 首先先安装中文输入法吧，就用搜狗拼音了，毕竟他已经熟悉我的打法了
+**2. 首先先安装中文输入法吧，就用搜狗拼音了，毕竟他已经熟悉我的打法了**
 > 1. 去官网上下载 搜狗的linux拼音版本  
 > 2. `sudo apt-get install facitx` and `sudo apt  --fix-broken install`  
 > 3. 进入 ”region and language“，设置为全局应用并且框架选择为 ”facitx“  
 > 4. 系统重启，会发现右上角有个键盘的图标，点击，进行 ”设置当前输入法“, 进入之后点击 `+` 添加 sougou Pinyin。 完成。
 
-3. 安装 ”google-chrome“ 
+**3. 安装 ”google-chrome“ **
 > 1. `wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb`
 > 2. `sudo dpkg -i google-chrome*`
 > 3. `sudo apt-get -f install`
 > 4. 安装翻墙插件： 一般来说最简单的还是： ”谷歌访问助手， 谷歌上网助手， setup vpn“ 等等，可能会挂，到时候自己再搜，一般可以到chrome插件网去搜索  
-4. 安装 “Python” 
-<mark>不同的系统版本不一样，Ubuntu18.04 是预安装了Python3</mark>  
-> 1. `sudo apt-get install update` and `sudo apt-get install upgrade`  
-> 2. `sudo apt install -y python3-pip` 安装Python管理器（这个我不懂）
->> 实用pip的时候，因为我安装的是Python3-pip 所以我用 pip3 这个命令  
-
-> 3. `sudo apt install build-essential libssl-dev libffi-dev python3-dev` 预安装一些有用的实用包  
-
-<mark>PS:</mark> 这里是假设你的系统上已经安装了python3而进行的设置  
-
-5. 安装 oh-my-zsh  
+**4. 安装 oh-my-zsh**
 **the gihub registroy: https://github.com/robbyrussell/oh-my-zsh**
 
 **first using oh-my-zsh you should do:**
@@ -75,6 +65,27 @@
 > 2. persistenc alias setting: `alias rm="rm -i"`  
 
 > 3. I use **antigen** to manager the plugin of zsh, which like **vundle** for vim  
+
+**5. 安装 “Python” **
+<mark>不同的系统版本不一样，Ubuntu18.04 是预安装了Python3</mark>  
+> 1. `sudo apt-get install update` and `sudo apt-get install upgrade`  
+> 2. `sudo apt install -y python3-pip` 安装Python管理器（这个我不懂）
+>> 实用pip的时候，因为我安装的是Python3-pip 所以我用 pip3 这个命令  
+
+> 3. `sudo apt install build-essential libssl-dev libffi-dev python3-dev` 预安装一些有用的实用包  
+
+<mark>PS:</mark> 这里是假设你的系统上已经安装了python3而进行的设置  
+
+
+
+6. **Install node**  
+the content is following.  
+
+7. **Install vim**  
+If we can't install vim from github or website, we can install using `sudo apt-get install vim`  
+
+
+
 
 
 --------------------------------------------
