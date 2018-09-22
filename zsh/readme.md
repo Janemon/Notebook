@@ -10,10 +10,5 @@
 
 #### last config it:
 **Using `~/.zshrc` to config it:**
-1. Theme setting: `ZSH_THEME="agnoster"`
-> My config  
-
-2. persistenc alias setting: `alias rm="rm -i"`  
-
-3. I use **antigen** to manager the plugin of zsh, which like **vundle** for vim  
+> I use **antigen** to manager the plugin of zsh, which like **vundle** for vim  
 
