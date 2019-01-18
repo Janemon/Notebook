@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>hash</title>
+  </head>
+  <body>
+    <script>
+
+      /*==if this work means that the a1 set will change this htmlfile==*/
+      switch(location.hash){
+        case "#data":
+          callback();
+          break;
+      }
+
+      function callback(){
+        const data="the data is '111'"
+        try{
+          parent.location.hash=data
+        }catch(e){
+          var iframeproxy=document.createElement("iframe")
+          iframeproxy.src="http://localhost:8080/a3.html#"+ data
+          iframeproxy.style.display="none"
+          document.body.appendChild(iframeproxy)
+        }
+      }
+    </script>
+  </body>
+</html>

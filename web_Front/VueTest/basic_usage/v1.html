@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>simple_usage1</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17-beta.0/vue.js"></script>
+    <style>
+      .red{
+        color:red;
+      }
+      .solid{
+        border: 1px solid blue;
+      }
+      .test{
+        box-shadow: 2px 2px 1px 5px red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app1">
+      {{text}}
+      <p :title="testArr">Array?</p> <!-- show "1 2 3" -->
+      <!--`:` is equal to `v-bind:` which bind the element's arttrbution not the data's key-->
+      <!--it support the single expression and object and function(which return value)-->
+      <p :title="testObj">Object?</p> <!-- show [object object] -->
+      <p :title="testFunction1">function1?</p> <!-- just show function-->
+      <p :title="testFunction2">function2?</p> <!-- Me too-->
+      <p :title="testFunction3()">function3?</p> <!-- cause `()` here, so show 6 -->
+      <!--if the `:class=".."` is true, we will add it it stylesheet-->
+      <p class="test" :class="testClassObject">true/false</p>
+      <p class="test" :class="{'red':isRed, 'solid':isSolid}">true/false</p>
+
+      <input type="checkbox" name="os" id="andriod" value="andriod" v-model="checkMessage"/>
+      <label for="andriod">Andriod</label>
+      <input type="checkbox" name="os" id="iso" value="iso" v-model="checkMessage"/>
+      <label for="iso">Iso</label>
+      <input type="checkbox" name="os" id="window" value="window" v-model="checkMessage"/>
+      <label for="window">window</label>
+      <p>checked message: {{checkMessage}}</p>
+
+      <input type="radio" name="fruit" id="apple" value="apple" v-model="radioMessage"/>
+      <label for="apple">apple</label>
+      <input type="radio" name="fruit" id="peach" value="peach" v-model="radioMessage"/>
+      <label for="peach">peach</label>
+      <p>radio message: {{radioMessage}}</p>
+
+      <select multiple sytle="width: 100px;" v-model="selectedMessage">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+      <br/>
+      <span>selected message: {{selectedMessage}}</span>
+      <br/><br/><br/>
+
+      <label>lazyChange: <input v-model.lazy="lazyChange" /></label> <!-- it just change will the newvalue is different -->
+      <p>lazyhange: {{lazyChange}}</p>
+      <label>toNumber: <input v-model.number="toNumber" type="number"/></label>
+      <p>Tonumber: {{toNumber}}</p>
+      <label>trimTest: <input v-model.trim="trimText"></label>
+      <p style="white-space:pre-wrap;">trimText: {{trimText}}</p>
+
+
+    </div>
+    <script>
+      function testFunc(){
+        var result= 1+2
+        return result;
+      }
+      let app1=new Vue({
+        el:"#app1",
+        data:{
+          text:"hello, guys",
+          testArr:[1, 2, 3],
+          testObj:{name:"Jaxon"},
+          testFunction1:function(){
+            var resutl=1+1
+            return result;
+          },
+          testFunction2:testFunc,
+          testFunction3:function(){
+            var result=1+5
+            return result;
+          },
+          testClassObject:{
+            red:false,
+            solid:true,
+          },
+          isRed:true,
+          isSolid:false,
+          checkMessage:[], // if is the double quote, something weird. It will just show true or false and only on selected then the all will be selected.
+          radioMessage:"",
+          selectedMessage:[],
+          lazyChange:"",
+          toNumber:"",
+          trimText:"",
+        },
+      })
+    </script>
+  </body>
+</html>

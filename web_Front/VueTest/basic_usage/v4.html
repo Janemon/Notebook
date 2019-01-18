@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>simple_usage4</title>
+    <script src="./vue.js"></script>
+    <style>
+      #box1{
+        display:flex;
+        flex-flow: row;
+        justify-content: center;
+      }
+      #box2{
+        display:flex;
+        flex-flow: row;
+        justify-content: space-around;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!--使用JavaScript表达式去应对简单的数据变化, 缺点就是简单-->
+    <div id=box1>
+      <div id="example1">
+        <h2>example1: simple expression</h2>
+        <label>Enter: <input type="text" v-model="message"/></label>
+        <p>这里是 << {{message}} >> 的翻转字符： [ {{ message.split("").reverse().join("") }} ]</p>
+      </div>
+    </div>
+
+
+    <div id=box2>
+      <!--利用methods去应对数据的变化更新，缺点是页面一渲染methods就是执行，比较耗性能-->
+      <div id="example2">
+        <h2>example2: methods</h2>
+        <ul>
+          <li v-for="(item, index) in books" :key="index"> <!--注意这里不是用对象的{}，而是用了()-->
+            <p>系统名： {{item.name}}</p>
+            <p>价格： {{ item.price.toFixed(2) }}</p>
+            <p>数量： {{item.num}}</p>
+            <br/>
+            <!--为什么就能确定是当前这个item呢？-->
+            <input type="button" value="+" @click=" item.num+=1 "/>
+            <input type="button" value="-" @click=" item.num-=1 "/>
+          </li>
+        </ul>
+        <p>总价： {{totalPrice()}}</p> <!--看清楚了，这里是函数执行-->
+      </div>
+
+
+      <!--利用watch去监听数据变化，然后更新，这个不是页面一渲染就执行的是数据变化再执行的，而且支持异步延时-->
+      <!--但是这个我不是了解得很清楚？？？-->
+      <div id="example3">
+        <h2>example3: watch</h2>
+        <ul>
+          <li v-for="(item, index) in books" :key="index">
+            <p>系统名： {{item.name}}</p>
+            <p>价格： {{ item.price.toFixed(2) }}</p>
+            <p>数量： {{item.num}}</p>
+            <br/>
+            <input type="button" value="+" @click=" item.num+=1 "/>
+            <input type="button" value="-" @click=" item.num-=1 "/>
+          </li>
+        </ul>
+        <p>总价： {{totalPrice}}</p>
+      </div>
+
+      <div id="example4">
+        <!--computed的数据不需要出现在data中，但是他依赖的参数要依赖data中的key哦, 还有他是唯一一个具备缓冲功能的（在这4个中）-->
+        <!--注意要在computed函数中要 return哦, computed函数名是在 html中的 {{...}} 出现的-->
+        <!--也是只有在数据变化时才会被触发-->
+        <h2>example4: computed</h2>
+        <ul>
+          <li v-for="(item, index) in books" :key="index">
+            <p>系统名： {{item.name}}</p>
+            <p>价格： {{ item.price.toFixed(2) }}</p>
+            <p>数量： {{item.num}}</p>
+            <br/>
+            <input type="button" value="+" @click=" item.num+=1 "/>
+            <input type="button" value="-" @click=" item.num-=1 "/>
+          </li>
+        </ul>
+        <p>总价： {{totalPrice}}</p>
+      </div>
+
+    </div>
+
+
+    <script>
+
+      let vm1=new Vue({
+        el:"#example1",
+        data:{
+          message:"",
+        },
+      })
+
+
+      let vm2=new Vue({
+        el:"#example2",
+        data:{
+          books:[
+            {name: "Andriod", price:123.5, num:0,}, // 注意如果是数字不能加引号。
+            {name: "IOS", price:200.365, num:0,},
+            {name: "Windows", price:300.88, num:0,},
+          ],
+        },
+        methods:{
+          totalPrice: function(){
+            let result=0
+            this.books.forEach(function(book){ // 这里是使用了 this.books 并且是指向了 data
+              result+=book.price * book.num
+            })
+            return result.toFixed(2);
+          },
+        },
+      })
+
+
+      let vm3=new Vue({
+        el:"#example3",
+        data:{
+          books:[
+            {name: "Andriod", price:123.5, num:0,}, // 注意如果是数字不能加引号。
+            {name: "IOS", price:200.365, num:0,},
+            {name: "Windows", price:300.88, num:0,},
+          ],
+          totalPrice: 0.00,
+        },
+        watch:{
+          books:{
+            handler: function(books){
+              this.totalPrice="计算中..."
+              let $this=this
+              setTimeout(function(){
+                $this.totalPrice=0.00
+                books.forEach(function(book){
+                  $this.totalPrice+=book.price * book.num
+                })
+              }, 1000)
+            },
+            deep:true,
+          }
+        }
+      })
+
+
+      let vm4=new Vue({
+        el:"#example4",
+        data:{
+          books:[
+            {name: "Andriod", price:123.5, num:0,}, // 注意如果是数字不能加引号。
+            {name: "IOS", price:200.365, num:0,},
+            {name: "Windows", price:300.88, num:0,},
+          ],
+        },
+        computed:{ // 这个不是方法函数所以不用在html中表示为函数执行, 所以他必须 return
+          totalPrice:function(){
+            let sum=0
+            this.books.forEach((book)=>{
+              sum+= book.price * book.num
+            })
+            return sum;
+          }
+        }
+
+      })
+
+    </script>
+  </body>
+</html>

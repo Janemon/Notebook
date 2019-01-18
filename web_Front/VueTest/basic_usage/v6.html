@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>The animation of Vue</title>
+    <style>
+      #scroll{
+        height: 230px;
+        overflow-y:auto;
+      }
+      #explain{
+        display:flex;
+        flex-flow: column;
+        align-items: center;
+      }
+      .line{
+        height:1px;
+        background: red;
+        margin: 20px auto;
+      }
+      p{
+        border: 1px solid blue;
+        border-radius: 3px;
+        padding: 5px;
+        box-shadow: 2px 1px 3px 2px black;
+      }
+      ol{
+        border: 1px solid blue;
+        border-radius: 3px;
+        padding: 5px;
+        box-shadow: 2px 1px 3px 2px black;
+        list-style-type: none; /* 这个就是列表前面的标记类型 */
+      }
+      #examplesA{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+      #exampleA1{
+        margin: auto 15px;
+      }
+      #exampleA2{
+        margin: auto 15px;
+      }
+
+      /* exampleA1 */
+      .anim-1-enter{
+        transform: translateX(100px);
+        opacity: 0; /*被渲染前是透明的, 且在在标准位置上距离有100px*/
+      }
+      .anim-1-enter-active{
+        transition: all 1s ease; /*把 enter 的状态去除需要的过渡时间及过渡效果*/
+      }
+      .anim-1-leave-to{
+        transform: translateX(-100px);
+        opacity: 0;
+      }
+      .anim-1-leave-active{
+        transition: all 2s ease;
+      }
+      .anim-2-enter-active{
+        animation: bounce-in 3s;
+      }
+      .anim-2-leave-actice{
+        animation: bounce-in 1s reverse; /* reverse is what?*/
+      }
+      /* 定义动画变量使用 @keyframe */
+      @keyframes bounce-in {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /*exampleA2*/
+      .A2_1Enter{
+        transform: translateY(-100px);
+        opacity:0;
+      }
+      .A2_1Entera{
+        transition: all 1s ease;
+      }
+      .A2_1Leavet{
+        transform: translateY(100px);
+        opacity:0;
+      }
+      .A2_1Leavea{
+        transition: all 2s ease;
+      }
+      .A2_2Entera{
+        animation: bounce 3s;
+      }
+      .A2_2Leavea{
+        animation: bounce 1s reverse;
+      }
+      @keyframes bounce {
+        0% {
+          transform: scale(0);
+        }
+        25% {
+          transform: scale(.5);
+        }
+        50% {
+          transform: scale(1);
+        }
+        75% {
+          transform: scale(1.5);
+        }
+        100%{
+          transform: scale(1);
+        }
+      }
+
+      /* transition-group */
+      .list-item{
+        display: inline-block;
+        margin-right: 10px;
+      }
+      .list-enter-active, .list-leave-active{
+        transition: all 1s;
+      }
+      .list-enter, .list-leave-to{
+        opacity: 0;
+        transform: translateY(30px)
+      }
+    </style>
+    <link rel="stylesheet" href="./animate.css">
+    <script src="./vue.js"></script>
+    <script src="./anime.js"></script>
+  </head>
+  <body>
+
+    <div id="scroll">
+      <div id="explain">
+        <p>1. 在 Vue.js 中，所有动画的具体实现主要是通过组件 "transition" 和 "transition-group" 来实现的。两者的主要区别是：
+        "transition" 针对单个元素进行动画渲染（多个元素需要使用一个父元素包裹）
+        "transition-group" 针对列表元素进行动画渲染
+        </p>
+        <p>2. 触发动画的条件主要有4个： 1-条件渲染(v-if) 2-条件展示(v-show) 3-动态组件(html-tag: component) 4.组件根节点(?)</p>
+        <p>3. Vue 中对动画行为的描述，通过为 "transition" 添加类型的方式来定义动画具体的行为, 但是却是通过 "name" 来确定类型的！！！！</p>
+        <p>4. 其实上面的Vue提供的动画组件也不错, 但是简单, 不能应对复杂的问题, 所以我比较倾向使用 动画库: 1- 因为他操作简单 2- 能够解决复杂的问题</p>
+        <p>5. 纠正上面的写法, 我们Vue提供的动画组件给我们提供了过渡的状态控制而已, 所以没有什么用不用Vue组件的讨论, 除非你不用Vue构建动画. 而且正因为是提供控制状态的钩子, 所以我们可以使用动画库来进行丰富</p>
+        <ol>
+          <li>name-enter: 过渡的开始状态，元素插入前生效，下一帧移除. 一般和 transform 搭配使用</li>
+          <li>name-enter-active: 过渡的过程， 整个过程中生效. 一般和transition 和 animation 搭配使用</li>
+          <li>name-etner-to: 过程开始后生效，动画完成后移除</li>
+          <li>name-leave: 同理</li>
+          <li>name-leave-actice: 同理</li>
+          <li>name-leave-to: 同理</li>
+        </ol>
+        <div style="border: 2px solid blue">另一种定义类型的方式，但是功能还是一样的</div>
+        <ol>
+          <li>enter-class</li>
+          <li>enter-active-class</li>
+          <li>enter-to-class</li>
+          <li>leave-class</li>
+          <li>leave-active-class</li>
+          <li>leave-to-class</li>
+        </ol>
+      </div>
+      <p>7. 搭配 animated.css 使用时只需要在元素类名上加上 "animated 'animationType'"</p>
+      <p>8. 注意, 动画有帧数, 所以肯定会有过渡时间的, 除非你把它去掉了. 所以这个动画有个过渡,如果你不设置过渡的过程中那个节点有什么变化, 那么他会按照初次值和默认的变化机制来逐渐进行变化</p>
+    </div>
+    <div class="line"></div>
+
+    <div id="examplesA">
+      <div id="exampleA1">
+        <div>
+          <button @click="show= !show">Trigger</button>
+        </div>
+        <transition name="anim-1">
+        <p v-if="show">v-if animation-1</p>
+        </transition>
+        <transition name="anim-2">
+        <p v-if="show">v-show animation-2</p>
+        </transition>
+      </div>
+
+      <!--这是自定义过渡类名, 但是我觉得这个是多次一举的-->
+      <!--不是的, 一般我们用那个来进行动画库的搭配, 但是不搭配动画库的话, 还是用原生的比较好-->
+      <div id="exampleA2">
+        <div>
+          <button @click="show= !show">Trigger</button>
+        </div>
+        <transition enter-class="A2_1Enter"
+                    enter-active-class="A2_1Entera"
+                    leave-to-class="A2_1Leavet"
+                    leave-active-class="A2_1Leavea">
+        <p v-if="show">v-if animationA2_1</p>
+        </transition>
+        <transition enter-active-class="A2_2Entera"
+                    leave-active-class="A2_2Leavea">
+        <p v-if="show">v-show animationA2_2</p>
+        </transition>
+      </div>
+
+      <!-- transition-group 除了加个 tap 表明要替换成什么元素标签-->
+      <div id="exampleA3">
+        <button @click="add">Add</button>
+        <button @click="remove">Remove</button>
+        <transition-group name="list" tag="p">
+          <span v-for="item in items" :key="item" class="list-item">
+            {{item}}
+          </span>
+        </transition-group>
+      </div>
+
+      <!--搭配动画库 animate.css 进行动画展示-->
+      <div id="exampleA4">
+        <div>
+          <button @click="show= !show">trigger</button>
+        </div>
+        <!-- 一般是只是使用 enter-active 吗? -->
+        <transition
+           enter-active-class="animated rollIn"
+           leave-active-class="animated hinge">
+        <p v-show="show">animation1</p>
+        </transition>
+        <transition
+           enter-active-class="animated bounceInDown"
+           leave-active-class="animated bounceOutUp">
+        <p v-show="show">animation2</p>
+        </transition>
+        <transition
+           enter-active-class="animated tada"
+           leave-active-class="animated bounceOutRight">
+        <p v-show="show">animation3</p>
+        </transition>
+      </div>
+
+      <!--搭配动画库 anime.js 进行动画展示-->
+      <div id="exampleA5">
+        <div>
+          <button @click="show= !show">trigger</button>
+        </div>
+        <!--原来有 enter 和 leave 事件的呀? -->
+        <transition
+           @enter="inn"
+           @leave="outt">
+        <p v-show="show">animation1</p>
+        </transition>
+      </div>
+
+
+    </div>
+
+    <script>
+      let vm1=new Vue({
+        el:"#exampleA1",
+        data:{
+          show: true,
+        },
+      })
+
+      let vm2=new Vue({
+        el:"#exampleA2",
+        data:{
+          show: true,
+        },
+      })
+
+      let vm3=new Vue({
+        el:"#exampleA3",
+        data: {
+          items: [1, 2, 3, 4, 5, 6],
+          nextNum: 7,
+        },
+        methods:{
+          randomIndex: function(){
+            return Math.floor(Math.random() * this.items.length)
+          },
+          add :function(){
+            this.items.splice(this.randomIndex(), 0, this.nextNum++)
+          },
+          remove: function(){
+            this.items.splice(this.randomIndex(), 1)
+          },
+        },
+      })
+
+      let vm4=new Vue({
+        el:"#exampleA4",
+        data: {
+          show: true,
+        },
+      })
+
+      let vm5=new Vue({
+        el:"#exampleA5",
+        data: {
+          show: true,
+        },
+        methods: {
+          inn: function(el, done){
+            anime({ // 使用 anime.js 关键做法是, anime({...}), 而里面最重要的 两个key 是 targets: el 和 complete: function(anime){ done() }
+              targets: el, // 指代上面的 el 吗?
+              translateX: 0,
+              scale: 1,
+              rotate: "-1turn",
+              opacity: 1,
+              complete: function(anim){
+                done() // 必须执行 done() 方法, 否则永远不会进入 afterEnter 回调???
+              },
+            });
+          },
+          outt: function(el, done){
+            anime({
+              targets: el,
+              translateX: 250, //px
+              scale: 2,
+              rotate: "1turn",
+              opacity: 0,
+              complete: function(anim){
+                done()
+              },
+            });
+          },
+        },
+      })
+
+    </script>
+  </body>
+</html>

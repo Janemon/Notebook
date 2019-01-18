@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>postMessage</title>
+  </head>
+  <body>
+    <iframe src="http://localhost:8081/b2.html" style="display:none"></iframe>
+    <script>
+
+      window.onload=function(){
+        let targetOrigin="http://localhost:8081"
+        /*==the frame(senter) sent message to origin(reciever)==*/
+        window.frames[0].postMessage("I'm going to send your message", targetOrigin)
+        /*==And this window recieve the message==*/
+        window.addEventListener("message", function(e){
+          console.log("The message a.html gets ", e.data)
+        })
+      }
+
+    </script>
+  </body>
+</html>

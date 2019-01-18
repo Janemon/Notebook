@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,IAAI;EACA,MAAM,EAAC,CAAC;EACR,OAAO,EAAC,CAAC;;AACT,OAAE;EACE,SAAS,EAAC,IAAI;EACd,KAAK,EAAC,MAAM",
+"sources": ["../scss/mark.scss"],
+"names": [],
+"file": "mark.css"
+}

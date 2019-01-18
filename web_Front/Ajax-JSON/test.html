@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>OCR</title>
+    <script src="https://cdn.bootcss.com/tesseract.js/1.0.10/tesseract.js"></script>
+  </head>
+  <body>
+
+    <input type="text" id="url" placeholder="Image URL" />
+    <!-- <img id="verification" src="./Pictures/number.png"> -->
+    <input type="button" id="go_button" value="Run"/>
+    <div id="ocr_results"></div>
+    <div id="ocr_status"></div>
+
+    <script>
+      // 1. jsonp
+      functin jsonpCall(){
+      ...
+      }
+    </script>
+    <script src="http://.....?callback=jsnopCall"></script>
+    <script>
+      const Http=require("http")
+      const Url=require("url")
+      data={.....}
+      Http.createServer((req,res)=>{
+        let callback=Url.parse(req.url, true).qeury.callback
+        res.writeHead(200)
+        res.end(`${callback}(${JSON.stringify(data)})`)
+      }).listen(3000, "172.0.0.1")
+    </script>
+
+
+
+    <script>
+      // 2. CROS
+      const Http=require("http")
+      const Url=require("url")
+      data={...}
+      Http.createServer((req,res)=>{
+        res.writeHead(200,{
+          "Access-Control-Allow-Origin": "172.0.0.222"
+        })
+        res.end(data)
+      }).listen(3000,"......")
+    </script>
+
+
+
+    <script>
+      // 3. Server Proxy
+      const Http=require("http")
+      const Url=require("url")
+      Http.createServer((req,res)=>{
+        let path=Url.parse(req.url).slice(1)
+        // some code judge which website the user click
+        switch(otherLink){
+          case link=="....":
+            Https.get(".......", (resp)=>{
+              let data=""
+              resp.on("data",(chunk)=>{
+                data+= chunk
+              })
+              resp.on("end",()=>{
+                res.writeHead(200)
+                res.end(data)
+              })
+            })
+            break;
+        }
+      }).listen(3000,"......")
+
+    </script>
+
+
+
+    <script>
+      // 4. hash
+      let iframe=document.createElement("iframe")
+      iframe.src="http://172.0.0.1:8081/b.html#data"
+      iframe.style.display="none"
+      document.body.appendChild(iframe)
+
+      window.addEventListener("hashChange", (e)=>{
+        // using location.hash.substring(1) to do something
+      })
+
+    </script>
+    <script>
+      switch(hash){
+        case hash=='...':
+          callback(data[key])
+          break;
+          ...
+      }
+      let data={...}
+      function callback(data){
+        try{
+          parent.location.hash=data
+        }catch(e){
+          console.log(yes, your browser has great!)
+          let iframeproxy=document.createElement("iframe")
+          iframeproxy.src="http:172.0.0.01:8080/c.html"+data
+          iframeproxy.style.display="none"
+          document.body.appendChild(iframe)
+        }
+      }
+    </script>
+    <script>
+      parent.parent.hash=self.location.hash.slice(1)
+    </script>
+
+
+
+    <script>
+      // 5. window.name
+      let iframe=document.createElement("iframe")
+      iframe.src="...:8081/b.html"
+      iframe.style.display="none"
+      document.body.appendChild("iframe")
+      iframe.onload=function(){
+        iframe.src="...:8081/c.html"
+        iframe.onload=function(){
+          let data=iframe.contentwindow.name
+        }
+        
+      }
+    </script>
+    <script>
+      window.name=data
+    </script>
+
+
+
+
+    <iframe src="...:8081/b.html" style="display:none;"></iframe>
+    <script>
+      // 6. postMessage
+      window.onload=function(){
+        let targetOrigin="...:8081"
+        let data={...}
+        document.iframe[0].postMessage("the data a.html gets: ",targetOrigin)
+        window.addEventListener("message", (e)=>{
+          console.log("get message")
+          // some code does something
+        })
+      }
+    </script>
+    <script>
+      window.addEventListener("message", (e)=>{
+        if(e.source !== window.parent) return;
+        let data.=e.data
+        parent.postMessage("....", e.origin)
+      })
+    </script>
+
+
+
+  </body>
+</html>

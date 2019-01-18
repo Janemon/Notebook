@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>window.name</title>
+  </head>
+  <body>
+    <script>
+      let ifram=document.createElement("frame")
+      ifram.src="http://localhost:8081/c2.html"
+      ifram.style.display="none"
+      document.body.appendChild(ifram)
+      let data=''
+      ifram.onload=function(){
+        // becasue the iframe also has the SOP, so we can change it' src again, don' warry, the window's name will keep, here we keep window's name is c2.html's.
+        ifram.src="http://localhost:8080/c3.html"
+        ifram.onload=function(){
+          data=ifram.contentWindow.name
+          console.log("I get the data", data)
+        }
+      }
+
+    </script>
+  </body>
+</html>

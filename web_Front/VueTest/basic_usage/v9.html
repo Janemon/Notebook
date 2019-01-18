@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Vuex</title>
+    <style>
+      #scroll{
+        height: 230px;
+        overflow-y:auto;
+      }
+      #explain{
+        display:flex;
+        flex-flow: column;
+        align-items: center;
+      }
+      p{
+        border: 1px solid blue;
+        border-radius: 3px;
+        padding: 5px;
+        box-shadow: 2px 1px 3px 2px black;
+      }
+      .line{
+        height:1px;
+        background: red;
+        margin: 20px auto;
+      }
+      #examplesA{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+      #examplesB{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+    </style>
+  </head>
+  <body>
+    <div id=scroll>
+      <div id="explain">
+        <h3>我们现在说的状态管理到底是什么？=> 其实说的就是数据的变化</h3>
+        <h3>想象这样一个情景，通过按钮来增加每个变量的数值并通过一个P标签来显示出结果，我们应该怎样做</h3>
+        <p>1. 最简单的话，我们可以通过父子组件来进行传参, 但是如果所有状态管理都是按照这种方式来进行的话，那么整个项目的组织就会变得很繁琐</p>
+        <p>2. 如果非得要是兄弟组件呢？ => 我们可以通过“全局状态管理” 这种方法来进行“状态改变”的传输. 但是有一个致命的问题： 在任何时间，应用中的任何部分，在任何数据改变后，都不会留下变更过的记录. 这对我们的代码调试是一个噩梦!</p>
+        <p>3. 犯了个错误，Vue实例是不能包含在body里面的模块的</p>
+        <P>4. 我想我们还要注意一点，就是我们是直接拿到 data return 的对象里面的"属性中的属性"</P>
+        <p>5. Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。致力于管理项目中所有公用数据的状态</p>
+        <p>6. Vuex 的核心功能： 1- State ：Vuex 中的 “唯一数据源”  2- Mutation ：更改 Vuex 中数据的唯一方式，就是通过 mutation 进行修改，只支持同步操作。就像上面的例子一样  3-  Action ：当需要异步更改数据时，通过 Action 提交的是 mutation，而不是直接变更状态  4- Getter ：Vuex 中的计算属性，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算  5- Module ：由于 Vuex 使用单一状态树，应用的所有状态会集中到一个比较大的对象。Vuex 允许将 store 分割成模块（ module ）。每个模块拥有自己的 state、mutation、action、getter 甚至是嵌套子模块——从上至下进行同样方式的分割</p>
+        <p>7. 注意： 在 Vue 的组件中提交 Dispatch 操作，用以操作对应的 Actions 方法，然后在 Actions 的方法中，通过提交 Commit 操作调用对应的 Mutation 方法来修改对应的状态 State，最后 State 的改变被渲染到组件中</p>
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div id="examplesA">
+      <div id="exampleA1">
+        <count-1></count-1>
+        <count-2></count-2>
+      </div>
+      <script type="text/x-template" id="count-1">
+        <div>
+            <input type="button" @click="add1" value="count++"/>
+        </div>
+      </script>
+      <script type="text/x-template" id="count-2">
+        <div>
+            count: {{count}}
+        </div>
+      </script>
+
+      <div id="exampleA2">
+        <p>这是通过父子传参来进行状态传递</p>
+        <new-count-1></new-count-1>
+      </div>
+      <script type="text/x-template" id="new-count-1">
+        <div>
+          <input type="button" @click="newAdd1" value="count++">
+          <new-count-2 :sonCount="fatherCount"></new-count-2><!--这个绑定是在父组件里进行的-->
+        </div>
+      </script>
+      <script type="text/x-template" id="new-count-2">
+        <div>
+          count: {{sonCount}}
+        </div>
+      </script>
+
+      <div id="exampleA3">
+        <p>这是一个通过全局变量来进行的“全局状态管理”</p>
+        <count-3-1></count-3-1>
+        <count-3-2></count-3-2>
+      </div>
+      <script type="text/x-template" id="count-3-1">
+        <input type="button" @click="Tadd1" value="count++" >
+      </script>
+        <script type="text/x-template" id="count-3-2">
+          <div>count: {{Tcount}}</div><!--Please don't forget the 花括号-->
+        </script>
+
+    </div>
+    <div class="line"></div>
+
+    <div id="examplesB">
+      <div id="exampleB1">
+        <b-count-1></b-count-1>
+        <b-count-2></b-count-2>
+      </div>
+      <script type="text/x-template" id="b-count-1">
+        <input type="button" @click="bAdd1" value="count++"/>
+      </script>
+      <script type="text/x-template" id="b-count-2">
+        <div>count: {{shareData.count}}</div>
+      </script>
+
+      <div id="exampleB2">
+        <b-count2-1></b-count2-1>
+        <b-count2-2></b-count2-2>
+      </div>
+      <script type="text/x-template" id="b-count2-1">
+        <div>
+        <input type="button" @click="b2Add1" value="count++"/>
+        </div>
+      </script>
+      <script type="text/x-template" id="b-count2-2">
+        <div>count: {{this.$store.state.count}}</div> <!--获取官方指定的就是不一样啊-->
+      </script>
+
+
+    </div>
+  </body>
+  <script src="./vue.js"></script>
+  <script src="./vue-router.js"></script>
+  <script src="./vuex.js"></script>
+  <script>
+    Vue.component("count-1",{
+      template:"#count-1",
+      data:function(){
+        return {
+          count:0
+        }
+      },
+      methods:{
+        add1:function(){
+          this.count+=1
+        }
+      }
+    });
+    Vue.component("count-2",{
+      template: "#count-2",
+      data:function(){
+        return {
+          count:0
+        }
+      }
+    })
+    let vm1=new Vue({
+      el: "#exampleA1"
+    })
+
+    /*exampleA2*/
+    Vue.component("new-count-1",{
+      template:"#new-count-1",
+      data:function(){
+        return {
+          fatherCount: 0
+        }
+      },
+      methods:{
+        newAdd1:function(){
+          this.fatherCount+=1
+        }
+      }
+    })
+    Vue.component("new-count-2",{
+      template:"#new-count-2",
+      props:{
+        sonCount: 0
+      }
+    })
+    let vm2=new Vue({
+      el:"#exampleA2"
+    })
+
+
+    let vm3Store={
+      Tcount:0
+    }
+    Vue.component("count-3-1",{
+      template:"#count-3-1",
+      data:function(){
+        return vm3Store;
+      },
+      methods:{
+        Tadd1: function(){
+          this.Tcount+=1
+        }
+      }
+    })
+    Vue.component("count-3-2",{
+      template:"#count-3-2",
+      data:function(){
+        return vm3Store;
+      }
+    })
+    let vm3=new Vue({
+      el:"#exampleA3"
+    })
+
+
+    /*这次是对全局状态管理的改进，这样可以记录下状态的变更*/
+      let Store={
+        debug: true,
+        state:{
+          count: 0
+        },
+        mutation:{
+          bAdd1: function(state){ // 而这个只是形参
+            if(Store.debug) console.log("state.count++") // 必须考虑到debug是从哪里拿的
+            state.count++
+          }
+        }
+      }
+    Vue.component("b-count-1",{
+      template:"#b-count-1",
+      data: function(){
+        return {
+          privateData:{},
+          shareData: Store.state
+        };
+      },
+      methods: {
+        bAdd1: function(){
+          Store.mutation.bAdd1(this.shareData)
+        }
+      }
+    })
+    Vue.component("b-count-2",{
+      template:"#b-count-2",
+      data: function(){
+        return {
+          privateDate:{},
+          shareData: Store.state
+        };
+      }
+    })
+    let vm4=new Vue({
+      el:"#exampleB1"
+    })
+
+
+    /*基于上面store思想而进行扩展的vue官方全局管理工具： Vuex*/
+    const store=new Vuex.Store({
+      state:{
+        count: 0
+      },
+      mutations:{
+        aincrement(state, num){
+          state.count+=num
+        }
+      },
+      actions:{
+        bincrement(context, num){
+          setTimeout(function(){
+            context.commit("aincrement", num) // 这是是关键，得要提交mutation
+          }, 1000)
+        }
+      }
+    })
+    Vue.component("b-count2-1",{
+      template:"#b-count2-1",
+      methods:{
+        b2Add1: function(){
+          this.$store.dispatch("bincrement", 1) // 这里又是一个关键，得要进行分发
+        }
+      }
+    })
+    Vue.component("b-count2-2",{
+      template:"#b-count2-2",
+    })
+    let vm5=new Vue({
+      el:"#exampleB2",
+      store
+    })
+
+  </script>
+</html>

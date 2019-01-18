@@ -64,9 +64,10 @@
 
   ![git_origin_otherExplain](../datapi/git_origin_ohterExplain.png)  
   ![git_origin_otherExplain2](../datapi/git_origin_otherExplain2.png)  
-  
 <mark>NOTE:</mark> 有时候这个分支(可能是master也可能是branch)与多个主机存在追踪关系,可以用 -u 选项指定一个默认的主机, 这样后面就不用加任何参数了  
    `git push -u origin master`  
+> 第一次上传有可能会遇到push失败的情况，那是因为跟SVN一样，github上有一个README.md 文件没有下载下来 。我们得先`git pull --rebase origin master`，然后执行`git push -u origin master`就可以成功啦.  
+> 如果你提交的是分支那么就不是 **master**了，就是你提交的那个分支名:`branchName`  
 > 这个时候需要提交密码.  
 
 -------------------------
@@ -111,6 +112,16 @@
         `git log`  
     如果我们想要查看提交的内容差异:  
         `git log -p`  
+    如果我们想要查看所有分支的提交内容:  
+        `git log --all`  
+    如果我们想要查看简洁的提交内容:  
+        `git log --oneline`  
+    如果我们想要查看最近几次的提交内容:  
+        `git log -n2`[这里表示最近2次]  
+    如果我们想要查看某个分支提交的内容:  
+        `git log branchName`  
+    如果我们想要查看提交的内容层级:  
+        `git log -graph`  
 
 -------------------------
 
@@ -120,9 +131,12 @@
 其次, 是我们的**完成区(Head)** 这是我们 **'git commit'** 后的最终区  
 最后, 是我们的**工作区**, 就是我们实际上操作的区域但没有被git跟踪,换句话来说其实他和git没有什么关系.  
 
-2. **`git config --list`** 
+2. **`git config --list`**  
     这个是查看配置信息的  
     ![git_config_setting1](../datapi/git_config_setting1.png)  
+> 1. `git config --global`[当前用户的所有仓库]  
+> 1. `git config --system`[所有登陆的用户]  
+> 1. `git config --local`[仅仅是针对当前仓库]  
 
 3. **`.gitignore`**
     这个是在git中可被忽略的文件:  
@@ -201,6 +215,14 @@
 22 现阶段我们一般是使用 `pull` 来更新数据, 但是其实如果说安全一点还是用 `fetch` 比较好. 因为 **fetch** 他是不会**自动合并**的, 你可以在merge前, 查看更新情况, 然后在决定是否合并, 当然 **pull**也有他的好处, 就是比较方便和省事.  
 
 -------------------------
+
+<mark>NOTE:</mark> **额外知识点： .git**  
+1. **HEAD**文件里面的内容是表示当前工作分支, 例如： `ref: refs/heads/dev`  
+2. **config**文件就是配置内容，比如用户信息，分支情况等等  
+3. **refs**目录里面存放的是，分支：`heads`，远程主机：`remotes`，标签：`tags`  
+4. **objects**目录里面存放的是，各类文件，主要类型有 **commit**[提交], **tree**[树], and **bobe**[文件]  
+> 我们使用 `git cat-file -t name`来查看文件类型, `git cat-file -p name`来查看文件内容  
+
 
 
 

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>simple_usage5</title>
+    <style>
+      #scroll{
+        height: 230px;
+        overflow-y:auto;
+      }
+      #explain{
+        display:flex;
+        flex-flow: column;
+        align-items: center;
+      }
+      p{
+        border: 1px solid blue;
+        border-radius: 3px;
+        padding: 5px;
+        box-shadow: 2px 1px 3px 2px black;
+      }
+      .line{
+        height:1px;
+        background: red;
+        margin: 20px auto;
+      }
+      #examplesA{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+      #examplesB{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+      #examplesC{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+      #examplesD{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+      #examplesE{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+      .asyncE{
+        margin: auto 5px;
+        font-size: 23px;
+        color: green;
+        border: 1px solid black;
+        border-radius: 3px;
+        padding: 3px;
+      }
+    </style>
+    <script src="./vue.js"></script>
+
+    <!--
+      <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+      <script src="https://unpkg.com/simplebar@latest/dist/simplebar.js"></script>
+      -->
+  </head>
+  <body>
+    <div id="scroll">
+      <div id="explain">
+        <p>1. Component 是一个复用且独立的Vue实例，他与 new Vue拥有一样的属性和方法，唯一不同的是 Component没有 el !!!</p>
+        <p>2. Component 中我觉得最重要的一个前提是 “template”, 没有他一切归零</p>
+        <p>3. 一个组件的 data 选项必须是一个函数，并且他总会通过 return 来返回一个可维护的独立对象</p>
+        <p>4. 当使用全局注册的方式来声明一个组件的时候，表示：一旦声明，那么这个组件将永久地包含到最终构建结果之中，无论是不是对这个组件进行了引用。使结果不够简洁</p>
+        <p>5. 组件各自独立，尽管都是有一个模板产出的</p>
+        <p>Note: 有个很小的但是需要注意的点是： 组件名必须是小写而且字母间用连字符来连接(kebab-case)</p>
+        <p>6. 局部注册的组件要在实例里面写，而且不像全局那么需要加s: "components",而且不是函数是个对象</p>
+        <p>7. 局部注册的优点就是可以组件化，因为组件名需要是一个变量对象，那么这个变量对象(是变量对象而不是组件名)就可以放在其他文件中了，然后可以通过模块来引入，达到一种复用的功能</p>
+        <p>Note: 我发现，在工程实践中，是通过 .vue 中的 template, script, style 来构建一个组件，并且 export default {...} 和 import 来产出和使用</p>
+        <p>8. template 既可以是直接的html标签，也可以是通过id引入的script标签</p>
+        <p>9. 子组件如果想要从父组件中拿到数据，那么他需要 props 这个单向传输的属性。具体做法是在子组件中绑定一个属性，而这个属性的值是data 中的key, 而在子组件的构造中这个绑定的属性需要放在 props 中</p>
+        <p>Note: 注意，props虽然可以返回数据，但是不像data一样是个函数</p>
+        <p>Note: 组件的data要return，但是实例的data不用</p>
+        <p>10. 那么我们如果想在子组件中修改 props 的值呢？ 其实就把 this.props 放在其他 key 中进行修改就可以了</p>
+        <p>11. 这个props是子组件维护父组件传递给自己参数的关键</p>
+        <p>12. 如果想要分配到特定的插槽，那么我们可以在标签中添加属性： `slot="name"`, 而没有指定具名的slot的标签元素则会分配到一样没有具名的slot中去</p>
+        <p>13. 在插槽中使用的数据，如果想要在整个实例中使用，那么必须得是在 "new Vue" 中定义数据，而不能在模板中定义数据, 这是一个非常重要但是容易忽略的问题，就如模板名必须小写一样</p>
+        <p>14. component 标签和里面的 is="virableName" 绑定声明一个区域来进行动态组件的改变， 注意这个virableName 必须得包含模板， 毕竟这需要模块的进行渲染, and this variable is key in data of new Vue</p>
+        <p>15. the <keep-alive> stores the component which has been rendered, advoid the effection waste</p>
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div id="examplesA">
+      <div id="exampleA1">
+        <h3>exampleA1</h3>
+        <btn-success></btn-success>
+      </div>
+
+      <div id="exampleA2">
+        <h3>exampleA2</h3>
+        <btn-count-add></btn-count-add>
+        <btn-count-add></btn-count-add>
+      </div>
+
+
+      <div id="exampleA3">
+        <h3>exampleA3</h3>
+        <btn-count-add></btn-count-add>
+        <btn-count-add></btn-count-add>
+      </div>
+
+      <div id="exampleA4"></div> <!--还有这种用 script 进行的组件, 有什么用呢？-->
+      <!--必须有ID，实例的 template需要引用，还必须有个类型-->
+      <!--还必须有个div的根元素！！！-->
+      <script id="tplA" type="x-template">
+        <div>
+          <h3>exampleA4</h3>
+          <span>当前的count值： {{count}} </span>
+          <button @click='onCountAddClick'>count++</button>
+        </div>
+      </script>
+    </div>
+
+    <div class="line"></div>
+
+    <div id="examplesB">
+
+      <div id="exampleB1">
+        <h3>exampleB1</h3>
+        <main-view></main-view> <!--很重要一点，这个组件里面使用的模块是 #tplB -->
+      </div>
+
+      <!--javascript 模块标签的id要和组件名一致？ 不一定吧？ 答案是，不必须一定!-->
+      <!--这父组件模板中建立子组件?-->
+      <!--要不然勒，如果是像你这样想： 在外一个组件包着另一个组件，那么其实你想想他们各自还是独立组件。-->
+      <!-- 其实一开始我以为script中的必须全是html标签元素，其实我们只要保持父组件中的data就行了 -->
+      <script id="tplB1" type="x-template">
+        <div>
+          <button @click="onChangeDescClick('Auglar')">Auglar</button>
+          <button @click="onChangeDescClick('React')">React</button>
+          <button @click="onChangeDescClick('Vue')">Vue</button>
+
+          <p>{{desc}}</p>
+          <div style="color: red;">上面这个是独立组件，下面这个是父子组件</div>
+          <desc-view :SonDesc="desc"></desc-view>
+        </div>
+      </script>
+
+
+      <div id="exampleB2">
+        <h3>exampleB2</h3>
+        <father-view></father-view>
+      </div>
+
+
+      <div id="exampleB3">
+        <h3>exampleB3</h3>
+        <boss-view></boss-view>
+      </div>
+
+    </div>
+
+    <div class="line"></div>
+
+    <div id="examplesC">
+
+      <div id="exampleC1">
+        <cmain-view></cmain-view> <!--他妈卖批啊啊啊啊啊啊啊啊啊啊，必须是小写啊啊啊啊啊啊啊啊啊啊-->
+      </div>
+      <script type="text/x-template" id="tplC1">
+        <div>
+          <button @click="ChangeDesc('Android')">Android</button>
+          <button @click="ChangeDesc('IOS')">IOS</button>
+          <button @click="ChangeDesc('Windows')">Windows</button>
+          <button @click="ChangeFontSize()">descFontSize++</button>
+          <cdesc-view :subDescObj="descObj"></cdesc-view>
+        </div>
+      </script>
+      <script type="text/x-template" id="tplC2">
+        <div>
+          <h1>{{subDescObj.title}}</h1>
+          <p :style="{fontSize: fontSize + 'px'}">{{subDescObj.desc}}</p>
+        </div>
+      </script>
+
+    </div>
+
+    <div class="line"></div>
+
+    <div id="examplesD">
+
+      <div id="exampleD1">
+        <dmain-view>
+          <h1 slot="title">{{blogData.title}}</h1>
+          <span id="time" slot="time">{{blogData.time}}</span>
+          <div>
+            <p>{{blogData.desc}}</p>
+          </div>
+        </dmain-view>
+      </div>
+      <script type="text/x-template" id="blogView">
+        <div>
+          <slot name="title"></slot>
+          <slot name="time"></slot>
+          <slot>剩下的没有具名的全部被分到这里来</slot>
+        </div>
+      </script>
+
+    </div>
+
+    <div class="line"></div>
+
+    <div id="examplesE">
+
+      <div id="exampleE1">
+        <button @click="ChangeComponent(1)">To ComponentA</button>
+        <button @click="ChangeComponent(2)">To ComponentB</button>
+        <button @click="ChangeComponent(3)">To ComponentC</button>
+        <!-- 又一种有意思的写法，用 component 标签和里面的 is="virableName" 绑定声明一个区域来进行动态组件的改变， 注意这个virableName 必须得包含模板， 毕竟这需要模块的进行渲染 -->
+        <keep-alive>
+          <component :is="componentId"></component> <!--因为是动态的，所以data肯定是由实例提供的-->
+        </keep-alive>
+      </div>
+      <!--我们需要模板所以下面是必须的-->
+      <script type="text/x-template" id="component-a">
+        <div>component-a</div>
+      </script>
+      <script type="text/x-template" id="component-b">
+        <div>component-b</div>
+      </script>
+      <script type="text/x-template" id="component-c">
+        <div>component-c</div>
+      </script>
+
+      <div id="exampleE2-1">
+        <async-example1></async-example1>
+      </div>
+      <script type="text/x-template" id="tplE1">
+        <div class="asyncE">I am a component loaded by async1</div>
+      </script>
+
+      <div id="exampleE2-2">
+        <async-example2></async-example2>
+      </div>
+      <script type="text/x-template" id="tplE2">
+        <div class="asyncE">I am a component loaded by async2</div>
+      </script>
+
+      <div id="exampleE2-3">
+        <async-example3></async-example3>
+      </div>
+      <script type="text/x-template" id="tplE3">
+        <div class="asyncE">I am a component loaded by async3</div>
+      </script>
+
+    </div>
+
+
+    <script>
+
+      //new SimpleBar(document.getElementById("scroll")) // beauty your scroll
+
+
+      Vue.component("btn-success",{
+        template: '<div><button @click="onSuccessClick">成功</button></div>',
+        // 其实从template中的内容就可以知道，所谓组件不过是html标签元素而已
+        methods: {
+          onSuccessClick: function(){
+            alert("点击Success按钮")
+          }
+        },
+      })
+      let vm1=new Vue({
+        el:"#exampleA1"
+      })
+
+
+      Vue.component("btn-count-add",{
+        template: `<div><span>当前的count值： {{count}} </span><button @click='onCountAddClick'>count++</button></div>`,
+        data: function(){ // data 只能是function了, return 一个对象
+          return {
+            count: 0,
+          };
+        },
+        methods: {
+          onCountAddClick: function(){
+            this.count+=1 // 因为还是指向 data.
+          },
+        },
+      })
+      let vm2=new Vue({
+        el:"#exampleA2",
+      })
+      /*以上都是全局声明！其实唯一的缺点就是，他令构建结果变得不够简洁了*/
+
+
+      let CountAdd={
+        template: `<div><span>当前的count值： {{count}} </span>
+                     <button @click="onCountAddClick">count++</button>
+                   </div>`,
+        data: function(){
+          return {
+            count: 0,
+          };
+        },
+        methods: {
+          onCountAddClick: function(){
+            this.count+=1
+          },
+        },
+      }
+      let vm3=new Vue({
+        el: "#exampleA3",
+        components: {
+          "btn-count-add": CountAdd, // 局部组件，引入一个对象变量里面有 template。 而且像全局组件那样，除了 el 什么都可以写.
+        },
+      })
+
+
+      let vm4=new Vue({
+        el:"#exampleA4",
+        template: "#tplA", // 这种使用 script 的组件，就是在 Vue 实例中使用 template， 而其他我认为是正统的则不是！！！
+        data: {
+          count:0,
+        },
+        methods: {
+          onCountAddClick: function(){
+            this.count+=1
+          },
+        },
+      })
+
+
+      /*接下来进入到分界线之一的组件传参*/
+      Vue.component("main-view", {
+        template: "#tplB1",
+        data: function(){ // Take care again! The data in component must be a function.
+          return {
+            desc: "这是Angular的描述信息",
+          };
+        },
+        methods: {
+          onChangeDescClick: function(type){
+            this.desc= "这是"+ type + "的描述信息"; // 都是从 data base 里面拿货
+          },
+        },
+      })
+      Vue.component("desc-view",{
+        template:`<h3>{{SonDesc}}</h3>`,
+        props:{
+          SonDesc:"",
+        },
+      })
+      let vm5=new Vue({
+        el:"#exampleB1",
+      })
+
+      // 局部注册的父子组件
+      let componentB2_2={
+        template:`<h3>{{SonDesc}}</h3>`,
+        props:{
+          SonDesc:"",
+        },
+      }
+      let componentB2_1={
+        template:`<div>
+                    <button @click="onChangeDesc('Html')">Html</button>
+                    <button @click="onChangeDesc('Css')">Css</button>
+                    <son-view :SonDesc="desc"></son-view>
+                  </div>`,
+
+        data: function(){
+          return {
+            desc: "Hello!!!",
+          };
+        },
+        methods:{
+          onChangeDesc: function(type){
+            this.desc="这是" +type+ "的描述信息"
+          },
+        },
+        components:{ // 在哪里的组件就在哪里注册，如果 son-view 在 #exampleB2 里面注册了那么就会错误
+          "son-view": componentB2_2,
+        },
+      }
+      let vm6=new Vue({
+        el:"#exampleB2",
+        components:{
+          "father-view": componentB2_1,
+        },
+      })
+
+      // 改变props
+      let componentB3_2={
+        // 麻蛋，记住了模块总是需要一个根元素！！！
+        template:`<div>
+                    <p>{{getOrder}}</p>
+                    <p>{{upperCase}}</p>
+                  </div>`,
+        props:{
+          getOrder:"", // 不能加任何内容!!!不知道为什么，可以如果是 object 模式 可以加啊！！
+        },
+        /* 目前不知道有什么作用？
+        data: function(){
+          return {
+            text: this.getOrder,
+          }
+        }
+         */
+        computed:{
+          upperCase:function(){
+            return this.getOrder.toLocaleUpperCase();
+          },
+        }
+      }
+      let componentB3_1={
+        template: `<div>
+                     <button @click="onChange('apple')">apple</button>
+                     <button @click="onChange('banana')">banana</button>
+                     <stuff-view :getOrder="order"></stuff-view>
+                   </div>`,
+        components:{
+          "stuff-view": componentB3_2,
+        },
+        data: function(){
+          return {
+            order: "Stand by!!!",
+          }
+        },
+        methods: {
+          onChange:function(fruit){
+            this.order=`Hi! This is ${fruit} before you order.`
+          },
+        },
+      }
+      let vm7=new Vue({
+        el: "#exampleB3",
+        components: {
+          "boss-view": componentB3_1,
+        },
+      })
+
+
+      /*关于组件的事件的传递和发送*/
+      Vue.component("cdesc-view", {
+        template: "#tplC2",
+        props: {
+          subDescObj: {
+            type: Object, // 其实 props 中的 key 一般要表明数据类型，不过string一般都省略掉了
+            default: function(){ // default? 默认继承父组件data return的key对象?
+              return {
+                title: "This is a default title",
+                desc: "This is a default content",
+              };
+            },
+          },
+        },
+        data: function(){
+          return {
+            fontSize: 12, // 属于自己的数据
+          };
+        },
+        created(){
+          let $this=this
+          this.$root.$on("descFontSizeAdd", function(size){ // 在这里是在父元素中创建并监听一个事件，并设置一个回调函数
+            $this.fontSize+=size
+          })
+        },
+      })
+      Vue.component("cmain-view", {
+        template: "#tplC1",
+        data: function(){
+          return {
+            descObj: {
+              title: "Android",
+              desc: "This are message about Andriod",
+            },
+          };
+        },
+        methods:{
+          ChangeDesc: function(type){
+            this.descObj.title=type
+            this.descObj.desc="This are message about " + type;
+          },
+          ChangeFontSize: function(){
+            this.$root.$emit("descFontSizeAdd", 1) // 指定某个事件，如果触发某个操作那么我们就触发这个事件并配置为其配置参数
+          },
+        },
+      })
+      let vm8=new Vue({
+        el: "#exampleC1",
+      })
+
+
+      /*slot 插槽*/
+      Vue.component("dmain-view",{
+        template:"#blogView",
+      })
+      let vm9=new Vue({
+        el:"#exampleD1",
+        data: function(){
+          return {
+            blogData:{
+              title: "Jamoon's Blog",
+              time: (new Date()).toLocaleString(),
+              desc: "the content...",
+            },
+          };
+        },
+      })
+
+
+      /*动态组件*/
+      let componentA={
+        template: "#component-a", // 把模板放进变量里面可以方便动态组件的模板变换
+      }
+      let componentB={
+        template: "#component-b", // 我更倾向不要script，直接把模板内容写在模板变量里
+      }
+      let componentC={
+        template: "#component-c",
+      }
+      let vm10=new Vue({
+        el:"#exampleE1",
+        data: function(){
+          return {
+            componentId: componentA
+          };
+        },
+        methods: {
+          ChangeComponent: function(type){
+            switch(type){
+              case 1:
+                this.componentId=componentA
+              break;
+              case 2:
+                this.componentId=componentB
+              break;
+              case 3:
+                this.componentId=componentC
+              break;
+            }
+          },
+        },
+      })
+
+
+      /*异步组件*/
+      let compntE1={
+        template: "#tplE1",
+      }
+      Vue.component("async-example1", function(resolve, reject){ // 不要管细节了，内部会帮你管理好的
+        setTimeout(function(){
+          resolve(compntE1)
+        }, 1000)
+      })
+      let vm11=new Vue({
+        el: "#exampleE2-1",
+      })
+
+      let compntE2={
+        template: "#tplE2"
+      }
+      let promise1=new Promise(function(resolve, reject){
+        setTimeout(function(){
+          resolve(compntE2)
+        }, 2000)
+      })
+      let vm12=new Vue({
+        el: "#exampleE2-2",
+        components:{
+          "async-example2": function(){
+            return promise1;
+          }
+        }
+      })
+
+      let compntE3={ // success
+        template: "#tplE3",
+      }
+      let loadingCompnt={ // loading
+        template: "<div>The component is loading ...</div>"
+      }
+      let errorCompnt={ // failed
+        template: "<div>Here is something wrong!!!</div>"
+      }
+      let promise2=new Promise(function(resolve, reject){
+        setTimeout(function(){
+          resolve(compntE3)
+        }, 3000)
+      })
+      const AsyncComponent=function(){ // above three set, must using return
+        return {
+          component: promise2,
+          loading: loadingCompnt,
+          error: errorCompnt,
+          delay: 200,
+          timeout: 5000,
+        };
+      }
+      let vm13=new Vue({
+        el: "#exampleE2-3",
+        components:{
+          "async-example3": AsyncComponent
+        },
+      })
+
+
+    </script>
+
+
+  </body>
+</html>

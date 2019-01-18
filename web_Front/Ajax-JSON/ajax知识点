@@ -1,0 +1,137 @@
+﻿客户端：浏览网页、看视频、听音乐。。。
+服务器：网页服务、文件下载服务、邮件服务、视频服务。。。（给客户端提供服务）
+
+
+协议：计算机之间的关系(其实是通信协议）(其实类比成公司之间的关系,海关, 工具接口等等也就比较明了了, 其实就是一个规范, 为了减小不必要的麻烦)
+
+多方之间的通信形成网络
+
+
+网络之间的计算机如何找到彼此？
+
+IP地址：xxx.xxx.xxx.xxx
+端口：用来区分电脑上特定应用网络应用程序
+域名：http://www.baidu.com/
+
+域名和IP地址 ： 对应关系不一定是一一对应的
+internet上的ip地址是唯一的，一个IP地址对应一个计算机
+  一个域名对应一个ip地址
+  一台计算机上面可以有好多个服务(比如说, 这台服务器不仅仅只有一个人租来搭建网站)，也就是一个ip地址对应了好多个域名
+
+我们也知道每一台机都有一个唯一ip地址，
+特别难记，所以出现了今天的DNS(域名)
+当我们的计算机想要和一个远程机器连接时，我们可以申请连接该机器ip地址下的DNS，例如：www.baidu.com。
+连接的时候，DNS会提供一个ip地址，供服务器去找寻
+所以，当我们在网址中输入：www.baidu.com，会获取到百度ip，并跳转页面 
+
+URL:统一资源定位符（Uniform Resource Locator）
+完整的URL由如下几部分组成：
+schema://host:port/path?query#fragment
+schema:通信协议，常用的有：http/ftp
+host:主机，服务器（计算机）域名或IP地址
+port:端口，整数，可选，省略时使用默认端口，http的默认端口是80
+path:路径，由零或多个”/”符号隔开的字符串，一般用来表示主机的一个目录或者文件地址
+query:查询 可选，用于给动态网页（如使用CGI、ISAPI、PHP/JSP/ASP/ASP.NET等技术制作的网页）传递参数，可有多个参数，用"&"符号隔开，每个参数的名和值用"="符号隔开。
+fragment:信息片断
+字符串，用于指定网络资源中的片断。例如一个网页中有多个名词解释，可使用fragment直接定位到某一名词解释。(也称为锚点.)
+
+
+
+
+动态网站的原理：html页面是动态生成的
+实现异步局部更新（不使用XMLHttpRequest）
+
+1. 表单提交后的相应页面返回到iframe当中，主页面内容不变
+
+2. Ajax asynchronous javascript and xml
+
+Ajax中的回调函数类似于setTimeout中的定时函数，先定义后执行
+
+xhr.readyState 
+0：XMLHttpRequest对象创建完成 (ok)
+1：表示发送请求的动作准备好了，但是还没有开始发送 (ready)
+2：表示已经发送完成 (ok)
+3：服务器已经返回了数据 (ready)
+4：服务器返回的数据已经可以使用 (ok)
+
+xhr.status (表示服务器返回状态，必须得等到服务器返回的数据可用才行) 
+200 表示请求成功；
+404表示没有找到这个页面或者数据
+503表示服务器端发生错误
+
+onloadstart, 是在 ajax 请求发送前触发，在 readyState==1 之后，readyState==2 之前
+onprogress, 是在接受数据时触发，也就是在 readyState==3 时触发，默认传入 ProgressEvent 对象, 可通过   e.loaded/e.total (标准浏览器，及ie9++）来计算加载资源的进度, 该方法用于获取资源的下载进度。
+onload, 是在 ajax 请求成功，服务器返回数据可用(服务器返回的可能对失败的告示），也就是 readyState==4 状态之后。
+ontimeout, 在ajax请求超时时触发： xhr.ontimeout=(e)=>{ console.error("request timeout!") }
+onabort， 中断 ajax 请求， 使 readyState=0
+onerror, 发生错误时，触发
+getResponseHeader, 用于获取 ajax 响应头中指定的 name 的值： console.log(xhr.getResponsedHeader("Content-Type"));
+getAllResponseHeaders, 获取所有安全的 ajax 响应头，但 readyState===2 时，就可以：
+xhr.onreadystatechange=function(){
+  if(this.readyState == 2){
+    console.log(this.getAllResponseHeaders());
+  }
+}
+setRequestHeader, 设置请求头： xhr.setRequestHeader("Content-type", "application/json");
+overrideMimeType, 强制修改response的Content-Type： xhr.overrideMimeType("text/xml; charset=utf-8")
+
+实际上, 如果你仅仅只是想要一个不错的http库, 相比于庞大臃肿的jquery, 短小精悍的Axios可能更加适合
+
+回调函数接到的数据类型
+responseType： 返回的数据类型，默认为空字符
+repoonse: 返回默认内容，不管是什么
+responseText：response的 json  html  script 格式
+responseXML：同理
+
+xml的解析是把他的节点一个一个拆出来的，而json的解析则是通过一个内置方法来来把他解析出来. 尽管xml比较好懂(我倒是觉得看惯了的话, Jsonp 还是挺容易懂的)，但是这个json分析把代码量减少了。
+
+注意： ajax 里面的并不是所有部分都是异步的，至少 onreadystatechange 的 1 和 onloadstart 是同步的一开始执行。
+
+同源问题：协议、域名、端口都相同；
+
+跨域文件解决方法与实现原理（都得在服务端设置一些东西，总的来说，还是可以CORS比较好，但是浏览器支持必须是ie10+）
+1. jsonp(json with padding)/是通过script脚本来实现，同样的还有 img 等等/  
+2. server proxy
+3. CORS(cross origin resource sharing)
+
+4. url#hash
+5. window.name(iframe)
+6. postmessage(iframe)
+   那么如何启用CORS？
+   比如：在html文件中添加，<meta http-equiv="Acess-Control-Allow-Origin" content="*">, 表示 html允许任意域名下的网页跨站访问！
+/ http-equiv 相当于http的响应头，它回应给浏览器一些有用的信息，以帮助精确显示内容 /
+   以CROS有关的header：
+   1.HTTP Response Header（服务器提供）： Access-Control:*
+Access-Control-Allow-Origin: 指定允许哪些源的网页发送请求.
+
+Access-Control-Allow-Credentials: 指定是否允许cookie发送.
+
+Access-Control-Allow-Methods: 指定允许哪些请求方法.
+
+Access-Control-Allow-Headers: 指定允许哪些常规的头域字段, 比如说 Content-Type.
+
+Access-Control-Expose-Headers: 指定允许哪些额外的头域字段, 比如说 X-Custom-Header.
+   2. HTTP Request Header(浏览器)：
+Access-Control-Request-Method: 告知服务器,浏览器将发送哪种请求, 比如说POST.
+Access-Control-Request-Headers: 告知服务器, 浏览器将包含哪些额外的头域字段.
+   CORS请求分两种，一是简单请求 二是非简单请求
+如果是简单请求：
+1) 请求是以下三种之一:
+
+HEAD
+GET
+POST
+
+2) http头域不超出以下几种字段:
+
+Accept
+Accept-Language
+Content-Language
+Last-Event-ID
+Content-Type字段限三个值 application/x-www-form-urlencoded、multipart/form-data、text/plain
+
+对于简单请求, 浏览器将发送一次http请求, 同时在Request头域中增加 Origin 字段, 用来标示请求发起的源, 服务器根据这个源采取不同的响应策略. 若服务器认为该请求合法, 那么需要往返回的 HTTP Response 中添加 Access-Control-* 等字段.( Access-Control-* 相关字段解析请阅读我之前写的CORS 跨域访问 )
+对于非简单请求, 比如Method为POST且Content-Type值为 application/json 的请求或者Method为 PUT 或 DELETE 的请求, 浏览器将发送两次http请求. 第一次为preflight预检(Method: OPTIONS),主要验证来源是否合法. 值得注意的是:OPTION请求响应头同样需要包含 Access-Control-* 字段等. 第二次才是真正的HTTP请求. 所以服务器必须处理OPTIONS应答(通常需要返回20X的状态码, 否则xhr.onerror事件将被触发).
+
+
+

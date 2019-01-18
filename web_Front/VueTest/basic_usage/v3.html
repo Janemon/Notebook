@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>simple_usage3</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+
+    <!--template-->
+    <div id="example1">
+      <h1>Test!!!</h1>
+      <p>to be or not to be?</p>
+    </div>
+    <script id="tpl" type="x-template">
+      <div>
+        <p>This is a template from script tag</p>
+      </div>
+    </script>
+
+    <!--LifeCycle-->
+    <div id="example2">
+      <label>Input: <input v-model="inputMsg"/></label>
+      <p>Show: {{inputMsg}}</p>
+    </div>
+
+    <!--computed-->
+    <div id="example3">
+      <p>&yen; {{price}}</p> <!-- 对把数据的处理隐藏起来，不用前后端的数据交互每次都经过转换 -->
+    </div>
+
+    <!--v-for-->
+    <div id="example4">
+      <ul>
+        <li v-for="item in items"> <!-- set in li not ul-->
+          <p>{{item.title}}</p>
+          <p>{{item.content}}</p>
+        </li>
+      </ul>
+    </div>
+
+
+    <script>
+      let data={name: "jaxon", age: 21,}
+      let vm1=new Vue({
+        el:"#example1",
+        data: data,
+        template:"#tpl", // 直接全部替换内容
+      })
+      console.log("vm1.$data: ", vm1.$data) // 实例中 options 中的 key, 需要使用 `$` 来区别其他不是Vue实例的, 注意是option的直接key。
+      console.log("vm1.data: ", vm1.data)
+      console.log("vm1.$data and data: ", vm1.$data==data)
+
+
+      let vm2=new Vue({
+        el:"#example2",
+        data:{
+          inputMsg:"",
+        },
+        beforeCreate: function(){
+          console.log("vm2: beforeCreate")
+        },
+        created: function(){
+          console.log("vm2: created")
+        },
+        beforeMount: function(){
+          console.log("vm2: beforeMounted")
+        },
+        mounted: function(){
+          console.log("vm2: mounted")
+        },
+        beforeUpdate: function(){
+          console.log("vm2: beforeUpdate")
+        },
+        updated: function(){
+          console.log("vm2: updated")
+        },
+        // 下面两个什么时候用啊？
+        beforeDestroy: function(){
+          console.log("vm2: beforeDestry")
+        },
+        destroyed: function(){
+          console.log("vm2: destryed")
+        },
+      })
+
+
+      let vm3=new Vue({
+        el:"#example3",
+        data:{
+          cents: 100,
+        },
+        computed:{
+          price:{
+            get: function(){
+              return (this.cents/100).toFixed(2);
+            },
+            set: function(newValue){
+              this.cents=newValue*100
+            },
+          }
+        },
+      })
+
+
+      let  vm4=new Vue({
+        el:"#example4",
+        data:{
+          items:[ // note that here is array not object
+            {title:"title-1", content:"content-1"},
+            {title:"title-2", content:"content-2"},
+            {title:"title-3", content:"content-3"}
+          ],
+        },
+      })
+
+    </script>
+  </body>
+</html>

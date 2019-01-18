@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>hash</title>
+  </head>
+  <body>
+    <script>
+      window.addEventListener("message", function(e){
+        /*==make sure whether it has seen by parent window==*/
+        if(e.source !== window.parent){ // e.source means window
+          return;
+        }
+        let data=e.data
+        console.log("The message b.html gets ", data)
+        parent.postMessage("I have recieved the message", e.origin) // e.origin means address
+        // so the postMessage's syntax is `targetwindow.postMessage(data, target's address)
+      })
+    </script>
+  </body>
+</html>

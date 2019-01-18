@@ -1,0 +1,172 @@
+// the syntax of scss which is the nested.
+ul{
+  font-size: 14px;
+  li{
+    list-style: none; 
+  }
+}
+
+// the virable
+$primary-color: #fff;
+$primary-border: 1px solid $primary-color;
+
+div.box{
+  background-color: $primary-color;
+}
+
+div.package{
+  border: $primary-border;
+}
+
+// the nested
+.nav{
+  height: 100px;
+  ul{
+    margin: 0;
+    li{
+      float:left;
+      padding:5px;
+      list-style:none;
+    }
+  }
+}
+
+// to call the parent-selector
+.nav{
+  height: 100px;
+  ul{
+    margin: 0;
+    li{
+      float:left;
+      padding:5px;
+      list-style:none;
+      &:hover{
+        font-size: 20px;
+      }
+    }
+  }
+  & &-text{
+    border: 5px;
+  }
+}
+
+// the nest of selector
+.pp{
+  font: {
+    family: Heson;
+    size: 12px;
+    weight: bold;
+  }
+}
+
+// the @maxin
+@mixin alert{
+  color: #fff;
+  background-color:yellowgreen;
+  a{
+    color: red;
+  }
+}
+
+.alert-warnig{
+  @include alert;
+}
+
+// the @maxin include paramater
+@mixin show($text-color,$bgcolor){
+  color:$text-color;
+  background-color: $bgcolor;
+  a{
+    color:darken($text-color, 10%);
+  }
+}
+
+/*!
+.show{
+  @include show($bgcolor:#fff,$text-color:blue)
+}
+*/
+.show{
+  @include show(blue,#fff)
+}
+
+
+// @import and partials
+/*! the compulsive comment of after compile */
+@import "base";
+
+// the @extend
+.box{
+  padding:15px;
+}
+.box-info{
+  @extend .box;
+  background-color: burlywood;
+}
+.box a{
+  font-weight: bold;
+}
+
+// the @if
+$user-prefixes: false;
+$theme: dark;
+.rounded{
+  // the -bdrs will show all prefix;
+  @if($user-prefixes){
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+  }
+  border-radius: 5px;
+}
+body{
+  @if($theme==light){
+    background-color:white;
+  }@else if($theme==dark){
+    background-color: black;
+  }@else{
+    background-color: #fff;
+  }
+}
+
+// the @for
+$columns:4;
+@for $i from 1 through $columns {
+  col-#{$i}{
+    width: 100% / $columns * $i
+  }
+}
+@for $i from 1 to $columns{
+  col-#{$i}{
+    width: 100% / $columns * $i
+  }
+}
+
+// the @each
+$icons: success error warning; // this is a list.(array)
+@each $icon in $icons{
+  icon-#{$icon} {
+    background-image: url(../img/icons/#{$icon}.png);
+  }
+}
+
+// the @while
+$ii:6;
+@while($ii > 0 ){
+  .ite-#{$ii}{
+    width: 5px * $ii;
+  }
+  $ii: $ii - 2;
+}
+
+// the acustomized function @function
+$colors:(light: #fff, dark: #000);
+@function color($key){
+  @if not map-get($colors,$key) {
+    @warn "Sorry, what you iput doesn't find in array.";
+  }
+  @return map-get($colors,$key);
+}
+body{
+  background-color: color(gray);
+}
+

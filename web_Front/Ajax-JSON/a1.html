@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Hash</title>
+  </head>
+  <body>
+    <script>
+
+      let ifram=document.createElement("iframe")
+      ifram.src="http://localhost:8081/a2.html#data"
+      ifram.style.display="none"
+      document.body.appendChild(ifram)
+
+      window.addEventListener("hashchange", function(e){
+        console.log("what we get is ", location.hash.substring(1))
+      })
+
+    </script>
+  </body>
+</html>

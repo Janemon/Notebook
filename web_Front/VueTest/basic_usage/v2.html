@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>simple_usage2</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17-beta.0/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <!--@click=(v-on)is equal to onClick=-->
+        <!--preventDefault-->
+        <!--Here we should pay attention that @click="innerexp" is same as v-model="innerexp" which can using the key in data -->
+        <a href="https://www.baidu.com" @click.prevent="count+=1">baidu turn to count</a>
+        <p>count: {{count}}</p>
+      </div>
+      <br/>
+      <div>
+        <button @click="testOnClickMethods">testOnClickMethods</button>
+      </div>
+      <br/>
+      <div>
+        <!-- Only events we can use in normal, we can use v-on(@) to listen it -->
+        <input type="text" @keyup="onChange" v-model="inputMsg"></input>
+        <p>the input: {{inputMsg}}</p>
+      </div>
+      <br/>
+      <div>
+        <!--修饰符，让我们专注业务逻辑而不去关心那些DOM处理事件的细节-->
+        <button @click.stop="Sum(1,2)">Sum</button>
+        <!--stopPropagation, actually in same tiem, the `.self` has the same effect-->
+        <!--then the `.capture`-->
+      </div>
+      </br>
+      <div>
+        <button @click.once="count+=1">click-once</button>
+        <p>count: {{count}}</p>
+      </div>
+      <!--不知道passive有什么用？-->
+    </div>
+
+    <script>
+      let app=new Vue({
+        el:"#app",
+        data:{
+          count:0,
+          inputMsg:'',
+        },
+        methods:{
+          testOnClickMethods:function(event){
+            if(event){
+              alert(event.target.tagName) // It is which trigger it. the event.currentTarget is point to which added the listener.
+            }
+          },
+          onChange:function(){
+            console.log(this.inputMsg)
+          },
+          Sum: function(p1, p2){
+            alert(p1+p2)
+          }
+
+        }
+      })
+
+    </script>
+  </body>
+</html>

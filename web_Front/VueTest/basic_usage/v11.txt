@@ -1,0 +1,87 @@
+1. 什么是脚手架
+
+前端开发中提到的“脚手架”是一个形象的比喻，比喻各类语言的前期工作环境。
+在软件开发上（当然也包括前端开发）的脚手架指的就是：有人帮你把这个开发过程中要用到的工具、环境都配置好了，你就可以方便地直接开始做开发，专注你的业务，而不用再花时间去配置这个开发环境，这个开发环境就是脚手架。
+比如vue.js就有个vue-cli脚手架，基于node.js的开发环境，作者帮你把开发环境大部分东西都配置好了，你把脚手架下载下来就可以直接开发了，不用再考虑搭建这些工具环境。
+
+
+2. Vue CLI 的包名称由 vue-cli 改成了 @vue/cli
+
+
+3. 例子
+
+1- 我们将使用 @vue/cli+webpack 来构建实战项目 AutoChat。@vue/cli 3.0+ 的环境下如果我们想要使用 webpack 作为模板来构建一个项目框架的话，安装一个桥接工具 @vue/cli-init，用以执行旧版的 vue init 指令:
+    `vue init <template-name> <project-name`
+    `vue init webpack auto-chat`
+
+2- 一般我们通过 npm run build 来打包代码，打包之后的代码为实际生产环境中使用的代码，当执行 npm run build 指令时，webpack 会去优化 src 文件夹中的代码和资源，最终打包代码会被放入到 ./dist 文件夹下
+
+3- 我们可以看一下package.json 里面一些不常见的的项:
+    engines，它表示该模块运行的平台：
+        "engines": {
+            "node": ">= 6.0.0",
+            "npm": ">= 3.0.0"
+        },
+
+    browserslist，它表示这个项目的浏览器兼容情况，其中的 > 1%, last 2 versions，not ie <= 8 都是查询参数。
+        "browserslist": [
+            "> 1%", // 兼容所有市场占有率大于1%的浏览器
+            "last 2 versions", // 兼容所有位于最近2个版本的浏览器
+            "not ie <= 8" // 不兼容 IE8 及以下
+        ]
+
+4- src文件夹就是代码所在的地址, 比如资源文件夹 assets，（注意这里的 assets 与根目录下的 static 的区别是：根目录中的 static 默认不参与 build 的优化。），组件文件夹 components、路由 router、最初的组件 APP.vue 和入口文件 main.js.
+
+    先看一下 main.js 中的代码：
+
+        import Vue from 'vue'
+        import App from './App'
+        import router from './router'
+
+        Vue.config.productionTip = false
+
+        /* eslint-disable no-new */
+        new Vue({
+        el: '#app',
+        router,
+        components: { App },
+        template: '<App/>'
+        })
+    看 new Vue 这一部分，它指定了 el 属性为 #app，这里的 #app 指向的地点为根目录中的 index.html 中的 <div id="app"></div>，然后指定了它的 components 为 App，也就是说默认情况下我们的整个项目都是在组件 App 中去进行开发的。
+
+    然后看一下 ./App.vue 中的代码：
+
+        <template>
+        <div id="app">
+            <img src="./assets/logo.png">
+            <router-view/>
+        </div>
+        </template>
+
+        <script>
+        export default {
+        name: 'App'
+        }
+        </script>
+    在 App.vue 中，它通过 <router-view/> 指定了一个路由的出口，我们看一下路由的配置，在 ./router/index.js 中：
+
+        import Vue from 'vue'
+        import Router from 'vue-router'
+        import HelloWorld from '@/components/HelloWorld'
+
+        Vue.use(Router)
+
+        export default new Router({
+        routes: [
+            {
+            path: '/',
+            name: 'HelloWorld',
+            component: HelloWorld
+            }
+        ]
+        })
+    它定义了访问根目录时展示的 component 为 HelloWorld。也就是说当使用 npm run dev 启动了整个项目的时候，它展示的层次结构为：
+                    Index.html
+                <div id="app"></div>[App.vue]
+                <router-view/>[HelloWorld.vue]
+

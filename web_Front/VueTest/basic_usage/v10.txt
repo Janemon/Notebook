@@ -1,0 +1,217 @@
+<Note>这是Vue中关于异步调用的所使用的 Axios 工具，他主要是基于Promise来实现的</Note>
+
+
+我们需要根据用户来获取他的朋友们，并且通过列表把用户的朋友展示出来。现在服务器提供了两个接口：1、根据 ID 获取用户，2、根据用户获取用户的朋友。
+
+我们通过 express 搭建了一个后台的服务，用以提供这两个接口：
+
+router.post('/users', function(req, res, next) {
+  if (req.body.id === '123') {
+    res.send({
+      name: 'LGD_Sunday',
+      age: '26'
+    });
+  }
+});
+
+router.post('/users/friends', function(req, res, next) {
+  res.send([
+    {
+      name: '张三',
+      age: '28'
+    },
+    {
+      name: '李四',
+      age: '22'
+    },
+    {
+      name: '王五',
+      age: '30'
+    }
+  ]);
+});
+接下来就是前端的实现代码：
+
+<div id="app">
+  <ul>
+    <li v-for="(friend, index) in friends" :key="index">{{friend.name}}</li>
+  </ul>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            user: {},
+            friends: []
+        },
+        mounted() {
+            axios.post('/users', {
+                id: '123'
+            }).then((res) => {
+              // 获取用户信息,执行我们的 赋值逻辑
+              this.user = res.data;
+            }).then((res) => {
+              // 通过用户信息,调用下一个接口，并返回它的 Promise ，我们这里调用 /users/friends
+              return axios.post('/users/friends', this.user);
+            }).then ((res) => {
+              // 获取 friends 信息，执行我们的 赋值逻辑....
+              this.friends = res.data
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
+    });
+</script>
+
+同样 Promise 所拥有的特性在 axios 上也都是可以使用的。比如我们可以同时执行多个 ajax 请求：
+
+axios.all([
+  axios.post('/users', {
+    id: '123'
+  }),
+  axios.post('/users/friends'),
+]).then(axios.spread((usersData, friendsData) => {
+  this.user = usersData.data;
+  this.friends = friendsData.data
+})).catch((err) => {
+
+});
+同样我们也可以直接通过 axios 来进行配置请求：
+
+axios({
+  method: 'post',
+  url: '/users/friends',
+  data: {}
+}).then((res) => {
+  this.friends = res.data
+});
+然后来看一下 axios 的所有配置信息（数据来自 axios github）：
+
+{
+  // url 是将用于请求的服务器 URL
+  url: '/user',
+
+  // method 是发出请求时使用的请求方法
+  method: 'get', // default
+
+  // 基础 URL 路径，假如 url 不是绝对路径，如http://127.0.0.1:3000/users/friends,
+  // 那么向服务器发送请求的URL将会是 baseURL + url。
+  baseURL: 'https://some-domain.com/api/',
+
+  //transformRequest 允许在将请求数据发送到服务器之前对其进行更改
+  // 这仅适用于请求方法'PUT'，'POST'和'PATCH'
+  // 数组中的最后一个函数必须返回一个字符串或 Buffer，ArrayBuffer，FormData 或 Stream 的实例
+  transformRequest: [function (data, headers) {
+    // Do whatever you want to transform the data
+
+    return data;
+  }],
+
+  // transformResponse 方法允许在数据传递到 then/catch 之前修改 response 数据。此方法最后也要返回数据。
+  transformResponse: [function (data) {
+    // Do whatever you want to transform the data
+
+    return data;
+  }],
+
+  // 发送自定义 Headers 头文件，头文件中包含了 http 请求的各种信息。
+  headers: {'X-Requested-With': 'XMLHttpRequest'},
+
+  // params 是与请求一起发送的 URL 参数
+  // 必须是普通对象或 URLSearchParams 对象
+  params: {
+    ID: 12345
+  },
+
+  // paramsSerializer 是一个可选函数，负责序列化 params
+  paramsSerializer: function(params) {
+    return Qs.stringify(params, {arrayFormat: 'brackets'})
+  },
+
+   // data 是要作为请求体发送的数据
+   // 仅适用于请求方法 'PUT'，'POST'和'PATCH'
+   // 如果没有设置 transformRequest，则必须是以下类型之一：
+   // - 字符串，普通对象，ArrayBuffer，ArrayBufferView，URLSearchParams
+   // - 仅限浏览器：FormData，File，Blob
+   // - 仅限节点：流，缓冲区
+  data: {
+    firstName: 'Fred'
+  },
+
+  // timeout 指定请求超时之前的毫秒数。
+  // 如果请求的时间超过“超时”，请求将被中止。
+  timeout: 1000, // default is `0` (no timeout)
+
+  // 表明是否有跨域请求需要用到证书
+  withCredentials: false, // default
+
+  // adapter 允许自定义处理请求，使测试更容易。
+  // 返回一个 promise 并提供一个有效的响应
+  adapter: function (config) {
+    /* ... */
+  },
+
+  // auth 表示提供凭证用于完成 http 的身份验证
+  // 这将设置一个 Authorization 信息，覆盖任何现有信息
+  // 使用 headers 设置的 Authorization 自定义信息。
+  auth: {
+    username: 'janedoe',
+    password: 's00pers3cret'
+  },
+
+  // responseType 表示服务器将响应的数据类型
+  // 选项是'arraybuffer'，'blob'，'document'，'json'，'text'，'stream'
+  responseType: 'json', // default
+
+  // responseEncoding 表示用于解码响应的编码
+  //  注意他将忽略“stream”或“客户端”请求的“responseType”
+  responseEncoding: 'utf8', // default
+
+  // xsrfCookieName 是用作xsrf令牌值的cookie的名称
+  xsrfCookieName: 'XSRF-TOKEN', // default
+
+  // xsrfHeaderName 是带有 xsrf 标记值的 http 标头的名称
+  xsrfHeaderName: 'X-XSRF-TOKEN', // default
+
+  // onUploadProgress 允许处理上传的进度事件
+  onUploadProgress: function (progressEvent) {
+    // Do whatever you want with the native progress event
+  },
+
+  // onDownloadProgress 允许处理下载的进度事件
+  onDownloadProgress: function (progressEvent) {
+    // Do whatever you want with the native progress event
+  },
+
+  // maxContentLength 定义了允许的以字节为单位的 http 响应内容的最大大小
+  maxContentLength: 2000,
+
+  // validateStatus 定义了根据 HTTP 响应状态码决定是否接收或拒绝获取到的 promise。
+  // 如果 validateStatus 返回 true (或为 null 或 undefined)，promise 将被接收；否则 promise 将被拒绝。
+  validateStatus: function (status) {
+    return status >= 200 && status < 300; // default
+  },
+
+  // maxRedirects 定义了 node.js 中要遵循的最大重定向数。
+  // 如果设置为 0，则不会执行重定向。
+  maxRedirects: 5, // default
+
+  // httpAgent 和 httpsAgent 定义了执行 http 时要使用的自定义代理
+  httpAgent: new http.Agent({ keepAlive: true }),
+  httpsAgent: new https.Agent({ keepAlive: true }),
+
+  // 'proxy'定义代理服务器的主机名和端口。使用 auth 来进行身份验证
+  proxy: {
+    host: '127.0.0.1',
+    port: 9000,
+    auth: {
+      username: 'mikeymike',
+      password: 'rapunz3l'
+    }
+  },
+
+  // cancelToken 指定可用于取消请求的取消令牌
+  cancelToken: new CancelToken(function (cancel) {
+  })
+}

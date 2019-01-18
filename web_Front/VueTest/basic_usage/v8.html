@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Vue-router</title>
+    <style>
+      #scroll{
+        height: 230px;
+        overflow-y:auto;
+      }
+      #explain{
+        display:flex;
+        flex-flow: column;
+        align-items: center;
+      }
+      .line{
+        height:1px;
+        background: red;
+        margin: 20px auto;
+      }
+      p{
+        border: 1px solid blue;
+        border-radius: 3px;
+        padding: 5px;
+        box-shadow: 2px 1px 3px 2px black;
+      }
+      #examplesA{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+      #examplesB{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+      #examplesC{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="scroll">
+      <div id="explain">
+        <p>1. 服务器对 URL 进行解析的过程就是一次路由的处理，URL 对应的执行函数就是路由。这种对路由的控制方式被称为服务器路由管理。 但是在一些情况之下（比如单页面应用），用户的请求无需通过服务器路由管理，可以在客户端进行路由分发操作，这种情况就是客户端路由管理。
+        </p>
+        <p>2. 路由的定义及配置: 1- 声明`const Router= new VueRouter({routes: Routes})` 2-为路径配置组件 `const Routes=[{path: "...", component: Foo}, {path: "...", component: Boo}]`</p>
+        <p>3. 路由的基本使用: 1- "<router-link to='...'>", to 属性是用来指定链接的; router-link 会被默认渲染成一个 a 标签; 2- "<router-view>", 这里是路由出口, 路由匹配到的组件将会渲染在这里
+        </p>
+        <p>Note: 其实有上面的描述就可以知道, 不论做什么到最后,都会变成组件的渲染</p>
+        <p>4. 动态路由主要是把path中的锚点编程变量</p>
+        <p>5. 嵌套路由主要是要有一个父路径和一个孩子路径</p>
+        <p>6. 在Vue中我们通过"导航守卫"的方式来监听页面的变化, vue-router提供的导航守卫主要是通过跳转和取消的方式来"守卫导航". 而"导航守卫"被分成两大部分: 全局守卫和单独路由守卫</p>
+        <p>6-1 他妈的难以理解，其实“导航守卫”就是“路由钩子”，重复一篇，其实就是“路由钩子”</p>
+        <p>7. 而在路由使用过程中，组件的生命周期函数钩子也会照常进行，但是当路由组件实例进行复用的时候，组件的生命周期钩子不会再被调用. 因为两个路由都渲染同个组件，比起销毁再创建，复用则显得更加高效。不过，这也意味着组件的生命周期钩子不会再被调用。</p>
+        <p>8. 我们可以通过导航守卫的方式来监听组件的复用</p>
+        <p>9. 进入一个路由激发这样一个钩子，router.beforeEach(注意这是在router上的钩子), 然后执行顺序是, beforeEnter(这是在路由线上的), beforeROuteEnter(这个是在路由模板上的), router.afterEach.</p>
+        <p>10. 当离开一个路由时候， 会这样: beforeRouteLeave(router.afterEach 必须都是得在最后)=>router.beforeEach=>router.afterEach(看是这样吧)</p>
+        <p>11. 路由钩子中的参数: next(函数占位符, 为了可以执行下一个钩子), to(目标路由), from(当前离开的路由)</p>
+      </div>
+    </div>
+    <div class="line"></div>
+
+    <div id="examplesA">
+      <div id="exampleA1">
+        <p>
+        <router-link to="/a1one">one</router-link> <!--会被解析成 a 标签, 并到某个路径上找配件-->
+        <router-link to="/a1two">two</router-link>
+        </p>
+        <router-view></router-view> <!--而上面找到的组件就在这里显示出来-->
+      </div>
+
+      <div id="exampleA2">
+        <p>
+        <router-link to="/a2one">A2onewview</router-link>
+        <router-link to="/a2two/123">A2twoview</router-link>
+        <a href="#" @click="byName">jump to "two" by name</a>
+        <a href="#" @click="byPath">jump to "two" by path</a>
+        </p>
+        <router-view></router-view>
+      </div>
+
+    </div>
+    <div class="line"></div>
+
+    <div id="examplesB">
+      <div id="exampleB1">
+        <p>I am sup's content</p>
+        <router-view></router-view> <!--这里是哪个路由的出口? 其实如果是包含子路由的话(这里表现为模块上有路由), 那么父模板也必须有一个路由出口-->
+      </div>
+    </div>
+    <script type="text/x-template" id="sup">
+      <div>
+        <p>I am sub's content</p>
+        <router-link to="/b1sub1">b1sub1</router-link>
+        <router-link to="/b1sub2">b1sub2</router-link>
+        <router-view></router-view>
+      </div>
+    </script>
+    <div class="line"></div>
+
+    <div id="examplesC">
+      <div id="exampleC1">
+        <router-view></router-view>
+        <router-view name="sidebar"></router-view>
+        <router-view name="main"></router-view>
+      </div>
+
+      <div id="exampleC2">
+        <div>
+          <router-link to="/c2user/foo">/c2user/foo</router-link>
+          <router-link to="/c2user/bar">/c2user/bar</router-link>
+          <router-view></router-view>
+        </div>
+      </div>
+
+
+      <div id="exampleC3">
+        <p>
+        <router-link to="/c3one">c3one</router-link>
+        <router-link to="/c3two">c3two</router-link>
+        </p>
+        <router-view></router-view>
+      </div>
+
+    </div>
+
+
+  </body>
+  <script src="./vue.js"></script>
+  <script src="./vue-router.js"></script>
+  <script>
+    let a1One={
+      template: "<div>OneView</div>",
+    }
+    let a1Two={
+      template: "<div>TwoView</div>",
+    }
+    let A1routes=[
+      {
+        path: "/a1one", // 原来路线表上, 自己表明自己的路径和组件啊
+        component: a1One,
+      },
+      {
+        path: "/a1two",
+        component: a1Two,
+      },
+    ]
+    let A1router=new VueRouter({ // 路由器(router), 并配置路由表(routes)
+      routes: A1routes,
+    })
+    let vm1=new Vue({
+      router: A1router, // 第一次见 el 不是第一个
+      el: "#exampleA1",
+    })
+
+
+    /*Can't work*/
+    let a2one={
+      template: `<div>a2Oneview</div>`
+    }
+    let a2two={
+      template: `<div>a2Towview: <p>$route.params: {{$route.params}}</p><p>$route.query: {{$route.query}}</p></div>` // 这里的 $route.params 对应的是 routes 里面的某个route的 path里面的绑定的参数?
+    }
+    let A2routes=[
+      {
+        path: "/a2one",
+        component: a2one,
+      },
+      {
+        path: "/a2two/:id", // 这个路由路线, 表示则是个动态路由 `:id`
+        name:"a2Two",
+        component: a2two,
+      }
+    ];
+    let A2router=new VueRouter({
+      routes: A2routes,
+    })
+    let vm2=new Vue({
+      router: A2router,
+      el:"#exampleA2",
+      methods: {
+        byName: function(){
+          this.$router.push({ // router 不是数组, routes 才是, 所以这不是增加, 而是到指定的地方去去修改
+            name: "a2Two",
+            params:{
+              id: "456",
+            },
+          })
+        },
+        byPath: function(){
+          this.$router.push({
+            path: "/a2two/789",
+            query: {
+              id: "10086",
+            },
+          });
+        },
+      },
+    });
+
+
+    /*嵌套路由*/
+    let b1Sup={
+      template: "#sup"
+    }
+    let b1Sub1={
+      template: "<div>I am sub1</div>"
+    }
+    let b1Sub2={
+      template: "<div>I am sub2</div>"
+    }
+    let B1routes=[ // 这里是路由表
+      {
+        path: "/", // 父路径一般是以根路径来设置: "/", 表示当前实例
+        component: b1Sup, // 不在 new Vue 中挂组件了,改成在路由上挂
+        children:[ // 这里是关键, 所以我是否可以理解为, 一个路线表里可以包含下一级别的路线表
+          {path: "b1sub1", component: b1Sub1},
+          {path: "b1sub2", component: b1Sub2}
+        ]
+      }
+    ]
+    let B1router=new VueRouter({ // 这里是路由器
+      routes: B1routes
+    })
+    let vm3=new Vue({
+      router: B1router,
+      el: "#exampleB1",
+    })
+
+
+    /*多级路由*/
+    let defaultCom={
+      template: "<div>I am defaultCom</div>"
+    }
+    let sidebarCom={
+      template: "<div>I am sidebarCom</div>"
+    }
+    let mainCom={
+      template: "<div>I am mainCom</div>"
+    }
+    let C1routes=[
+      {
+        path: "/",
+        components: {
+          default: defaultCom,
+          sidebar: sidebarCom,
+          main: mainCom
+        }
+      }
+    ]
+    let C1router= new VueRouter({
+      routes: C1routes
+    })
+    let vm4= new Vue({
+      router: C1router,
+      el: "#exampleC1",
+    })
+
+
+    /*导航守卫*/
+    let c2User={
+      template: "<div>c2user视图 {{$route.params.type}}</div>", // 这里面的route.params 就是我们绑定的路线参数, 而 type 就是我们自己设定的变量. 还要注意, 这里的 route 路由线指向的是当前使用的你动态改变的路由线, 但是模板的复用的.
+      beforeRouteUpdate(to, from, next){ // 我们把回调的时机交给了组件自己的判定, 而不是交给实例去判定, 因为这样比较具体
+        console.log("beforeRouteUpdate")
+        next()
+      },
+    }
+    let C2routes=[
+      {
+        path: "/c2user/:type", // type也好, ID也好, 都是自己取的
+        component: c2User,
+      }
+    ]
+    let C2router= new VueRouter({
+      routes: C2routes
+    })
+    let vm5= new Vue({
+      router: C2router,
+      el: "#exampleC2"
+    })
+
+
+    let c3One={
+      template: "<div>c3OneView</div>",
+      beforeRouteEnter(to, from, next){ // 进入路由前使用, 组件实例还没被创建
+        console.log("c3: beforeRouteEnter")
+        next();
+      },
+      beforeRouteUpdate(to, from, next){ // 路由复用时调用, 可以访问组件
+        console.log("c3: beforeRouteUpdate")
+        next()
+      },
+      beforeRouteLeave(to, from, next){
+        console.log("c3: beforeRoteLeave")
+        next();
+      },
+    }
+    let c3Two={
+      template: "<div>c3TwoView</div>",
+    }
+    let C3routes=[
+      {
+        path: "/c3one",
+        component: c3One,
+        beforeEnter: (to, from, next)=> {
+          console.log("c3: beforeEnter")
+          next()
+        },
+      },
+      {
+        path: "/c3two",
+        component: c3Two,
+      }
+    ]
+    let C3router=new VueRouter({
+      routes: C3routes
+    })
+    C3router.beforeEach((to, form, next)=>{ // 进入路由时, 最先被调用
+      console.log("beforeEach")
+      next()
+    })
+    C3router.afterEach((to, from)=>{ // 导航执行完成后调用, 还有这里已经不需要使用 next了, 所以不用使用占位符了
+      console.log("afterEach")
+    })
+    let vm6=new Vue({
+      router: C3router,
+      el: "#exampleC3",
+    })
+
+  </script>
+</html>

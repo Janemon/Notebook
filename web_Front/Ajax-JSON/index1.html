@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>index</title>
+  </head>
+  <body>
+    <h1 style="color: red;">Test!!!</h1>
+    <script>
+
+      function jsonpCallback(data){
+        alert("get data" + data.x)
+      }
+
+    </script>
+    <script src="http://127.0.0.222:3000?callback=jsonpCallback"></script>
+  </body>
+</html>
