@@ -1,63 +1,64 @@
 # If you come from bash you might have to change your $PATH.
- export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/janemon/.oh-my-zsh"
+export ZSH="/home/janemon/.oh-my-zsh"
 
 # Theme
-ZSH_THEME="peepcode"
+ZSH_THEME="frisk"
+# what i used: peepcode, 
 
 
 # Uncomment the following line to use case-sensitive completion.
- CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
- HYPHEN_INSENSITIVE="true"
- 
+HYPHEN_INSENSITIVE="true"
+
 # show the time pre-fix front the indirectives
- HIST_STAMPS="yyyy-mm-dd"
+HIST_STAMPS="yyyy-mm-dd"
 
 # update
 # export UPDATE_ZSH_DAYS=30
 
 
 # Uncomment the following line to display red dots whilst waiting for completion.
- COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
- DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 
 # Plugin
-#plugins=(
-#  git
-#)
+plugins=(
+extract # 一键解压
+)
 
 source /home/janemon/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
- antigen use oh-my-zsh
+antigen use oh-my-zsh
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
- antigen bundle git
- antigen bundle heroku
- antigen bundle pip
- antigen bundle lein
- antigen bundle command-not-found
+antigen bundle git
+antigen bundle heroku
+antigen bundle pip
+antigen bundle lein
+antigen bundle command-not-found
 
 # Syntax highlighting bundle.
- antigen bundle zsh-users/zsh-syntax-highlighting
- 
-# useful plugin finded on web 
- antigen bundle rupa/z
- antigen bundle wting/autojump
- antigen bundle zsh-users/zsh-autosuggestions
- antigen bundle paulirish/git-open
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# useful plugin finded on web
+#antigen bundle rupa/z
+antigen bundle wting/autojump
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle paulirish/git-open
 # # Tell Antigen that you're done.
- antigen apply
+antigen apply
 
 
 
@@ -82,29 +83,57 @@ source $ZSH/oh-my-zsh.sh
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
- export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Aliases
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="cd ~/.oh-my-zsh"
-alias gop="git-open"
+alias gon="git-open"
 
 alias rm="trash -i"  # 防止误删，把文件丢到 /.local/share/Trash/files
 alias rmr="trash -rf"
 alias rml="trash-list"
 alias rmall="trash-empty"
-alias cp="cp -i" # 防止文件覆盖到已存在的文件上
+alias cpi="cp -i" # 防止文件覆盖到已存在的文件上
 alias szh="source ~/.zshrc"
 alias sai="sudo apt-get install"
+alias nr="npm run"
+alias xm="cd /home/janemon/CptPrograms/xmind-8-update8-linux/XMind_amd64 && ./XMind"
+alias cc="clear"
+alias cmx="chmod +x"
+alias lsa="ls -ahl"
+alias tree="tree -Lf"
+alias psv="ps -aux | more"
+alias psb="ps -ef | more"
+alias netstat="netstat -anp | more"
+alias diff="diff -u"
+
+# find most largerest 5 files in current directory
+alias findlg="find . -type f -exec du -h {} \+ | sort -rh | head -n 5"
+
+# function cmd
 function mkcd
 {
     command mkdir $1 && cd $1
 }
 
+# kill all process when system is zombieing
+alias kall="killall -r *"
+
+## git
+alias gk="gitk --all"
+alias gone="git log --oneline"
+alias gcm="git commit -m"
+alias go="git checkout"
+alias gam="git add . && git commit -m"
+alias gb="git branch -av"
+alias gre="git rebase -i"
 
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
+# let autojump works
+. /usr/share/autojump/autojump.sh
 

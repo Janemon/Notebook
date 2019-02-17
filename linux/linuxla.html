@@ -25,10 +25,48 @@
   </p>
   <ol>
    <li>
-    <p>
-     为什么会有逻辑卷管理器(logical volume manager)?
-    </p>
+    为什么会有逻辑卷管理器(logical volume manager)?
+    <blockquote>
+     <p>
+      物理磁盘（顾名思义）
+     </p>
+    </blockquote>
    </li>
+  </ol>
+  <blockquote>
+   <p>
+    虚拟磁盘（使用RAID技术或者其他技术组合的多个物理磁盘组成的虚拟磁盘）
+   </p>
+   <p>
+    虚拟磁盘可以在逻辑上再次进行划分，划分出的磁盘称为逻辑磁盘。(划分后的这100G大小的逻辑磁盘，可能并不一定位于同一块物理磁盘上，它可能各占了每个磁盘的25G，又或者各占了其中两个硬盘的50G，也就是说它可能是跨多个物理磁盘的，这样提高了IO效率。)
+   </p>
+   <p>
+    分区（和逻辑磁盘并不是一个概念, 这是一个用户自己的重装系统的操作，在这之前逻辑磁盘已经分完了）（OS会认为自己看到的就是一个物理磁盘（而不管它实际可能是一个逻辑磁盘），在此基础上，操作系统可以对这个自己看到的物理磁盘（实际上可能是逻辑磁盘）进行分区、格式化等操作）[Windows分区时必须有一个主分区，或者一个主分区一个扩展分区（就是一块硬盘分成了主分区和扩展分区），当处于后者时，我们又可以把扩展分区分成多个逻辑分区（也就是我们常见的D、E、F盘）]
+   </p>
+  </blockquote>
+  <p>
+   他是Linux环境下
+   <strong>
+    对磁盘分区进行管理
+   </strong>
+   的一种机制，LVM是建立在
+   <strong>
+    硬盘和分区
+   </strong>
+   上的一个逻辑层，来提高磁盘分区管理的灵活性。通过LVM系统管理员可以轻松管理磁盘分区，如：将若干个磁盘分区连接为一个整块的卷组(volume group) 形成一个存储池。管理员可以在卷组上随意创建逻辑卷组(logical volumes)并进一步在逻辑卷组上创建文件系统.管理员通过LVM可以方便的调整存储卷组的大小，并且可以对磁盘存储按照组的方式进行命名、管理和分配，例如按照使用用途进行定义：“development”和“sales”，而不是使用物理磁盘名“sda”和“sdb”。而且当系统添加了新的磁盘，通过LVM管理员就不必将磁盘的文件移动到新的磁盘上以充分利用新的存储空间，而是直接扩展文件系统跨越磁盘即可。
+  </p>
+  <blockquote>
+   <p>
+    PV(VM将操作系统识别到的物理磁盘或者RAID提交上来的逻辑磁盘改了个名字，称为PV。物理卷是分区或者硬盘在LVM结构下“转化”的结果，和分区、磁盘等（我们称之为基本的物理存储介质）的不同之处在于包含有与LVM相关的管理参数。)
+   </p>
+   <p>
+    VG(volume group 多个物理卷可以被逻辑的放在一个组中，称为卷组，卷组是一个虚拟的大存储空间，逻辑上是连续的，卷组会将所有的物理卷首尾相连，组成一个逻辑上连续编址的大存储池。)
+   </p>
+   <p>
+    LV(LVM的逻辑卷类似于非LVM系统中的硬盘分区，在逻辑卷之上可以建立文件系统(比如/home或者/usr等)。)[生成的逻辑卷，在主机看来还是和普通磁盘一样，可以对其进行分区、格式化等。逻辑卷和前面的逻辑磁盘的一个区别是，逻辑磁盘的容量划分完成后，不好改变大小，而逻辑卷的容量可以随时进行改变。]
+   </p>
+  </blockquote>
+  <ol>
    <li>
     <p>
      <strong>
@@ -57,6 +95,15 @@
     <p>
      uname =&gt; knel and linux version.
     </p>
+    <blockquote>
+     <p>
+      如果想查看系统的发行版本只能用
+      <code>
+       lsb_release -a
+      </code>
+      , 这个最多只能看处理器类型和主机名（不是用户名）[order: 29]
+     </p>
+    </blockquote>
    </li>
    <li>
     <p>
@@ -95,19 +142,57 @@
     <p>
      stat 查看文件的相关信息
     </p>
+    <blockquote>
+     <p>
+      可以显示大小，块数，链接，权限，属主，最主要的还是时间戳：文件的访问时间，文件的修改时间，文件的权限修改时间（文件的创建时间,在权限从未更改过的前提下）
+     </p>
+    </blockquote>
    </li>
+  </ol>
+  <p>
+   <mark>
+    NOTE:
+   </mark>
+   有个命令是
+   <code>
+    file
+   </code>
+   但是这个是显示文件类型的，而不像
+   <code>
+    stat
+   </code>
+   这样会包含那么多的信息.
+  </p>
+  <ol>
+   <li>
+    在文件的每行截取指定字符, 通过 -b/-c(字符而不是字节)/-f.其实看去来没什么用但是’存在即是真理’. 比如: 截取passw文件的第一个用户, 用cut就特别方便.
+    <br/>
+    <img alt="cut command" src="../datapi/linux_cut_command2.png"/>
+    <br/>
+    <img alt="cut command" src="../datapi/linux_cut_command.png"/>
+   </li>
+  </ol>
+  <p>
+   <mark>
+    注意：
+   </mark>
+   现在我们可以知道，对文件的行我们可以用
+   <code>
+    head
+   </code>
+   or
+   <code>
+    tail
+   </code>
+   。对行里面我们可以用
+   <code>
+    cut
+   </code>
+  </p>
+  <ol>
    <li>
     <p>
-     在文件的每行截取指定字符, 通过 -b/-c/-f.其实看去来没什么用但是’存在即是真理’. 比如: 截取passw文件的第一个用户, 用cut就特别方便.
-     <br/>
-     <img alt="cut command" src="../datapi/linux_cut_command2.png"/>
-     <br/>
-     <img alt="cut command" src="../datapi/linux_cut_command.png"/>
-    </p>
-   </li>
-   <li>
-    <p>
-     diff 查看文件的不同, 单单是查看的方式就有三种: diff file1 file2 | diff -c file1 file2 | diff -u file1 file2 (当然是合并版最好,’git’ 就采取了这种方式)
+     diff 查看文件(是两个不同的文件)的不同, 单单是查看的方式就有三种: diff file1 file2 | diff -c file1 file2 | diff -u file1 file2 (当然是合并版最好,’git’ 就采取了这种方式)
      <br/>
      <img alt="diff command" src="../datapi/linux_diff_command1.png"/>
      <br/>
@@ -116,7 +201,10 @@
    </li>
    <li>
     <p>
-     mkdir -p .... 可创建层叠文件夹
+     mkdir -p .... 可创建层叠文件夹:
+     <code>
+      mkdir -p parent/{a,b,c}
+     </code>
     </p>
    </li>
    <li>
@@ -132,13 +220,58 @@
     <p>
      tar -xzvf … -C ....
      <br/>
-     解压(为gzip),过程,源文件,目标地址
+     解压(为tar.gzip),过程,源文件,目标地址
      <br/>
      tar -czvf … -C ....
      <br/>
-     压缩(为gzip),过程,源文件,目标地址
+     压缩(为tar.gzip),过程,源文件,目标地址
+    </p>
+    <p>
+     gzip -d …
+     <br/>
+     解压(decompress, 为 .gz格式), 源文件
+     <br/>
+     gzip …
+     <br/>
+     压缩，源文件
+    </p>
+    <p>
+     bzip2 -d …
+     <br/>
+     解压(为bz2格式), 源文件
+     <br/>
+     bzip2 -z …
+     <br/>
+     压缩，源文件
+    </p>
+    <p>
+     unzip …
+     <br/>
+     解压（格式为zip），源文件
+     <br/>
+     zip -r … file.zip
+     <br/>
+     压缩，递归，源文件(为目录), 目标文件(压缩后)
     </p>
    </li>
+  </ol>
+  <blockquote>
+   <p>
+    格式为这样的：
+    <code>
+     tar.zip
+    </code>
+    和
+    <code>
+     tar.gz
+    </code>
+    之类的，第一个为 tar 打包不是压缩，而后面的才是压缩，而且要注意一个重要更新 tar 从1.15版本后就可以自动识别压缩的格式，不再需要人为区分压缩格式就能正确解压, 所以一切tar包的解压都可以用
+    <code>
+     tar -xvf
+    </code>
+   </p>
+  </blockquote>
+  <ol>
    <li>
     <p>
      /etc/passwd 保存着所有用户信息
@@ -146,26 +279,53 @@
    </li>
    <li>
     <p>
-     grep 查询字符 被查询文件
+     grep 查询字符 被查询文件(可以是多个)
      <br/>
      -n 这个是显示字符所在的行数
      <br/>
+     -i 忽略文字大小写
+     <br/>
      -v 参数是那么代表反选
      <br/>
-     -c 显示符合的行数(列数)
+     -c 统计出符合的行数(列数)
      <br/>
      -E “…” 使用正则
      <br/>
      -r 可对目录使用递归
      <br/>
-     -q 成功搜索到输出 ‘0’ or if will return not zero value when it failed
+     -A number, 显示匹配字符的下面(对文字来说，下面的确是前进的方向)几行内容
      <br/>
-     -A number, means print the content of numberth lines behind the fit line.
+     -B number, 显示匹配字符上面几行的内容
      <br/>
-     -B number, 意味着打印符合条件的当前行前number行的内容.
+     -C number, 显示匹配字符前后几行的内容
      <br/>
-     -C number, 前后行
+     -l 列出包含查询字符的文件名（在多个查询文件中）
+     <br/>
+     -e 匹配多个查询字符
+     <br/>
+     -f 我们可以创建一个查询模式文件，通过这个文件来进行查询文件中内容
+     <br/>
+     <mark>
+      注意：
+     </mark>
     </p>
+    <blockquote>
+     <p>
+      <code>
+       grep
+      </code>
+      查询的是文件内容，而下面的
+      <code>
+       find
+      </code>
+      是查文件本身。
+      <br/>
+      查找文件中的所有空行：
+      <code>
+       grep ^$ file -n
+      </code>
+     </p>
+    </blockquote>
    </li>
    <li>
     <p>
@@ -211,7 +371,7 @@
    的世界吧:
    <br/>
    <strong>
-    find ‘diretory’ ‘condition’ ‘motion’
+    find ‘directory’ ‘option’
    </strong>
    <br/>
    <em>
@@ -260,7 +420,7 @@
     </strong>
     , means using regex to find file.
     <strong>
-     eg: find . -regex “.*(.txt\|.pdf)$”
+     eg: find . -regex “.*(.txt|.pdf)$”
     </strong>
    </p>
    <p>
@@ -380,13 +540,20 @@
      <mark>
       eg:
      </mark>
-     find . -name “*.txt” -exec rm {} \;.
+     <code>
+      find . -name "*.txt" -exec rm {} \;
+     </code>
+     .
     </strong>
     Actually, we can use
     <mark>
      -ok
     </mark>
-    to replace it beacuse it will show the prompt which show more security.**
+    to replace it beacuse it will show the prompt which show more security.值得注意的是，只能用在
+    <code>
+     \;
+    </code>
+    这种情况下**
    </p>
   </blockquote>
   <hr/>
@@ -454,7 +621,7 @@
     <br/>
     1 通过
     <strong>
-     kill `ps -ef | grep ‘ddd’`
+     kill ps -ef | grep ‘ddd’
     </strong>
     <br/>
     这种形式，这个时候实际上等同于拼接字符串得到的命令，其效果类似于  kill $pid
@@ -494,8 +661,20 @@
    xargs命令是给其他命令传递参数的一个过滤器，也是组合多个命令的一个工具。它擅长将标准输入数据转换成命令行参数，xargs能够处理管道或者stdin并将其转换成特定命令的命令参数.
    <br/>
    <img alt="linux_command_xargs" src="../datapi/linux_command_xargs1.png"/>
-   <br/>
-   这里值得注意的是, xargs 必须和其他命令一起执行的, 因为他的作用就是为了使其他东西转换成命令行参数, xargs 是要放在需要参数的命令行前面.
+  </p>
+  <blockquote>
+   <p>
+    值得注意的是
+    <strong>
+     xargs
+    </strong>
+    是默认以空格作为分隔符来进行参数的分隔
+    <br/>
+    -d 指定参数分隔的分隔符； -n 每次处理参数个数，不写则是不做处理直接文件为一个参数
+   </p>
+  </blockquote>
+  <p>
+   这里值得注意的是, xargs 必须和其他命令一起执行的(我主要用在 find 上), 因为他的作用就是为了使其他东西转换成命令行参数, xargs 是要放在需要参数的命令行前面.
    <br/>
    这里有一个和 find 命令里面的一个
    <strong>
@@ -524,7 +703,7 @@
    </em>
    <strong>
     <code>
-     ls *.jpg | xargs -n1 I cp {} /data/images
+     ls *.jpg | xargs -n1 -I {} cp {} /data/images
     </code>
    </strong>
    <br/>
@@ -540,18 +719,37 @@
     </code>
     =&gt;
     <code>
-     find . -type f -name "*.log" | xargs -n1 I rm -f {}
+     find . -type f -name "*.log" | xargs -n1 -I {} rm -f {}
     </code>
    </strong>
    <br/>
    <img alt="linux_command_xargs" src="../datapi/linux_command_xargs2.png"/>
   </p>
+  <blockquote>
+   <p>
+    所以总结出来
+    <strong>
+     xargs
+    </strong>
+    最重要的参数分别是
+    <code>
+     -n, -d, -I({}), -t, -p
+    </code>
+   </p>
+  </blockquote>
   <hr/>
   <ol>
    <li>
     <p>
      pidof name 查找改该进程的id
     </p>
+    <blockquote>
+     <p>
+      -s 返回以进程号
+      <br/>
+      -c 仅显示具有相同“root”目录的进程
+     </p>
+    </blockquote>
    </li>
    <li>
     <p>
@@ -580,15 +778,20 @@
    </li>
   </ol>
   <p>
-   输入重定向: 把文件导入命令(一般是直接在命令后面跟文件)
+   输入重定向: 从文件中输入，也就是说把文件导入命令(一般是直接在命令后面跟文件)
    <a href='"&lt;"  就如C++ 一样的输入方向'>
     多用于组合命令中
    </a>
    <br/>
    输出重定向: 把原本输出屏幕的数据信息写入到指定文件中显示
    <br/>
-   <img alt="standard in out" src="../datapi/SIO.png"/>
+   标准输入(STDIN, 文件描述符为0)：默认是从键盘输入
    <br/>
+   标准输出(STDOUT，文件描述符为1)：默认输出到屏幕
+   <br/>
+   标准错误输出(STDERR，文件描述符为1)：默认输出到屏幕
+  </p>
+  <p>
    <img alt="standard input redirection" src="../datapi/rein.png"/>
    <br/>
    <img alt="the way of redirection of inouterror" src="../datapi/reInOutWay.png"/>
@@ -602,10 +805,6 @@
     set -o noclobber
    </code>
    , 然后, 当确定要重定向时, 使用 ‘&gt;|’.
-   <br/>
-   2.’&gt;’ 和 ‘&lt;’, 可以一并使用:
-   <br/>
-   <img alt="'&gt;' and '&lt;'" src="../datapi/combind'&lt;,&gt;'.png"/>
   </p>
   <ol>
    <li>
@@ -707,25 +906,44 @@
      </ul>
     </blockquote>
    </li>
-   <li>
+  </ol>
+  <blockquote>
+   <p>
+    需要注意的是这些条件放的位置：
+    <code>
+     -e
+    </code>
+    是放在文件名前面，而
+    <code>
+     -ge
+    </code>
+    就放在文件名后面
+    <br/>
+    <code>
+     &amp;&amp;
+    </code>
+    我理解为“连”，前面为真时执行后面的命令；
+    <code>
+     ||
+    </code>
+    我理解为“跳”，前面为假时执行后面的命令
+    <br/>
+    2.
     <strong>
      $?
     </strong>
     可以显示上一条命令执行后的返回值, 其实如果在脚本中,那么上一条语句执行过后,那么它也就可以说是上一条命令了.
-   </li>
+    <br/>
+    3. shell 脚本中的条件测试语句, 如果成功那么它返回的值是
+    <strong>
+     0
+    </strong>
+    , failed, 则返回其他任何值.
+   </p>
+  </blockquote>
+  <ol>
    <li>
-    <p>
-     shell 脚本中的条件测试语句, 如果成功那么它返回的值是
-     <strong>
-      0
-     </strong>
-     , failed, 则返回其他任何值.
-    </p>
-   </li>
-   <li>
-    <p>
-     shell 脚本的流程控制语句:
-    </p>
+    shell 脚本的流程控制语句:
     <blockquote>
      <ol>
       <li>
@@ -842,7 +1060,7 @@
     <p>
      <img alt="linux_command_usermod1.png" src="../datapi/linux_command_usermod1.png"/>
      <br/>
-     其中, 需要注意的是’一切皆是文件’, 所以添加用户实际上就是修改配置文件的过程. 用户信息都保存在 /etc/passwd 中, 不要单单认为他是’密码’ :).
+     其中, 需要注意的是’一切皆是文件’, 所以添加用户实际上就是修改配置文件的过程. 用户信息都保存在 /etc/passwd 中, /etc/shadow 才是加密的密码信息 :).
      <br/>
      <img alt="linux_command_usermod2" src="../datapi/linux_command_usermod2.png"/>
     </p>
@@ -922,10 +1140,6 @@
    <li>
     <p>
      <img alt="linux_command_chmod" src="../datapi/linux_command_chmod.png"/>
-     <br/>
-     <strong>
-      chmod ‘who’+’what access’
-     </strong>
     </p>
    </li>
    <li>
@@ -1062,7 +1276,7 @@
      SUID:4 SGID:2 SBIT:1
     </strong>
     <br/>
-    2 隐藏权限, 可以对文件,目录进行隐秘的设置, 比如不能修改内容;只能追加内容: 删除文件后还有备份; 他这个不同 特殊权限, 是针对的是文件而不是用户. 用法:
+    2 隐藏权限, 可以对文件/目录,目录进行隐秘的设置, 比如不能修改内容;只能追加内容: 删除文件后还有备份; 他这个不同 特殊权限, 是针对的是文件而不是用户. 用法:
     <strong>
      <code>
       chattr +/- parameter file
@@ -1115,6 +1329,23 @@
      <img alt="linux_dev4" src="../datapi/linux_dev4.png"/>
      <br/>
      <img alt="linux_dev5" src="../datapi/linux_dev5.png"/>
+    </p>
+   </li>
+   <li>
+    <p>
+     /lost+found: 这个目录是空的，当系统非法关机后，里面才会放一些文件
+     <br/>
+     /etc(everyting could be configured)
+     <br/>
+     /usr: usr是user的缩写，是曾经的HOME目录，然而现在已经被/home取代了，现在usr被称为是Unix System Resource，即Unix系统资源的缩写。/usr 是系统核心所在，包含了所有的共享文件。它是 unix 系统中最重要的目录之一，涵盖了二进制文件，各种文档，各种头文件，还有各种库文件；还有诸多程序，例如 ftp，telnet 等等。
+     <br/>
+     /srv: service的缩写，该服务存放着服务启动后需要提取的服务
+     <br/>
+     /mnt: 为了让用户临时挂载别的文件系统，然后进入该目录后就可以查看里面的内容了.
+     <br/>
+     /opt: 这是给主机额外安装软件所摆放的目录
+     <br/>
+     /usr/local: 这和 /opt 的用途一样，但是这一般放通过编译而安装的软件
     </p>
    </li>
   </ol>

@@ -1,0 +1,1382 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   h1,h2,h3,h4{color:#6495ed}body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}body{font-family:Helvetica,Arial,sans-serif}h1,h2{text-align:center}blockquote{background:#f9f9f9;border-left:10px solid #6495ed;margin:1.5em 10px;padding:.5em 10px;font-style:italic}blockquote p{display:inline}hr{clear:both;float:none;width:100%;height:2.5px;margin:1.4em 0;border:none;background:#ddd;background:-webkit-gradient(linear,left bottom,right bottom,color-stop(0,#fff),color-stop(.1,#ddd),color-stop(.9,#ddd),color-stop(1,#fff)) #ddd;background:-moz-linear-gradient(left center,#fff 0,#ddd 10%,#ddd 90%,#fff 100%) #ddd}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr th{font-weight:700}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none;background:0 0}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <p>
+   1 首先自己本地得有一个仓库
+   <br/>
+   <code>
+    mkdir Test_git
+   </code>
+  </p>
+  <blockquote>
+   <p>
+    或者使用第二步的操作 (git init Test_git)
+   </p>
+  </blockquote>
+  <hr/>
+  <p>
+   2 让git来管理你仓库里面的工程
+   <br/>
+   <code>
+    git init
+   </code>
+  </p>
+  <hr/>
+  <p>
+   3 创建你的工程.这里假设你的工程现在只做出一个 readme.txt 文件
+   <br/>
+   <code>
+    vim reademe.txt
+   </code>
+  </p>
+  <hr/>
+  <p>
+   4 把这个readme.txt 文件追踪起来(这是第一步,我们要做的版本控制当然是得把他添加进来git的控制中),添加到 working dictionary(另一些资料称为:Index)
+   <br/>
+   <code>
+    git add .
+   </code>
+   <br/>
+   (注意: 我们没修改一次都要add一下用于追踪)
+  </p>
+  <hr/>
+  <p>
+   5 检查情况
+   <br/>
+   <code>
+    git status
+   </code>
+  </p>
+  <hr/>
+  <p>
+   6 如果此时,你还想在修改一次的话,那么修改完后,可以查看前后有什么不同的地方
+   <br/>
+   <code>
+    git diff
+   </code>
+   (工作区和暂存区的区别)
+  </p>
+  <hr/>
+  <p>
+   7 最后,如果确认无误后,我们就可以真正地去保存他了(Head).
+   <br/>
+   <code>
+    git commit -m 'des'
+   </code>
+  </p>
+  <hr/>
+  <p>
+   8 当然如果我们是团队开发的话,那么我们必须建一个中心仓库来管理整个团队的工程项目.
+  </p>
+  <blockquote>
+   <p>
+    所以我们得链接上这个远端的中心仓库(提交到远程github 上的仓库, 你也得要在上面有才行啊 #_#!).
+   </p>
+  </blockquote>
+  <p>
+   <code>
+    git remote add name referenced-address
+   </code>
+  </p>
+  <blockquote>
+   <p>
+    remote add 表示了和本地的 add有所不同
+    <br/>
+    当我们不需要了，我们可以：
+    <code>
+     git remove name
+    </code>
+    <br/>
+    如果我们把当地的仓库push到一个完全没有联系的远程仓库中去的话，那么我们99%会失败，所以我们必须把上游和我们产生冲突的分支拉下来,一般用
+    <code>
+     git fetch branch
+    </code>
+    . 不用
+    <code>
+     pull
+    </code>
+    是因为他直接两步走了： 先fetch下来，再merge掉, 会有一定风险。[其实我们]
+    <br/>
+    <code>
+     fast-foward
+    </code>
+    表示树没有共同的祖先
+    <br/>
+    如果一开始
+    <strong>
+     add
+    </strong>
+    的时候出现了
+    <code>
+     fast-forward
+    </code>
+    的情况，那么这个情况会更加复杂，我们在
+    <strong>
+     fetch
+    </strong>
+    后的merge时会有出现
+    <strong>
+     merge unrelated histories
+    </strong>
+    所以我可可以添加
+    <strong>
+     –allow-unrelated-historries
+    </strong>
+    到
+    <strong>
+     merge
+    </strong>
+    中去[其实这个选项太长了，我们可以在
+    <code>
+     git --help
+    </code>
+    中 cut下来]
+    <br/>
+    其实用
+    <strong>
+     改基
+    </strong>
+    也可以解决种鸽冲突问题
+   </p>
+  </blockquote>
+  <p>
+   <mark>
+    NOTE:
+   </mark>
+   <br/>
+   当然有些时候我们是直接在github上直接clone 那个中心仓库的工程项目,而不用自己建一个.
+   <br/>
+   <code>
+    git clone referenced address
+   </code>
+  </p>
+  <hr/>
+  <p>
+   9 那么和remote链接上了之后,我们可能被分配创建一个新的分支
+   <br/>
+   <code>
+    git branch branch_name
+   </code>
+  </p>
+  <hr/>
+  <p>
+   10 如果我们想要切换到另一个分支的时候那么我们可以这样做:
+   <br/>
+   <code>
+    git checkout otherBranch_name
+   </code>
+  </p>
+  <hr/>
+  <p>
+   11 当我们完成了自己所完成的功能时候,我们就要把他提交到中心仓库上了
+   <br/>
+   <code>
+    git push origin&lt;1&gt; master&lt;2&gt;
+   </code>
+  </p>
+  <blockquote>
+   <p>
+    1 假设是提交到remote的分支,默认是主机上的master)
+    <br/>
+    2 假设是当前要提交的分支,默认的也是这个
+   </p>
+  </blockquote>
+  <p>
+   <img alt="git_origin_otherExplain" src="../datapi/git_origin_ohterExplain.png"/>
+   <br/>
+   <img alt="git_origin_otherExplain2" src="../datapi/git_origin_otherExplain2.png"/>
+   <br/>
+   <mark>
+    NOTE:
+   </mark>
+   有时候这个分支(可能是master也可能是branch)与多个主机存在追踪关系,可以用 -u 选项指定一个默认的主机, 这样后面就不用加任何参数了
+   <br/>
+   <code>
+    git push -u origin master
+   </code>
+  </p>
+  <blockquote>
+   <p>
+    第一次上传有可能会遇到push失败的情况，那是因为跟SVN一样，github上有一个README.md 文件没有下载下来 。我们得先
+    <code>
+     git pull --rebase origin master
+    </code>
+    ，然后执行
+    <code>
+     git push -u origin master
+    </code>
+    就可以成功啦.
+    <br/>
+    如果你提交的是分支那么就不是
+    <strong>
+     master
+    </strong>
+    了，就是你提交的那个分支名:
+    <code>
+     branchName
+    </code>
+    <br/>
+    这个时候需要提交密码.
+   </p>
+  </blockquote>
+  <hr/>
+  <p>
+   12 查看当前有那些remote链接:
+   <br/>
+   <code>
+    git remote -v
+   </code>
+  </p>
+  <hr/>
+  <p>
+   13 如果我们提交上去的branch已经被管理者所merge了,那么我们可以在本地上merge该分支,然后删除这个已经merge 的分支,如果可以顺便把remote的该分支也删了.
+   <br/>
+   <code>
+    git checkout master(假设是主分支)
+   </code>
+   <br/>
+   <code>
+    git merge required_branch
+   </code>
+   <br/>
+   <code>
+    git branch -d required_branch
+   </code>
+   [这就是删除分支]
+   <br/>
+   <code>
+    git push origin(假设是远端的主分支) --delete required_branch
+   </code>
+  </p>
+  <hr/>
+  <p>
+   14 当然不止你一个在打理一个分支功能,那么你也要吧别人的修改的东西拉到自己的本地分支了:
+   <br/>
+   <code>
+    git pull origin request_branch
+   </code>
+  </p>
+  <blockquote>
+   <p>
+    1 如果就是合并到这个分支的话,那就不用再打名字了, 其实如果出来工作了的话, 这是不是经常做的事
+    <br/>
+    2 如何你在之前已经设定了默认主机,那么根据情况, 你可以像 ‘git push’ 那样直接:
+    <code>
+     git pull
+    </code>
+   </p>
+  </blockquote>
+  <hr/>
+  <p>
+   15 如何我们想删除每个文件, 我们可以
+   <br/>
+   ‘git rm file_name`
+  </p>
+  <blockquote>
+   <p>
+    1 其实直接在工作区中
+    <code>
+     rm ...
+    </code>
+    那么还得
+    <code>
+     git add .
+    </code>
+    把情况
+    <strong>
+     add
+    </strong>
+    进去, 而 这个这不用。
+    <br/>
+    2 这样就把文件从git仓库中删除了(也就是说不再被git追踪了), 并且连工作区中的文件也一并删除了
+    <br/>
+    3 如果我们只想把他从git仓库中删除但是不在工作区内删除的话,
+    <br/>
+    <code>
+     git rm --cached file_name
+    </code>
+    <br/>
+    Note: 最后,我们如果想要在github上也一并删除的话那么就得要 ‘git commit -&gt; git push’
+   </p>
+  </blockquote>
+  <hr/>
+  <p>
+   16 如何我们想要重命名,那么 status 会显示出这样的操作吗?
+   <br/>
+   <code>
+    git mv olafilename new filename
+   </code>
+   <br/>
+   答案是: 会的
+  </p>
+  <hr/>
+  <p>
+   17 如果我们想要查看提交的日记,我们可以
+   <br/>
+   <code>
+    git log
+   </code>
+   <br/>
+   如果我们想要查看提交的内容差异:
+   <br/>
+   <code>
+    git log -p
+   </code>
+   <br/>
+   如果我们想要查看所有分支的提交内容:
+   <br/>
+   <code>
+    git log --all
+   </code>
+   <br/>
+   如果我们想要查看简洁的提交内容:
+   <br/>
+   <code>
+    git log --oneline
+   </code>
+   <br/>
+   如果我们想要查看最近几次的提交内容:
+   <br/>
+   <code>
+    git log -n2
+   </code>
+   [这里表示最近2次]
+   <br/>
+   如果我们想要查看某个分支提交的内容:
+   <br/>
+   <code>
+    git log branchName
+   </code>
+   <br/>
+   如果我们想要查看提交的内容层级:
+   <br/>
+   <code>
+    git log -graph
+   </code>
+  </p>
+  <hr/>
+  <p>
+   <mark>
+    NOTE:
+   </mark>
+   <br/>
+   1. 我们知道在git下有三个区:
+   <br/>
+   首先, 是我们的
+   <strong>
+    暂存区(Index)
+   </strong>
+   这是我们
+   <strong>
+    ‘git add’
+   </strong>
+   后的区
+   <br/>
+   其次, 是我们的
+   <strong>
+    完成区(Head)
+   </strong>
+   这是我们
+   <strong>
+    ‘git commit’
+   </strong>
+   后的最终区
+   <br/>
+   最后, 是我们的
+   <strong>
+    工作区
+   </strong>
+   , 就是我们实际上操作的区域但没有被git跟踪,换句话来说其实他和git没有什么关系.
+  </p>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      <code>
+       git config --list
+      </code>
+     </strong>
+     <br/>
+     这个是查看配置信息的
+     <br/>
+     <img alt="git_config_setting1" src="../datapi/git_config_setting1.png"/>
+    </p>
+    <blockquote>
+     <ol>
+      <li>
+       <code>
+        git config --global
+       </code>
+       [当前用户的所有仓库]
+      </li>
+      <li>
+       <code>
+        git config --system
+       </code>
+       [所有登陆的用户]
+      </li>
+      <li>
+       <code>
+        git config --local
+       </code>
+       [仅仅是针对当前仓库]
+      </li>
+     </ol>
+    </blockquote>
+   </li>
+   <li>
+    <p>
+     <strong>
+      <code>
+       .gitignore
+      </code>
+     </strong>
+     <br/>
+     这个是在git中可被忽略的文件:
+    </p>
+    <blockquote>
+     <blockquote>
+      <p>
+       1 ‘#’ 表示注释
+       <br/>
+       2 ‘/’ 表示这个忽略的是目录
+      </p>
+     </blockquote>
+    </blockquote>
+   </li>
+   <li>
+    <p>
+     <strong>
+      git status
+     </strong>
+     是仅仅显示了那些文件做了修改, 有没有被 add 或者 commit,
+     <br/>
+     而
+     <strong>
+      git diff
+     </strong>
+     这是显示了那些还没被add的文件做了什么样的修改,
+     <br/>
+     而
+     <strong>
+      git diff –cached
+     </strong>
+     这是显示了还在暂存区和上次提交的区别,做了那些修改.
+    </p>
+   </li>
+   <li>
+    <p>
+     <strong>
+      <code>
+       git commit -am'...'
+      </code>
+     </strong>
+     <br/>
+     是可以不用’add’ 就可直接提交file了.But the file must be ‘add’ before
+    </p>
+   </li>
+   <li>
+    <p>
+     如果想要知道如何设置SSh秘钥, 上网搜索吧!
+    </p>
+   </li>
+  </ol>
+  <hr/>
+  <p>
+   18 换行: 在行末加两个空格键和一个回车键. (
+   <c-enter>
+    )
+    <br/>
+    分段: 段落之间空一段
+   </c-enter>
+  </p>
+  <hr/>
+  <p>
+   19 如何解决冲突, 选择一个你真正想修改的而放弃另一个.
+   <br/>
+   <img alt="git_solveConflict1" src="../datapi/git_solveConfict1.png"/>
+   <br/>
+   <img alt="git_solveConflict2" src="../datapi/git_solveConflict2.png"/>
+   <br/>
+   <img alt="git_solveConflict3" src="../datapi/git_solveConflict3.png"/>
+   <br/>
+   如我们看到的, 在
+   <code>
+    <mark>
+     =
+    </mark>
+    ===
+   </code>
+   上方的是我们当前仓库所在与远程仓库同一行的修改, 那么下方当然是远程仓库的修改咯.
+  </p>
+  <hr/>
+  <p>
+   20 I don’t know???
+   <br/>
+   <img alt="git_log1" src="../datapi/git_log1.png"/>
+  </p>
+  <hr/>
+  <p>
+   21 现在, 让我们来谈谈关于分支合并和处理冲突的东西吧:
+  </p>
+  <blockquote>
+   <p>
+    1 正如前面所说, 我们可以通过
+    <code>
+     branch
+    </code>
+    命令来创建分支, eg:
+    <code>
+     git branch issue1
+    </code>
+    . 如果我们不指定参数而执行的话, 那么他就会显示分支列表.
+   </p>
+   <p>
+    2 切换分支, 也如之前所说的, 可以用到
+    <code>
+     checkout
+    </code>
+    ,
+    <code>
+     git checkout issue1
+    </code>
+    . 不过值得注意的是, 我们如果切换到那个工作区工作, 那么我们的
+    <strong>
+     Head
+    </strong>
+    (用我自己的话来说这个是
+    <strong>
+     完成区
+    </strong>
+    ), 就在那个分区.
+   </p>
+   <p>
+    3 如果我们切换到了issue1中, 并且有内容提交了. 那么流程图是这样的:
+    <br/>
+    <img alt="git_branch3" src="../datapi/git_branch3.png"/>
+   </p>
+   <p>
+    4 如果我们想合并分支了, 那个我们可以使用
+    <code>
+     merge
+    </code>
+    , 先切换到
+    <code>
+     master
+    </code>
+    分支,确认一下内容是否已经合并了, 没有的话, 那么我们就可以合并他,eg:
+    <code>
+     git merge issue
+    </code>
+    <br/>
+    <img alt="git_branch4" src="../datapi/git_branch4.png"/>
+    <br/>
+    完成之后, 打开文档, 确认内容是否已经更改.如果更改了的话, 你又不再需要这个分支, 那个可以把他delete:
+    <code>
+     git branch -d &lt;branchname&gt;
+    </code>
+    .
+   </p>
+   <p>
+    5 假如我们多个分支进行工作的话, 那么可能会出现以下情况:
+    <br/>
+    <img alt="git_branch5" src="../datapi/git_branch5.png"/>
+    <br/>
+    <img alt="git_branch6" src="../datapi/git_branch6.png"/>
+    <br/>
+    <img alt="git_branch7" src="../datapi/git_branch7.png"/>
+    <br/>
+    我们开始可以合并issue2, 但是合并issue3就会出现冲突, 那么就是说有某处这两个分支是做出了不同的修改.
+    <br/>
+    <img alt="git_branch8" src="../datapi/git_branch8.png"/>
+    <br/>
+    <img alt="git_branch2" src="../datapi/git_branch2.png"/>
+    <br/>
+    <img alt="git_branch1" src="../datapi/git_branch1.png"/>
+    <br/>
+    那么做出了修改之后, 解决冲突部分, 重新提交, 比如像这样:
+    <br/>
+    <img alt="git_branch9" src="../datapi/git_branch9.png"/>
+    <br/>
+    上面这种是其中一种合并分支的方法, 但是这种合并分支的方法, 会让历史记录看起来有点乱啊(但是我觉得挺好的啊), 接下来介绍第二种方法:
+   </p>
+   <blockquote>
+    <p>
+     1
+     <img alt="git_branch10" src="../datapi/git_branch10.png"/>
+    </p>
+    <p>
+     2 比如,现在我们回到
+     <code>
+      issue3
+     </code>
+     , 并把它合并到
+     <code>
+      master
+     </code>
+     上.=&gt;
+     <code>
+      git checkout issue3
+     </code>
+     ,
+     <code>
+      git rebase master
+     </code>
+     , 此时我们就像上面那种方法一样, 冲突依旧存在, 我们像之前一样, 修改内容就行.
+    </p>
+    <p>
+     3 最后, 把修改过后的文件
+     <code>
+      add
+     </code>
+     好, 并且将rebase进行到底:
+     <code>
+      git rebase --continue
+     </code>
+     <br/>
+     <img alt="git_branch11" src="../datapi/git_branch11.png"/>
+    </p>
+    <p>
+     4 最后, 尽管这个合并主要都是在分支上进行, 但是我们最后还是得要回到master上进行合并:
+     <code>
+      git checkout master
+     </code>
+     ,
+     <code>
+      git merge issue3
+     </code>
+     <br/>
+     <img alt="git_branch12" src="../datapi/git_branch12.png"/>
+    </p>
+   </blockquote>
+  </blockquote>
+  <p>
+   <mark>
+    最后, 总结两个办法的不同:
+   </mark>
+  </p>
+  <blockquote>
+   <p>
+    1
+    <strong>
+     <em>
+      第一种
+     </em>
+    </strong>
+    : 我觉得操作比较直观而且历史记录比较详细,但是多过头的话, 这种方法就会显得记录的比较’复杂难看’. 这种方法:
+    <strong>
+     全部操作都是在master上进行的
+    </strong>
+   </p>
+   <p>
+    2
+    <strong>
+     <em>
+      第二种
+     </em>
+    </strong>
+    : 这种的话操作如果你懂的话也是比较简单直观的, 相比上一种方法, 他的记录不会那么详细, 因为最后他都不会记录分支的’路径记录’, 但是这样在流程图上就看起来比较直观, 即使是多个分支时, 也一样.这种方法:
+    <strong>
+     他的前期操作都是在分支上, 到最后需要合并的时候才会回到master
+    </strong>
+    .
+   </p>
+  </blockquote>
+  <hr/>
+  <p>
+   22 现阶段我们一般是使用
+   <code>
+    pull
+   </code>
+   来更新数据, 但是其实如果说安全一点还是用
+   <code>
+    fetch
+   </code>
+   比较好. 因为
+   <strong>
+    fetch
+   </strong>
+   他是不会
+   <strong>
+    自动合并
+   </strong>
+   的, 你可以在merge前, 查看更新情况, 然后在决定是否合并, 当然
+   <strong>
+    pull
+   </strong>
+   也有他的好处, 就是比较方便和省事.
+  </p>
+  <hr/>
+  <p>
+   <mark>
+    NOTE:
+   </mark>
+   <strong>
+    额外知识点： .git
+   </strong>
+   <br/>
+   1.
+   <strong>
+    HEAD
+   </strong>
+   文件里面的内容是表示当前工作分支, 例如：
+   <code>
+    ref: refs/heads/dev
+   </code>
+   <br/>
+   2.
+   <strong>
+    config
+   </strong>
+   文件就是配置内容，比如用户信息，分支情况等等
+   <br/>
+   3.
+   <strong>
+    refs
+   </strong>
+   目录里面存放的是，分支：
+   <code>
+    heads
+   </code>
+   ，远程主机：
+   <code>
+    remotes
+   </code>
+   ，标签：
+   <code>
+    tags
+   </code>
+   <br/>
+   4.
+   <strong>
+    objects
+   </strong>
+   目录里面存放的是，各类文件，主要类型有
+   <strong>
+    commit
+   </strong>
+   [提交],
+   <strong>
+    tree
+   </strong>
+   [树], and
+   <strong>
+    blob
+   </strong>
+   [文件]
+  </p>
+  <blockquote>
+   <p>
+    我们使用
+    <code>
+     git cat-file -t name
+    </code>
+    来查看文件类型,
+    <code>
+     git cat-file -p name
+    </code>
+    来查看文件内容
+   </p>
+  </blockquote>
+  <p>
+   <strong>
+    那么commit，tree，blob三者的关系是什么呢？
+   </strong>
+  </p>
+  <p>
+   <img alt="commit_tree_blob" src="../datapi/commit_tree_blob.png"/>
+  </p>
+  <p>
+   <img alt="commit_tree_blob" src="../datapi/commit_tree_blob2.png"/>
+  </p>
+  <blockquote>
+   <p>
+    HEAD 虽然指向的是分支但是分支最终的工作还是提交“commit”
+    <br/>
+    一个commit类型的文件里面有两种类型的文件，一个是对应文件夹的
+    <strong>
+     tree
+    </strong>
+    , 另一个是对应文件(文本文件)的
+    <strong>
+     blob
+    </strong>
+   </p>
+  </blockquote>
+  <hr/>
+  <p>
+   23 分离头指针（detached HEAD)
+  </p>
+  <blockquote>
+   <p>
+    就是指分离 HEAD, 就是直接 checkout 某个 commit
+    <br/>
+    本质上就是工作在没有分支上的情况,没有和branch挂钩
+    <br/>
+    所以如果一段时间后你没有把它向某个分支挂钩，那么git就会把它当做垃圾从而抛弃他
+    <br/>
+    而当你切换的时候会提示让你
+    <code>
+     git branch &lt;new-branch-name&gt; commitName
+    </code>
+    , 来保存变更下来
+    <br/>
+    <strong>
+     按我的理解就是，这是一个极具实验性和随意性的方法，随意是指他对这个改动可有可没，实验性就是心血一来想实验一下
+    </strong>
+    <br/>
+    <mark>
+     NOTE:
+    </mark>
+    <strong>
+     变基
+    </strong>
+    是离不开 datached HEAD
+   </p>
+  </blockquote>
+  <hr/>
+  <p>
+   24 修改提交记录”commit”
+  </p>
+  <ol>
+   <li>
+    <p>
+     <strong>
+      修改最新的提交记录
+     </strong>
+    </p>
+    <blockquote>
+     <p>
+      <code>
+       git commit -m"desc" --amend
+      </code>
+     </p>
+    </blockquote>
+   </li>
+   <li>
+    <p>
+     <strong>
+      修改某个提交记录
+     </strong>
+    </p>
+    <blockquote>
+     <p>
+      必须是修改他的父级提交
+      <br/>
+      <code>
+       git rebase -i commitName
+      </code>
+      <br/>
+      提交记录是不同
+      <code>
+       log
+      </code>
+      给出的，他是最下面的是最新的，最上面的是最旧的
+      <br/>
+      要去读懂git弹出窗口给你的提示，
+      <code>
+       pick
+      </code>
+      指的是
+      <strong>
+       pick out
+      </strong>
+      不受改变的提交,
+      <strong>
+       reword
+      </strong>
+      指的是只改提交的描述信息。
+      <br/>
+      注意第一次改的是前面的命令，比如改成
+      <code>
+       r
+      </code>
+      [reword], 第二次改的才是内容
+     </p>
+    </blockquote>
+   </li>
+   <li>
+    <p>
+     <strong>
+      整合连续的提交记录
+     </strong>
+    </p>
+    <blockquote>
+     <p>
+      <code>
+       git rebase -i commitName
+      </code>
+      <br/>
+      <strong>
+       s[squash]
+      </strong>
+      ，在选中的连续的commit的前面改成
+      <strong>
+       s
+      </strong>
+      , 就是把这些commites合并到他们的前面一个commit
+      <br/>
+      最好在后一个弹窗上写上合并的理由
+     </p>
+    </blockquote>
+   </li>
+  </ol>
+  <p>
+   4
+   <strong>
+    整合不连续的提交记录
+   </strong>
+  </p>
+  <blockquote>
+   <p>
+    <code>
+     git rebase -i commitName
+    </code>
+    <br/>
+    其实只需要把需要合并的那些commits剪切到那个依附的父级commit下, 然后在重复”整合连续提交记录”的操作
+    <br/>
+    需要注意的是，我们可能有时候会出现一些警告，这时候我们可以按他的提示来进行操作比如
+    <code>
+     git rabase --continue
+    </code>
+    , 就可以继续操作了
+   </p>
+  </blockquote>
+  <hr/>
+  <p>
+   24 diff 命令的使用
+  </p>
+  <ol>
+   <li>
+    <p>
+     <code>
+      git diff --cached
+     </code>
+     : 比较INDEX和HEAD之间文件的差别(就是比较暂存区和已提交的区别)
+    </p>
+   </li>
+   <li>
+    <p>
+     <code>
+      git diff
+     </code>
+     ： 比较的是工作区和暂存区之间的文件差别(主要是看有有哪些文件没有被被add和文件中有那些修改)
+    </p>
+   </li>
+   <li>
+    <p>
+     我们可以
+     <code>
+      git diff -- f1 f2 ...
+     </code>
+     , 后面加多个命令，比较单个或者多个命令的区别
+    </p>
+   </li>
+   <li>
+    <p>
+     比较不同分支、不同提交，不同分支的指定文件的区别：
+     <br/>
+     <code>
+      git diff branch1 branch2
+     </code>
+     : 这是指向该目录最近的一次提交
+     <br/>
+     <code>
+      git diff branch1_commit_code branch2_commit_code
+     </code>
+     : 直接比较分支某次提交
+     <br/>
+     <code>
+      git diff branch1 branch2 -- pointed_file
+     </code>
+    </p>
+   </li>
+  </ol>
+  <hr/>
+  <p>
+   25 不想要变更了怎么办？
+  </p>
+  <ol>
+   <li>
+    <p>
+     Index 里面的全部变更都不要了, 让INDEX保持和HEAD一样的进度：
+    </p>
+    <blockquote>
+     <p>
+      <code>
+       git reset HEAD
+      </code>
+      :  之后我们可以通过
+      <code>
+       git diff --cached
+      </code>
+      来暂存区和HEAD之间的区别，判定是否生效。
+      <br/>
+      如果只想不要其中部分只需要：
+      <code>
+       git reset HEAD f1 f2 ...
+      </code>
+     </p>
+    </blockquote>
+   </li>
+   <li>
+    <p>
+     工作区中的变更不想要了(使用情况： 觉得自己的工作区的变更还不如已经在暂存区中的变更好，想要作废掉)
+    </p>
+    <blockquote>
+     <p>
+      <code>
+       git checkout -- file
+      </code>
+     </p>
+    </blockquote>
+   </li>
+  </ol>
+  <hr/>
+  <p>
+   26 如何消除
+   <strong>
+    最近
+   </strong>
+   提交的几次commit记录？
+   <br/>
+   <mark>
+    这个我觉得很少能用得到，没必要消除记录，而且这种操作具有一定的风险性
+   </mark>
+  </p>
+  <ol>
+   <li>
+    <code>
+     git checkout 到需要删除记录的分支
+    </code>
+   </li>
+   <li>
+    <code>
+     git reset --hard 到不需要删除的分支commit代码
+    </code>
+    (注意这种操作只能是消除最近几次的commit记录, 分支变成到这个状态)
+   </li>
+  </ol>
+  <hr/>
+  <p>
+   27 如果在开发中当前分支之前的提交在线上出问题了，我们怎么办？
+  </p>
+  <ol>
+   <li>
+    我们需要把当前所做的更改保存下来，并且还原回提交时的版本：
+    <code>
+     git stash
+    </code>
+   </li>
+   <li>
+    现在我们有一个干净的目录了，可以修复bug了
+   </li>
+   <li>
+    修复完bug之后，我们需要把之前保存下来的修改在拿回来：
+    <code>
+     git stash apply
+    </code>
+    <blockquote>
+     <p>
+      还可以用
+      <code>
+       git stash pop
+      </code>
+      , 不过之后
+      <code>
+       git stash list
+      </code>
+      的内容就清空了
+     </p>
+    </blockquote>
+   </li>
+   <li>
+    最后我们要注意的是，因为修改后的代码和现在拿回来的代码肯定会有不同的所以会产出出冲突，所以我们要好好清除掉冲突就可以了
+   </li>
+  </ol>
+  <hr/>
+  <p>
+   28
+   <img alt="常用传输协议" src="../datapi/常用传输协议.png"/>
+  </p>
+  <p>
+   之前有个误解，就是git只能和网络上的远程主机一起使用，其实本地的也可以: 你可以在一个终端中建立一个git仓库，然后在另一个终端中clone或者push到这个“远程仓库”(
+   <code>
+    git remote add name[代替的是后面那一个大串地址] ip
+   </code>
+   )中去, 使用的是一般是只能协议：
+   <code>
+    file://path/.git
+   </code>
+   ( .git 是必须得加的)
+  </p>
+  <hr/>
+  <p>
+   29 不同的人修改了不同的的文件该如何处理？
+  </p>
+  <p>
+   <mark>
+    情况:
+   </mark>
+   在github上新建了一个分支, 不同的两个人修改不同的文件
+  </p>
+  <ol>
+   <li>
+    在其中一个开发者的工作目录下，checkout这个新的分支：
+    <code>
+     git checkout -b branch_path remote_host/branch_path
+    </code>
+    (表明这是基于远端而在本地产生的新的分支)
+   </li>
+   <li>
+    我们另一个开发者也可以直接
+    <code>
+     fetch
+    </code>
+    下来，但是这个新增的只是远端的分支，本地还是没有，所以还是像上一个分支那样branch一个分支，最好还是和远端的分支同名，这样不会混淆。
+   </li>
+   <li>
+    后来两个人修改了不同的文件内容，所以我们要每天上班后必须
+    <code>
+     fetch
+    </code>
+    ，我们可以看fetch后面显示的信息看看到底是那个分支产生了变化，还可以
+    <code>
+     git branch -av
+    </code>
+    来看看分支和远端的差异：
+    <strong>
+     ahead 1, behind 2
+    </strong>
+    这样代表比远端多了一个变化，和少2个变化
+   </li>
+   <li>
+    我们
+    <code>
+     push
+    </code>
+    文件产生了冲突
+   </li>
+   <li>
+    最后我们可以 merge 这个远端的分支，
+    <code>
+     git merge host_name/....
+    </code>
+    (commit_code is ok too), 因为是不同文件的内容，所以merge是比较简单的
+   </li>
+  </ol>
+  <p>
+   <mark>
+    注意：
+   </mark>
+   我们都可以通过同一分支的commit来看看是否产生了变化，如果是，那么就可以确定是发生了变化。
+  </p>
+  <hr/>
+  <p>
+   30 不同的人修改了同样的文件的不同区域该如何处理？
+  </p>
+  <p>
+   其实和上面那个一样的处理，这时候字节
+   <code>
+    git merge
+   </code>
+   就可以了。自动就合并。
+  </p>
+  <hr/>
+  <p>
+   31 不同的人修改了同样的文件的同样的区域该如何处理？
+  </p>
+  <p>
+   当我们push的时候出现警告,我们可以:
+   <br/>
+   1.
+   <code>
+    git pull
+   </code>
+   <br/>
+   2. 出现冲突了，和同事沟通编辑解决冲突
+   <br/>
+   3. 添加修改后的文件，commit后再push
+  </p>
+  <hr/>
+  <p>
+   32 不同的人修改了同样的文件的文件名该如何处理？
+  </p>
+  <ol>
+   <li>
+    <p>
+     首先push的时候肯定会有冲突，那么我们可以pull下来，然后和另外改文件的那个人沟通
+    </p>
+   </li>
+   <li>
+    <p>
+     沟通成功后，删除不要的那些名字，然后(可以
+     <code>
+      git status
+     </code>
+     来看建议)我们我们把留下来的那个add后再提交push就行了
+    </p>
+   </li>
+  </ol>
+  <hr/>
+  <p>
+   31 协同合作时，有那些禁止项?
+  </p>
+  <ol>
+   <li>
+    <p>
+     不能
+     <code>
+      git push -f ...
+     </code>
+    </p>
+    <blockquote>
+     <p>
+      但是如果是自己的话，那么可以把历史记录恢复到某个commit阶段
+      <br/>
+      examples:
+      <code>
+       git push -f host_name commit_code:branch_name
+      </code>
+     </p>
+    </blockquote>
+   </li>
+   <li>
+    <p>
+     公共分支不能
+     <code>
+      git rebase ...
+     </code>
+    </p>
+   </li>
+  </ol>
+  <hr/>
+  <p>
+   32 github是有高级搜索的:
+  </p>
+  <ol>
+   <li>
+    <p>
+     in:readme 是可以提高搜索质量的
+    </p>
+   </li>
+   <li>
+    <p>
+     stars:&gt;1000 搜索stars多余1000的
+    </p>
+   </li>
+   <li>
+    <p>
+     filename:… 在代码中搜索资料(注意他显示结果是代码块)
+    </p>
+   </li>
+  </ol>
+  <p>
+   <mark>
+    我可可以在 advanced search里面学习
+   </mark>
+  </p>
+  <hr/>
+  <p>
+   33 如何创建一个团队(organization)项目管理?
+  </p>
+  <ol>
+   <li>
+    <strong>
+     setting
+    </strong>
+    =&gt;
+    <strong>
+     organizations
+    </strong>
+    =&gt;
+    <strong>
+     new
+    </strong>
+   </li>
+   <li>
+    合并的时候，合并主分支是
+    <strong>
+     base
+    </strong>
+    , 即将被merge掉的分支是
+    <strong>
+     compare
+    </strong>
+    a
+    <blockquote>
+     <p>
+      现在github上也可以编辑解决冲突了
+     </p>
+    </blockquote>
+   </li>
+  </ol>
+  <p>
+   <mark>
+    改变历史的三种方法：
+   </mark>
+  </p>
+  <blockquote>
+   <p>
+    1
+    <strong>
+     pull : 就是直接合并
+    </strong>
+    <br/>
+    <img alt="git_pull_merge" src="../datapi/git_pull_merge.png"/>
+   </p>
+   <p>
+    2
+    <strong>
+     squash：不改变分支，只是把历史合并后放进主枝上(线性)
+    </strong>
+    <br/>
+    <img alt="git_squash_merge" src="../datapi/git_squash_merge.png"/>
+   </p>
+   <p>
+    3
+    <strong>
+     rebase：不改变分支，只是把每个历史放进主枝上(线性)
+    </strong>
+   </p>
+   <blockquote>
+    <p>
+     这个是最线性的，但是比上面两个麻烦，因为rebase会不断让你修复冲突
+     <br/>
+     <code>
+      git config --global rerere.enable true
+     </code>
+     听说这个可以自动解决，但还是不断的
+     <code>
+      git rebase --continue
+     </code>
+    </p>
+   </blockquote>
+  </blockquote>
+  <p>
+   <img alt="git_rebase_merge1" src="../datapi/git_rebase_merge1.png"/>
+   <br/>
+   <img alt="git_rebase_merge2" src="../datapi/git_rebase_merge2.png"/>
+  </p>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>

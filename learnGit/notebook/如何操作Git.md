@@ -251,22 +251,22 @@
 
 24 修改提交记录"commit"  
 
-1. 修改最新的提交记录  
+1. **修改最新的提交记录**  
 > `git commit -m"desc" --amend`  
 
-2. 修改某个提交记录  
+2. **修改某个提交记录**  
 > 必须是修改他的父级提交  
 > `git rebase -i commitName`  
 > 提交记录是不同 `log` 给出的，他是最下面的是最新的，最上面的是最旧的  
 > 要去读懂git弹出窗口给你的提示，`pick` 指的是 **pick out** 不受改变的提交, **reword** 指的是只改提交的描述信息。  
 > 注意第一次改的是前面的命令，比如改成 `r`[reword], 第二次改的才是内容  
 
-3. 整合连续的提交记录  
+3. **整合连续的提交记录**  
 > `git rebase -i commitName`  
 > **s[squash]**，在选中的连续的commit的前面改成 **s**, 就是把这些commites合并到他们的前面一个commit  
 > 最好在后一个弹窗上写上合并的理由  
 
-4 整合不连续的提交记录  
+4 **整合不连续的提交记录**  
 > `git rebase -i commitName`  
 >  其实只需要把需要合并的那些commits剪切到那个依附的父级commit下, 然后在重复"整合连续提交记录"的操作  
 > 需要注意的是，我们可能有时候会出现一些警告，这时候我们可以按他的提示来进行操作比如 `git rabase --continue`, 就可以继续操作了  
@@ -389,15 +389,16 @@
 > 现在github上也可以编辑解决冲突了  
 
 <mark>改变历史的三种方法：</mark>  
-> 1 pull : 就是直接合并  
+> 1 **pull : 就是直接合并**  
 ![git_pull_merge](../datapi/git_pull_merge.png)  
 
-> 2 squash：不改变分支，只是把历史合并后放进主枝上(线性)  
+> 2 **squash：不改变分支，只是把历史合并后放进主枝上(线性)**  
 ![git_squash_merge](../datapi/git_squash_merge.png)
 
-> 3 rebase：不改变分支，只是把每个历史放进主枝上(线性)  
+> 3 **rebase：不改变分支，只是把每个历史放进主枝上(线性)**  
 >> 这个是最线性的，但是比上面两个麻烦，因为rebase会不断让你修复冲突  
 >> `git config --global rerere.enable true` 听说这个可以自动解决，但还是不断的 `git rebase --continue`  
+
 ![git_rebase_merge1](../datapi/git_rebase_merge1.png)  
 ![git_rebase_merge2](../datapi/git_rebase_merge2.png)  
 
