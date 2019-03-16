@@ -12,6 +12,7 @@
     "watch:scss": "onchange -i \"./**/*.scss\" -- npm run transferSC",
     "watch:lint": "onchange -i \"./**/*.js\" \"./**/*.scss\" \"./**/*.html\" \"./**/*.json\" -- npm run lint",
     "reload": "browser-sync start --files \"./**/*.html, ./**/*.css, ./**/*.js\" -server",
+    // browser-sync start --server --index bower.html --files="css/*.css"
     "prebuild": "rm -rf dist && mkdir -p dist/images && mkdir -p dist/styles && mkdir -p dist/js",
     "build": "scripty",
     "build:images": "scripty",
