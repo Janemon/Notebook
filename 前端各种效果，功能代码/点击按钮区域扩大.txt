@@ -1,7 +1,0 @@
-<input type="radio" name="sex" id="nan"/> <label for="nan">男</label>
-<input type="radio" name="sex" id="women"/> <label for="women">女</label>
-
-还可以是：
-
-<label><input type='radio' name='sex' value='man'/>man</label>
-<label><input type='radio' name='sex' value='woman'/>woman</label>
